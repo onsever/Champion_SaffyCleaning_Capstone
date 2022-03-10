@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        configureViewController()
         configureLogoImageView()
         configureLogoTitleLabel()
         configureLogoSubTitleLabel()
@@ -116,6 +116,14 @@ class LoginViewController: UIViewController {
 
 // MARK: - UIConfiguration Methods
 extension LoginViewController {
+    
+    private func configureViewController() {
+        view.backgroundColor = .white
+        
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
     
     private func configureLogoImageView() {
         view.addSubview(logoImageView)
