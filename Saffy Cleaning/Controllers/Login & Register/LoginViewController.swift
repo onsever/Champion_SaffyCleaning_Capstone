@@ -49,6 +49,13 @@ class LoginViewController: UIViewController {
     // MARK: - Selectors
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
+        
+        self.presentAlert(title: "Incorrect Credentials", message: "Please check your email and / or your password again.") { action in
+            print("Positive action is tapped on.")
+        } negativeAction: { action in
+            print("Negative action is tapped on.")
+        }
+
     }
     
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
