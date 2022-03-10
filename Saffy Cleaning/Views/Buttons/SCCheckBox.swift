@@ -19,7 +19,7 @@ class SCCheckBox: UIButton {
         super.init(frame: frame)
         
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.setImage(UIImage(named: "sc_checkbox_selected"), for: .normal)
+        self.setImage(UIImage(named: "sc_checkbox_unselected"), for: .normal)
         self.contentVerticalAlignment = .fill
         self.contentHorizontalAlignment = .fill
         

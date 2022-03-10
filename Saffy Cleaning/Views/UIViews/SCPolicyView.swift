@@ -18,7 +18,6 @@ class SCPolicyView: UIView {
     public let checkBox = SCCheckBox(frame: .zero)
     public weak var delegate: SCPolicyViewDelegate?
     private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Accept the Privacy Policy and Terms & Conditions.")
-    private let tap = UITapGestureRecognizer(target: self, action: #selector(policyAction(_:)))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,6 +45,8 @@ class SCPolicyView: UIView {
             infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             infoLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(policyAction(_:)))
         
         self.checkBox.addTarget(self, action: #selector(checkBoxTapped(_:)), for: .touchUpInside)
         self.infoLabel.addGestureRecognizer(tap)
