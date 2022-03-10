@@ -15,7 +15,7 @@ class SCMainLabel: UILabel {
     
     public init(fontSize: CGFloat, textColor: UIColor) {
         super.init(frame: .zero)
-        self.font = UIFont.systemFont(ofSize: fontSize)
+        self.font = .urbanistRegular(size: fontSize)
         self.textColor = textColor
         configure()
     }

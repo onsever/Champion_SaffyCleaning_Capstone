@@ -19,12 +19,12 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var logoTitleLabel = SCTitleLabel(fontSize: 25, textColor: .brandDark)
+    private lazy var logoTitleLabel = SCTitleLabel(fontSize: 30, textColor: .brandDark)
     private lazy var logoSubTitleLabel = SCSubTitleLabel(text: "Keep your place clean\nSafe and effective", isRequired: false, textColor: .brandDark)
     private lazy var usernameTextField = SCTextField(placeholder: "Login Name")
     private lazy var passwordTextField = SCTextField(placeholder: "Password")
     private var textFieldStackView: SCStackView!
-    private lazy var forgetPasswordLabel = SCCompletionLabel(title: "Forget Password", titleColor: .brandDark, fontSize: 12)
+    private lazy var forgetPasswordLabel = SCCompletionLabel(title: "Forget Password", titleColor: .brandDark, fontSize: 13)
     private let loginButton = SCMainButton(title: "Log in", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
     private let signUpButton = SCMainButton(title: "Sign Up", backgroundColor: .white, titleColor: .brandGem, borderColor: .brandGem, cornerRadius: 10, fontSize: nil)
     private var buttonStackView: SCStackView!
@@ -131,7 +131,6 @@ extension LoginViewController {
     private func configureLogoTitleLabel() {
         view.addSubview(logoTitleLabel)
         logoTitleLabel.text = "Saffy Cleaning"
-        logoTitleLabel.font = UIFont.systemFont(ofSize: 30, weight: .medium)
         logoTitleLabel.setCharacterSpacing(characterSpacing: 2)
         
         NSLayoutConstraint.activate([
@@ -145,7 +144,7 @@ extension LoginViewController {
         view.addSubview(logoSubTitleLabel)
         logoSubTitleLabel.numberOfLines = 2
         logoSubTitleLabel.setCharacterSpacing(characterSpacing: 2)
-        logoSubTitleLabel.font = UIFont.systemFont(ofSize: 30, weight: .regular)
+        logoSubTitleLabel.font = .urbanistRegular(size: 30)
         logoSubTitleLabel.textAlignment = .center
         
         NSLayoutConstraint.activate([

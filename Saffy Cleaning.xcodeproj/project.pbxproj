@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
+		BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */; };
+		BA65DB5627DA69A50007A915 /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */; };
+		BA65DB5727DA69A50007A915 /* Urbanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5327DA69A50007A915 /* Urbanist-Medium.ttf */; };
+		BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB5927DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift */; };
+		BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB5B27DA6E030007A915 /* UIView+Ext.swift */; };
+		BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB5D27DA6E1A0007A915 /* UIColor+Ext.swift */; };
+		BA65DB6027DA6E2E0007A915 /* UIFont+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB5F27DA6E2E0007A915 /* UIFont+Ext.swift */; };
+		BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */; };
+		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
+		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
 		BA95396A27D99031005A899A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396927D99031005A899A /* AppDelegate.swift */; };
 		BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396B27D99031005A899A /* SceneDelegate.swift */; };
 		BA95396E27D99031005A899A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* LoginViewController.swift */; };
@@ -16,7 +27,6 @@
 		BA95398427D99032005A899A /* Saffy_CleaningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95398327D99032005A899A /* Saffy_CleaningTests.swift */; };
 		BA95398E27D99032005A899A /* Saffy_CleaningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95398D27D99032005A899A /* Saffy_CleaningUITests.swift */; };
 		BA95399027D99032005A899A /* Saffy_CleaningUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95398F27D99032005A899A /* Saffy_CleaningUITestsLaunchTests.swift */; };
-		BA9539A127D990A9005A899A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539A027D990A9005A899A /* Extensions.swift */; };
 		BA9539A427D990F5005A899A /* SCSubTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539A327D990F5005A899A /* SCSubTitleLabel.swift */; };
 		BA9539A627D990FE005A899A /* SCInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539A527D990FE005A899A /* SCInfoLabel.swift */; };
 		BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539A727D99106005A899A /* SCCompletionLabel.swift */; };
@@ -64,6 +74,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
+		BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Regular.ttf"; sourceTree = "<group>"; };
+		BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA65DB5327DA69A50007A915 /* Urbanist-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Medium.ttf"; sourceTree = "<group>"; };
+		BA65DB5927DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB5B27DA6E030007A915 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB5D27DA6E1A0007A915 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB5F27DA6E2E0007A915 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		BA95396627D99031005A899A /* Saffy Cleaning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saffy Cleaning.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95396927D99031005A899A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA95396B27D99031005A899A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +98,6 @@
 		BA95398927D99032005A899A /* Saffy CleaningUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Saffy CleaningUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95398D27D99032005A899A /* Saffy_CleaningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saffy_CleaningUITests.swift; sourceTree = "<group>"; };
 		BA95398F27D99032005A899A /* Saffy_CleaningUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saffy_CleaningUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		BA9539A027D990A9005A899A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BA9539A327D990F5005A899A /* SCSubTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSubTitleLabel.swift; sourceTree = "<group>"; };
 		BA9539A527D990FE005A899A /* SCInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCInfoLabel.swift; sourceTree = "<group>"; };
 		BA9539A727D99106005A899A /* SCCompletionLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCompletionLabel.swift; sourceTree = "<group>"; };
@@ -132,6 +152,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA65DB4E27DA69900007A915 /* StackViews */ = {
+			isa = PBXGroup;
+			children = (
+				BA9539D227D998E2005A899A /* SCStackView.swift */,
+			);
+			path = StackViews;
+			sourceTree = "<group>";
+		};
+		BA65DB4F27DA69A50007A915 /* Urbanist */ = {
+			isa = PBXGroup;
+			children = (
+				BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */,
+				BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */,
+				BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */,
+				BA65DB5327DA69A50007A915 /* Urbanist-Medium.ttf */,
+			);
+			path = Urbanist;
+			sourceTree = "<group>";
+		};
+		BA65DB5827DA69AC0007A915 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				BA95397727D99032005A899A /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		BA95395D27D99031005A899A = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +202,7 @@
 		BA95396827D99031005A899A /* Saffy Cleaning */ = {
 			isa = PBXGroup;
 			children = (
+				BA65DB4F27DA69A50007A915 /* Urbanist */,
 				BA95397A27D99032005A899A /* Info.plist */,
 				BA9539D127D991E7005A899A /* Support */,
 				BA95399F27D99079005A899A /* Extensions */,
@@ -193,7 +241,8 @@
 		BA95399D27D99058005A899A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BA95397727D99032005A899A /* LaunchScreen.storyboard */,
+				BA65DB5827DA69AC0007A915 /* Storyboards */,
+				BA65DB4E27DA69900007A915 /* StackViews */,
 				BA9539C627D991BF005A899A /* Cell Views */,
 				BA9539C327D99190005A899A /* ReusableVCs */,
 				BA9539BC27D9915B005A899A /* UIViews */,
@@ -201,7 +250,6 @@
 				BA9539B027D9912E005A899A /* Buttons */,
 				BA9539AD27D99119005A899A /* TextFields */,
 				BA9539A227D990E8005A899A /* Labels */,
-				BA9539D227D998E2005A899A /* SCStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -218,7 +266,13 @@
 		BA95399F27D99079005A899A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BA9539A027D990A9005A899A /* Extensions.swift */,
+				BA65DB5927DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift */,
+				BA65DB5B27DA6E030007A915 /* UIView+Ext.swift */,
+				BA65DB5D27DA6E1A0007A915 /* UIColor+Ext.swift */,
+				BA65DB5F27DA6E2E0007A915 /* UIFont+Ext.swift */,
+				BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */,
+				BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */,
+				BA65DB6527DA6E6D0007A915 /* String+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -435,8 +489,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA65DB5627DA69A50007A915 /* Urbanist-SemiBold.ttf in Resources */,
+				BA65DB5727DA69A50007A915 /* Urbanist-Medium.ttf in Resources */,
+				BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */,
 				BA95397927D99032005A899A /* LaunchScreen.storyboard in Resources */,
 				BA95397627D99032005A899A /* Assets.xcassets in Resources */,
+				BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,16 +519,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */,
+				BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */,
 				BA9539A427D990F5005A899A /* SCSubTitleLabel.swift in Sources */,
+				BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */,
 				BA9539CA27D991CD005A899A /* SCReviewCell.swift in Sources */,
-				BA9539A127D990A9005A899A /* Extensions.swift in Sources */,
 				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
+				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
 				BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
+				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
+				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
 				BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */,
 				BA9539B227D99136005A899A /* SCMainButton.swift in Sources */,
 				BA9539AA27D9910B005A899A /* SCMainLabel.swift in Sources */,
@@ -482,6 +545,7 @@
 				BA9539C527D991A7005A899A /* SCSelectionPopUp.swift in Sources */,
 				BA95396E27D99031005A899A /* LoginViewController.swift in Sources */,
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
+				BA65DB6027DA6E2E0007A915 /* UIFont+Ext.swift in Sources */,
 				BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,

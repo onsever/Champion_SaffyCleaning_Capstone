@@ -28,7 +28,10 @@ class SCMainButton: UIButton {
         self.layer.cornerRadius = cornerRadius
         
         if let fontSize = fontSize {
-            self.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+            self.titleLabel?.font = .urbanistMedium(size: fontSize)
+        }
+        else {
+            self.titleLabel?.font = .urbanistMedium(size: 16)
         }
         configure()
     }
@@ -44,10 +47,12 @@ class SCMainButton: UIButton {
         self.layer.cornerRadius = cornerRadius
         
         if let fontSize = fontSize {
-            self.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+            self.titleLabel?.font = .urbanistMedium(size: fontSize)
             self.setTitle(title, for: .normal)
         }
-
+        else {
+            self.titleLabel?.font = .urbanistMedium(size: 16)
+        }
         configure()
     }
     

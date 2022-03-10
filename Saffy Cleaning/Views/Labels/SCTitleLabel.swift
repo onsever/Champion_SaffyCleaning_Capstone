@@ -15,7 +15,7 @@ class SCTitleLabel: UILabel {
     
     public init(fontSize: CGFloat, textColor: UIColor) {
         super.init(frame: .zero)
-        self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+        self.font = .urbanistMedium(size: fontSize)
         self.textColor = textColor
         configure()
     }

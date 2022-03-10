@@ -38,7 +38,7 @@ class SCSubTitleLabel: UILabel {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.adjustsFontSizeToFitWidth = true
         self.numberOfLines = 3
-        self.font = UIFont.preferredFont(forTextStyle: .body)
+        self.font = .urbanistRegular(size: 16)
     }
     
 }

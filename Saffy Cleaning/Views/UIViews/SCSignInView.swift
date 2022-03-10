@@ -22,6 +22,7 @@ class SCSignInView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .brandDark
+        label.font = .urbanistRegular(size: 16)
         
         return label
     }()

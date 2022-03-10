@@ -32,22 +32,15 @@ class SCCompletionLabel: UILabel {
     public init(cornerRadius: CGFloat) {
         super.init(frame: .zero)
         
-        //let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: titleColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: titleColor])
-        
-        //self.attributedText = attributedText
-        //self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
-        
-        self.font = UIFont.systemFont(ofSize: 14)
-        
-        
+        self.font = .urbanistRegular(size: 16)
         configure()
     }
     
     public init(title: String, titleColor: UIColor, fontSize: CGFloat) {
         super.init(frame: .zero)
         
-        let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: titleColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: titleColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)])
+        let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: titleColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: titleColor, NSAttributedString.Key.font: UIFont.urbanistRegular(size: fontSize)!])
         
         self.attributedText = attributedText
         
