@@ -9,12 +9,23 @@ import UIKit
 
 class SCStackView: UIStackView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configure()
     }
-    */
-
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configure() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.axis = .vertical
+        self.distribution = .fillProportionally
+        self.alignment = .center
+        self.spacing = 10
+        self.autoresizesSubviews = true
+    }
+    
 }
