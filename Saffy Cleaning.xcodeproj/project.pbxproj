@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		BA95396A27D99031005A899A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396927D99031005A899A /* AppDelegate.swift */; };
 		BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396B27D99031005A899A /* SceneDelegate.swift */; };
-		BA95396E27D99031005A899A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* ViewController.swift */; };
-		BA95397127D99031005A899A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA95396F27D99031005A899A /* Main.storyboard */; };
+		BA95396E27D99031005A899A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* LoginViewController.swift */; };
 		BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BA95397227D99031005A899A /* Saffy_Cleaning.xcdatamodeld */; };
 		BA95397627D99032005A899A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA95397527D99032005A899A /* Assets.xcassets */; };
 		BA95397927D99032005A899A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA95397727D99032005A899A /* LaunchScreen.storyboard */; };
@@ -62,8 +61,7 @@
 		BA95396627D99031005A899A /* Saffy Cleaning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saffy Cleaning.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95396927D99031005A899A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA95396B27D99031005A899A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BA95396D27D99031005A899A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BA95397027D99031005A899A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BA95396D27D99031005A899A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BA95397327D99031005A899A /* Saffy_Cleaning.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Saffy_Cleaning.xcdatamodel; sourceTree = "<group>"; };
 		BA95397527D99032005A899A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA95397827D99032005A899A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 		BA95399D27D99058005A899A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BA95396F27D99031005A899A /* Main.storyboard */,
 				BA95397727D99032005A899A /* LaunchScreen.storyboard */,
 				BA9539C627D991BF005A899A /* Cell Views */,
 				BA9539C327D99190005A899A /* ReusableVCs */,
@@ -200,7 +197,7 @@
 		BA95399E27D99066005A899A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BA95396D27D99031005A899A /* ViewController.swift */,
+				BA95396D27D99031005A899A /* LoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -398,7 +395,6 @@
 			files = (
 				BA95397927D99032005A899A /* LaunchScreen.storyboard in Resources */,
 				BA95397627D99032005A899A /* Assets.xcassets in Resources */,
-				BA95397127D99031005A899A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +436,7 @@
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
 				BA9539B827D99149005A899A /* SCCheckBox.swift in Sources */,
 				BA9539C527D991A7005A899A /* SCSelectionPopUp.swift in Sources */,
-				BA95396E27D99031005A899A /* ViewController.swift in Sources */,
+				BA95396E27D99031005A899A /* LoginViewController.swift in Sources */,
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
@@ -485,14 +481,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		BA95396F27D99031005A899A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BA95397027D99031005A899A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BA95397727D99032005A899A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -632,7 +620,6 @@
 				INFOPLIST_FILE = "Saffy Cleaning/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -661,7 +648,6 @@
 				INFOPLIST_FILE = "Saffy Cleaning/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -35,6 +35,8 @@ class ViewController: UIViewController {
     // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         configureLogoImageView()
         configureLogoTitleLabel()
         configureLogoSubTitleLabel()
@@ -106,7 +108,7 @@ class ViewController: UIViewController {
 }
 
 // MARK: - UIConfiguration Methods
-extension ViewController {
+extension LoginViewController {
     
     private func configureLogoImageView() {
         view.addSubview(logoImageView)
@@ -233,7 +235,7 @@ extension ViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension ViewController: UITextFieldDelegate {
+extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
