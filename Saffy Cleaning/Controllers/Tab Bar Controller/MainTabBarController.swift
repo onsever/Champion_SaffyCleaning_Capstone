@@ -22,6 +22,8 @@ extension MainTabBarController {
     private func configure() {
         
         UITabBar.appearance().tintColor = .brandGem
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.urbanistRegular(size: 14)!], for: .normal)
+        UITabBar.appearance().unselectedItemTintColor = .brandLake
         view.backgroundColor = .white
         
         let homeVC = HomeViewController()
@@ -37,10 +39,15 @@ extension MainTabBarController {
         profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 4)
         
         let homeNC = UINavigationController(rootViewController: homeVC)
+        homeNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let chatNC = UINavigationController(rootViewController: chatVC)
+        chatNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let historyNC = UINavigationController(rootViewController: historyVC)
+        historyNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let settingsNC = UINavigationController(rootViewController: settingsVC)
+        settingsNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let profileNC = UINavigationController(rootViewController: profileVC)
+        profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
 
         viewControllers = [homeNC, chatNC, historyNC, settingsNC, profileNC]
     }
