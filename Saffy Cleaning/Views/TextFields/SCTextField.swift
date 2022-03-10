@@ -34,7 +34,7 @@ class SCTextField: UITextField {
     
     public init(placeholder: String) {
         super.init(frame: .zero)
-        self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 16)!])
+        self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDarkGray, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 16)!])
         self.font = .urbanistRegular(size: 16)
         configure()
     }

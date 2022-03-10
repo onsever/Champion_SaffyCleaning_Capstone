@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var logoTitleLabel = SCTitleLabel(fontSize: 30, textColor: .brandDark)
+    private lazy var logoTitleLabel = SCTitleLabel(fontSize: 32, textColor: .brandDark)
     private lazy var logoSubTitleLabel = SCSubTitleLabel(text: "Keep your place clean\nSafe and effective", isRequired: false, textColor: .brandDark)
     private lazy var usernameTextField = SCTextField(placeholder: "Login Name")
     private lazy var passwordTextField = SCTextField(placeholder: "Password")
@@ -144,7 +144,7 @@ extension LoginViewController {
         view.addSubview(logoSubTitleLabel)
         logoSubTitleLabel.numberOfLines = 2
         logoSubTitleLabel.setCharacterSpacing(characterSpacing: 2)
-        logoSubTitleLabel.font = .urbanistRegular(size: 30)
+        logoSubTitleLabel.font = .urbanistRegular(size: 25)
         logoSubTitleLabel.textAlignment = .center
         
         NSLayoutConstraint.activate([
@@ -186,7 +186,7 @@ extension LoginViewController {
         forgetPasswordLabel.addGestureRecognizer(tap)
         
         NSLayoutConstraint.activate([
-            forgetPasswordLabel.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor),
+            forgetPasswordLabel.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: 5),
             forgetPasswordLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             forgetPasswordLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
