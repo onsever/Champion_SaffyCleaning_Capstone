@@ -33,7 +33,6 @@ class SCSelectionPopUp: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //view.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 0.75)
         view.layer.cornerRadius = 20
         configureContainerView()
         configureDismissButton()

@@ -209,7 +209,7 @@ extension LoginViewController {
         NSLayoutConstraint.activate([
             buttonStackView.topAnchor.constraint(equalTo: forgetPasswordLabel.bottomAnchor, constant: 25),
             buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 120),
+            buttonStackView.widthAnchor.constraint(equalToConstant: 160),
         ])
     }
     
@@ -257,7 +257,14 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        switch textField {
+        case usernameTextField:
+            passwordTextField.becomeFirstResponder()
+        case passwordTextField:
+            textField.resignFirstResponder()
+        default:
+            textField.resignFirstResponder()
+        }
         return true
     }
     

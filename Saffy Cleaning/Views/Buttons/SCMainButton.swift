@@ -31,7 +31,7 @@ class SCMainButton: UIButton {
             self.titleLabel?.font = .urbanistMedium(size: fontSize)
         }
         else {
-            self.titleLabel?.font = .urbanistMedium(size: 16)
+            self.titleLabel?.font = .urbanistMedium(size: 20)
         }
         configure()
     }
@@ -51,7 +51,7 @@ class SCMainButton: UIButton {
             self.setTitle(title, for: .normal)
         }
         else {
-            self.titleLabel?.font = .urbanistMedium(size: 16)
+            self.titleLabel?.font = .urbanistMedium(size: 20)
         }
         configure()
     }
