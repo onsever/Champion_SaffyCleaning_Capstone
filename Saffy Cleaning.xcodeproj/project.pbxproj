@@ -38,6 +38,12 @@
 		BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539CD27D991D5005A899A /* SCAddressCell.swift */; };
 		BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */; };
 		BA9539D327D998E2005A899A /* SCStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539D227D998E2005A899A /* SCStackView.swift */; };
+		BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */; };
+		BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */; };
+		BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35A27D9AF170018A030 /* ChatViewController.swift */; };
+		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
+		BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */; };
+		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +99,12 @@
 		BA9539CD27D991D5005A899A /* SCAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAddressCell.swift; sourceTree = "<group>"; };
 		BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCHousePhotoCell.swift; sourceTree = "<group>"; };
 		BA9539D227D998E2005A899A /* SCStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCStackView.swift; sourceTree = "<group>"; };
+		BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BAB5F35A27D9AF170018A030 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,7 +209,8 @@
 		BA95399E27D99066005A899A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BA95396D27D99031005A899A /* LoginViewController.swift */,
+				BAB5F35227D9AD240018A030 /* Tab Bar Controller */,
+				BAB5F35127D9AD180018A030 /* Login & Register */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -287,6 +300,35 @@
 				BA95396927D99031005A899A /* AppDelegate.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		BAB5F35127D9AD180018A030 /* Login & Register */ = {
+			isa = PBXGroup;
+			children = (
+				BA95396D27D99031005A899A /* LoginViewController.swift */,
+			);
+			path = "Login & Register";
+			sourceTree = "<group>";
+		};
+		BAB5F35227D9AD240018A030 /* Tab Bar Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */,
+				BAB5F35427D9AD3B0018A030 /* View Controllers */,
+			);
+			path = "Tab Bar Controller";
+			sourceTree = "<group>";
+		};
+		BAB5F35427D9AD3B0018A030 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */,
+				BAB5F35A27D9AF170018A030 /* ChatViewController.swift */,
+				BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */,
+				BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */,
+				BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,8 +464,10 @@
 				BA9539A427D990F5005A899A /* SCSubTitleLabel.swift in Sources */,
 				BA9539CA27D991CD005A899A /* SCReviewCell.swift in Sources */,
 				BA9539A127D990A9005A899A /* Extensions.swift in Sources */,
+				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
+				BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
@@ -438,12 +482,16 @@
 				BA9539C527D991A7005A899A /* SCSelectionPopUp.swift in Sources */,
 				BA95396E27D99031005A899A /* LoginViewController.swift in Sources */,
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
+				BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */,
+				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
+				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
 				BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */,
 				BA9539AC27D99110005A899A /* SCTitleLabel.swift in Sources */,
+				BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */,
 				BA9539B427D9913D005A899A /* SCImageButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
