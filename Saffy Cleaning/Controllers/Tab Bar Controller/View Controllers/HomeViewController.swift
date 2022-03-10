@@ -6,17 +6,83 @@
 //
 
 import UIKit
+import MapKit
 
 class HomeViewController: UIViewController {
+    
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.isScrollEnabled = true
+        
+        return mapView
+    }()
+    
+    private let searchButton = SCCircleButton(image: UIImage(systemName: "magnifyingglass")!, cornerRadius: 20)
+    private let orderButton = SCCircleButton(image: UIImage(systemName: "plus")!, cornerRadius: 20)
+    private let addressButton = SCCircleButton(image: UIImage(systemName: "list.dash")!, cornerRadius: 20)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
         title = "Home"
+        configureMapView()
+        configureButtons()
     }
     
-
+    @objc private func searchButtonDidTap(_ button: UIButton) {
+        let searchController = UISearchController()
+        searchController.automaticallyShowsCancelButton = true
+        self.present(searchController, animated: true, completion: nil)
+    }
     
+    @objc private func orderButtonDidTap(_ button: UIButton) {
+        print("Order button tapped.")
+    }
+    
+    @objc private func addressButtonDidTap(_ button: UIButton) {
+        print("Address button tapped.")
+    }
+    
+}
 
+extension HomeViewController {
+    
+    private func configureMapView() {
+        view.addSubview(mapView)
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func configureButtons() {
+        mapView.addSubview(searchButton)
+        mapView.addSubview(orderButton)
+        mapView.addSubview(addressButton)
+        
+        searchButton.addTarget(self, action: #selector(searchButtonDidTap(_:)), for: .touchUpInside)
+        orderButton.addTarget(self, action: #selector(orderButtonDidTap(_:)), for: .touchUpInside)
+        addressButton.addTarget(self, action: #selector(addressButtonDidTap(_:)), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            searchButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 20),
+            searchButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
+            searchButton.widthAnchor.constraint(equalToConstant: 40),
+            searchButton.heightAnchor.constraint(equalToConstant: 40),
+            orderButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20),
+            orderButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
+            orderButton.heightAnchor.constraint(equalToConstant: 40),
+            orderButton.widthAnchor.constraint(equalToConstant: 40),
+            addressButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20),
+            addressButton.trailingAnchor.constraint(equalTo: orderButton.leadingAnchor, constant: -10),
+            addressButton.widthAnchor.constraint(equalToConstant: 40),
+            addressButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
 }

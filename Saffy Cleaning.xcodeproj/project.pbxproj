@@ -54,6 +54,7 @@
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
 		BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
+		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +306,7 @@
 				BA9539B327D9913D005A899A /* SCImageButton.swift */,
 				BA9539B527D99143005A899A /* SCRadioButton.swift */,
 				BA9539B727D99149005A899A /* SCCheckBox.swift */,
+				BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
+				BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */,
 				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
 				BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
