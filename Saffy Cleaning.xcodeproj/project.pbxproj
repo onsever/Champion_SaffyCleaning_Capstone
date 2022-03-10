@@ -52,7 +52,7 @@
 		BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */; };
 		BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35A27D9AF170018A030 /* ChatViewController.swift */; };
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
-		BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */; };
+		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 /* End PBXBuildFile section */
@@ -124,7 +124,7 @@
 		BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BAB5F35A27D9AF170018A030 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -382,7 +382,7 @@
 				BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */,
 				BAB5F35A27D9AF170018A030 /* ChatViewController.swift */,
 				BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */,
-				BAB5F35E27D9AF3F0018A030 /* SettingsViewController.swift */,
+				BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */,
 				BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */,
 			);
 			path = "View Controllers";
@@ -550,7 +550,7 @@
 				BA95396E27D99031005A899A /* LoginViewController.swift in Sources */,
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
 				BA65DB6027DA6E2E0007A915 /* UIFont+Ext.swift in Sources */,
-				BAB5F35F27D9AF3F0018A030 /* SettingsViewController.swift in Sources */,
+				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,

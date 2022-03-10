@@ -29,13 +29,13 @@ extension MainTabBarController {
         let homeVC = HomeViewController()
         let chatVC = ChatViewController()
         let historyVC = HistoryViewController()
-        let settingsVC = SettingsViewController()
+        let noticeVC = NoticeViewController()
         let profileVC = ProfileViewController()
         
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         chatVC.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "text.bubble"), tag: 1)
         historyVC.tabBarItem = UITabBarItem(title: "History", image: UIImage(systemName: "gobackward"), tag: 2)
-        settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 3)
+        noticeVC.tabBarItem = UITabBarItem(title: "Notice", image: UIImage(systemName: "bell"), tag: 3)
         profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 4)
         
         let homeNC = UINavigationController(rootViewController: homeVC)
@@ -44,12 +44,12 @@ extension MainTabBarController {
         chatNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let historyNC = UINavigationController(rootViewController: historyVC)
         historyNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
-        let settingsNC = UINavigationController(rootViewController: settingsVC)
-        settingsNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
+        let noticeNC = UINavigationController(rootViewController: noticeVC)
+        noticeNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
         let profileNC = UINavigationController(rootViewController: profileVC)
         profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
 
-        viewControllers = [homeNC, chatNC, historyNC, settingsNC, profileNC]
+        viewControllers = [homeNC, chatNC, noticeNC, historyNC, profileNC]
     }
     
 }
