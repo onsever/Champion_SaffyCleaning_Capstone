@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
+import FBSDKCoreKit
 
 class LoginViewController: UIViewController {
     
@@ -90,7 +91,37 @@ class LoginViewController: UIViewController {
     
     @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
         facebookSignInView.animateWithSpring()
+        let fireBaseService = FirebaseAuthService()
+        LoginManager.init().logIn(permissions: [Permission.publicProfile, Permission.email], viewController: self) { (loginResult) in
+          switch loginResult {
+          case .success(let granted, let declined, let token):
+              let facebookToken = AccessToken.current!.tokenString
+              let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
+              fireBaseService.loginWithFacebook(credential: credential, completionBlock: {
+                  [weak self] (success) in
+                  guard let `self` = self else {return}
+                  var message: String = ""
+                  if (success) {
+                      message = "Login Success"
+                  } else {
+                      message = "Login Failed"
+                  }
+                  self.presentAlert(title: "Login with FB", message: message) {
+                      action in
+                      print("Positive action is tapped on.")
+                  } negativeAction: { action in
+                      print("Negative action is tapped on.")
+                  }
+              })
+          case .cancelled:
+              print("Login: cancelled.")
+          case .failed(let error):
+            print("Login with error: \(error.localizedDescription)")
+          }
+        }
     }
+    
+    
     
     @objc private func forgetPasswordDidTapped(_ gesture: UITapGestureRecognizer) {
         print("Forget password label tapped on.")

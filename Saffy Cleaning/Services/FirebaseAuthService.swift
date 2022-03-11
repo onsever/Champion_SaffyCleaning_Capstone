@@ -28,4 +28,10 @@ class FirebaseAuthService {
             }
         }
     }
+    func loginWithFacebook(credential: AuthCredential, completionBlock: @escaping (_ success: Bool) -> Void) {
+        Auth.auth().signIn(with: credential, completion: {(firebabseUser, error) in
+            print(firebabseUser)
+            completionBlock(error == nil)
+        })
+    }
 }
