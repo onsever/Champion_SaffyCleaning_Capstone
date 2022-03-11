@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 import Firebase
+import FBSDKCoreKit
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         UINavigationBar.appearance().tintColor = .brandDark
+        // Init firebase app
         FirebaseApp.configure()
+        // Init facebook sdk
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
+    }
+    
+    private func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return ApplicationDelegate.shared.application(application, open: url as URL, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     // MARK: UISceneSession Lifecycle

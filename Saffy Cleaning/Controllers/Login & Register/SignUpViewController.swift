@@ -60,12 +60,25 @@ class SignUpViewController: UIViewController {
     // MARK: - Selectors
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        
-        self.presentAlert(title: "Incorrect Credentials", message: "Please check your email and / or your password again.") { action in
-            print("Positive action is tapped on.")
-        } negativeAction: { action in
-            print("Negative action is tapped on.")
+        let signupService = FirebaseAuthService()
+        if let email = emailTextField.text, let password = passwordTextField.text {
+            signupService.createUser(email: email, password: password) {
+                [weak self] (success) in
+                guard let `self` = self else {return}
+                var message: String = ""
+                if (success) {
+                    message = "User was successfully created"
+                }else {
+                    message = "There was an error"
+                }
+                self.presentAlert(title: "Sign Up", message: message) { action in
+                    print("Positive action is tapped on.")
+                } negativeAction: { action in
+                    print("Negative action is tapped on.")
+                }
+            }
         }
+
 
     }
     

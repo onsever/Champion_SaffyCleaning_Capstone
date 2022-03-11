@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
@@ -55,11 +57,21 @@ class LoginViewController: UIViewController {
     // MARK: - Selectors
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        
-        self.presentAlert(title: "Incorrect Credentials", message: "Please check your email and / or your password again.") { action in
-            print("Positive action is tapped on.")
-        } negativeAction: { action in
-            print("Negative action is tapped on.")
+        let loginService = FirebaseAuthService()
+        guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
+        loginService.signIn(email: username, pass: password) {[weak self] (success) in
+            guard let `self` = self else { return }
+            var message: String = ""
+            if (success) {
+                message = "User was successfully logged in."
+            } else {
+                message = "There was an error"
+            }
+            self.presentAlert(title: "Login", message: message) { action in
+                print("Positive action is tapped on.")
+            } negativeAction: { action in
+                print("Negative action is tapped on.")
+            }
         }
 
     }
@@ -122,6 +134,11 @@ class LoginViewController: UIViewController {
     }
 
 
+}
+
+// MARK: - Firebase Methods
+extension LoginViewController {
+    
 }
 
 // MARK: - UIConfiguration Methods
