@@ -18,7 +18,6 @@ class HomeViewController: UIViewController {
         return mapView
     }()
     
-    private let searchButton = SCCircleButton(image: UIImage(systemName: "magnifyingglass")!, cornerRadius: 20)
     private let orderButton = SCCircleButton(image: UIImage(systemName: "plus")!, cornerRadius: 20)
     private let addressButton = SCCircleButton(image: UIImage(systemName: "list.dash")!, cornerRadius: 20)
 
@@ -29,12 +28,6 @@ class HomeViewController: UIViewController {
         title = "Home"
         configureMapView()
         configureButtons()
-    }
-    
-    @objc private func searchButtonDidTap(_ button: UIButton) {
-        let searchController = UISearchController()
-        searchController.automaticallyShowsCancelButton = true
-        self.present(searchController, animated: true, completion: nil)
     }
     
     @objc private func orderButtonDidTap(_ button: UIButton) {
@@ -61,24 +54,18 @@ extension HomeViewController {
     }
     
     private func configureButtons() {
-        mapView.addSubview(searchButton)
         mapView.addSubview(orderButton)
         mapView.addSubview(addressButton)
         
-        searchButton.addTarget(self, action: #selector(searchButtonDidTap(_:)), for: .touchUpInside)
         orderButton.addTarget(self, action: #selector(orderButtonDidTap(_:)), for: .touchUpInside)
         addressButton.addTarget(self, action: #selector(addressButtonDidTap(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            searchButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 20),
-            searchButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
-            searchButton.widthAnchor.constraint(equalToConstant: 40),
-            searchButton.heightAnchor.constraint(equalToConstant: 40),
-            orderButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20),
+            orderButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 20),
             orderButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
             orderButton.heightAnchor.constraint(equalToConstant: 40),
             orderButton.widthAnchor.constraint(equalToConstant: 40),
-            addressButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -20),
+            addressButton.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 20),
             addressButton.trailingAnchor.constraint(equalTo: orderButton.leadingAnchor, constant: -10),
             addressButton.widthAnchor.constraint(equalToConstant: 40),
             addressButton.heightAnchor.constraint(equalToConstant: 40)

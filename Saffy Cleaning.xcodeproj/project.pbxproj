@@ -55,6 +55,7 @@
 		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
+		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,7 @@
 		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
+		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				BA95396D27D99031005A899A /* LoginViewController.swift */,
+				BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */,
 			);
 			path = "Login & Register";
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
+				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
 				BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */,
 				BA9539AC27D99110005A899A /* SCTitleLabel.swift in Sources */,

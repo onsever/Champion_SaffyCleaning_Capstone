@@ -1,13 +1,13 @@
 //
-//  ViewController.swift
+//  SignUpViewController.swift
 //  Saffy Cleaning
 //
-//  Created by Onurcan Sever on 2022-03-09.
+//  Created by Onurcan Sever on 2022-03-10.
 //
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class SignUpViewController: UIViewController {
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -22,15 +22,25 @@ class LoginViewController: UIViewController {
     private lazy var logoTitleLabel = SCTitleLabel(fontSize: 32, textColor: .brandDark)
     private lazy var logoSubTitleLabel = SCSubTitleLabel(text: "Keep your place clean\nSafe and effective", isRequired: false, textColor: .brandDark)
     private lazy var usernameTextField = SCTextField(placeholder: "Login Name")
+    private lazy var fullNameTextField = SCTextField(placeholder: "Full Name")
     private lazy var passwordTextField = SCTextField(placeholder: "Password")
+    private lazy var emailTextField = SCTextField(placeholder: "e.g name@emailprovider.com")
+    private lazy var contactNumberTextField = SCTextField(placeholder: "e.g. 617-680-12-09")
     private var textFieldStackView: SCStackView!
-    private lazy var forgetPasswordLabel = SCCompletionLabel(title: "Forget Password", titleColor: .brandDark, fontSize: 13)
-    private let loginButton = SCMainButton(title: "Log in", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
-    private let signUpButton = SCMainButton(title: "Sign Up", backgroundColor: .white, titleColor: .brandGem, borderColor: .brandGem, cornerRadius: 10, fontSize: nil)
-    private var buttonStackView: SCStackView!
-    private let googleSignInView = SCSignInView(image: UIImage(named: "sc_google_logo"), title: "Continue with Google")
-    private let facebookSignInView = SCSignInView(image: UIImage(named: "sc_facebook_logo"), title: "Continue with Facebook")
-    private var signInStackView: SCStackView!
+    private let signUpButton = SCMainButton(title: "Sign Up", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
+    private lazy var alreadyUserLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let attributedText = NSMutableAttributedString(string: "Do you have an account? ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistSemibold(size: 14)!])
+        attributedText.append(NSAttributedString(string: "Login", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistBold(size: 14)!]))
+        
+        label.attributedText = attributedText
+        label.textAlignment = .center
+        label.isUserInteractionEnabled = true
+        
+        return label
+    }()
 
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -41,19 +51,14 @@ class LoginViewController: UIViewController {
         configureLogoTitleLabel()
         configureLogoSubTitleLabel()
         configureTextFieldStackView()
-        configureForgetPasswordLabel()
-        configureButtonStackView()
-        configureSignInStackView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.hidesBackButton = true
+        configureAlreadyUserLabel()
+        configureSignUpButton()
+        
         navigationController?.isNavigationBarHidden = true
     }
     
     // MARK: - Selectors
-    @objc private func loginButtonDidTapped(_ button: UIButton) {
+    @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
         
         self.presentAlert(title: "Incorrect Credentials", message: "Please check your email and / or your password again.") { action in
@@ -64,24 +69,9 @@ class LoginViewController: UIViewController {
 
     }
     
-    @objc private func signUpButtonDidTapped(_ button: UIButton) {
-        button.animateWithSpring()
-        
-        let viewController = SignUpViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    @objc private func continueWithGoogleDidTapped(_ gesture: UITapGestureRecognizer) {
-        googleSignInView.animateWithSpring()
-    }
-    
-    @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
-        facebookSignInView.animateWithSpring()
-    }
-    
-    @objc private func forgetPasswordDidTapped(_ gesture: UITapGestureRecognizer) {
-        print("Forget password label tapped on.")
+    @objc private func haveAnAccountDidTapped(_ gesture: UITapGestureRecognizer) {
+        print("Have an account label tapped on.")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -125,7 +115,7 @@ class LoginViewController: UIViewController {
 }
 
 // MARK: - UIConfiguration Methods
-extension LoginViewController {
+extension SignUpViewController {
     
     private func configureViewController() {
         view.backgroundColor = .white
@@ -173,93 +163,65 @@ extension LoginViewController {
     }
     
     private func configureTextFieldStackView() {
-        textFieldStackView = SCStackView(arrangedSubviews: [usernameTextField, passwordTextField])
+        textFieldStackView = SCStackView(arrangedSubviews: [usernameTextField, fullNameTextField, emailTextField, contactNumberTextField, passwordTextField])
         view.addSubview(textFieldStackView)
         
         passwordTextField.isSecureTextEntry = true
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        fullNameTextField.delegate = self
+        emailTextField.delegate = self
+        contactNumberTextField.delegate = self
         
         usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             usernameTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
-            passwordTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor)
+            passwordTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
+            emailTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
+            contactNumberTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
+            fullNameTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            textFieldStackView.topAnchor.constraint(equalTo: logoSubTitleLabel.bottomAnchor, constant: 30),
+            textFieldStackView.topAnchor.constraint(equalTo: logoSubTitleLabel.bottomAnchor, constant: 60),
             textFieldStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             textFieldStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
         ])
     }
     
-    private func configureForgetPasswordLabel() {
-        view.addSubview(forgetPasswordLabel)
-        forgetPasswordLabel.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(forgetPasswordDidTapped(_:)))
-        
-        forgetPasswordLabel.addGestureRecognizer(tap)
-        
-        NSLayoutConstraint.activate([
-            forgetPasswordLabel.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: 5),
-            forgetPasswordLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-            forgetPasswordLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
-    }
-    
-    private func configureButtonStackView() {
-        buttonStackView = SCStackView(arrangedSubviews: [loginButton, signUpButton])
-        view.addSubview(buttonStackView)
-        
-        loginButton.addTarget(self, action: #selector(loginButtonDidTapped(_:)), for: .touchUpInside)
+    private func configureSignUpButton() {
+        view.addSubview(signUpButton)
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTapped(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            loginButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor),
-            signUpButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor),
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
+            signUpButton.bottomAnchor.constraint(equalTo: alreadyUserLabel.topAnchor, constant: -20),
+            signUpButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            signUpButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             signUpButton.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        NSLayoutConstraint.activate([
-            buttonStackView.topAnchor.constraint(equalTo: forgetPasswordLabel.bottomAnchor, constant: 25),
-            buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 160),
         ])
     }
     
-    private func configureSignInStackView() {
-        signInStackView = SCStackView(arrangedSubviews: [googleSignInView, facebookSignInView])
-        view.addSubview(signInStackView)
-        signInStackView.spacing = 20
+    private func configureAlreadyUserLabel() {
+        view.addSubview(alreadyUserLabel)
         
-        let googleTap = UITapGestureRecognizer(target: self, action: #selector(continueWithGoogleDidTapped(_:)))
-        let facebookTap = UITapGestureRecognizer(target: self, action: #selector(continueWithFacebookDidTapped(_:)))
-        
-        googleSignInView.addGestureRecognizer(googleTap)
-        facebookSignInView.addGestureRecognizer(facebookTap)
-                
-        NSLayoutConstraint.activate([
-            facebookSignInView.widthAnchor.constraint(equalTo: signInStackView.widthAnchor),
-            facebookSignInView.heightAnchor.constraint(equalToConstant: 50),
-            googleSignInView.widthAnchor.constraint(equalTo: signInStackView.widthAnchor),
-            googleSignInView.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        let tap = UITapGestureRecognizer(target: self, action: #selector(haveAnAccountDidTapped(_:)))
+        alreadyUserLabel.addGestureRecognizer(tap)
         
         NSLayoutConstraint.activate([
-            signInStackView.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 30),
-            signInStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-            signInStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            alreadyUserLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            alreadyUserLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            alreadyUserLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            alreadyUserLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
+    
     
 }
 
 // MARK: - UITextFieldDelegate
-extension LoginViewController: UITextFieldDelegate {
+extension SignUpViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
