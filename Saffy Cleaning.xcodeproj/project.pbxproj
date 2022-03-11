@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
+		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
 		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
 		BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */; };
 		BA65DB5627DA69A50007A915 /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */; };
@@ -76,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
+		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
 		BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Regular.ttf"; sourceTree = "<group>"; };
 		BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			children = (
 				BAB5F35227D9AD240018A030 /* Tab Bar Controller */,
 				BAB5F35127D9AD180018A030 /* Login & Register */,
+				BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				BA9539C427D991A7005A899A /* SCSelectionPopUp.swift */,
+				BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */,
 			);
 			path = ReusableVCs;
 			sourceTree = "<group>";
@@ -536,11 +542,13 @@
 				BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */,
 				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
 				BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */,
+				BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
+				BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */,
 				BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */,
 				BA9539B227D99136005A899A /* SCMainButton.swift in Sources */,
 				BA9539AA27D9910B005A899A /* SCMainLabel.swift in Sources */,

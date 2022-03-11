@@ -32,10 +32,24 @@ class HomeViewController: UIViewController {
     
     @objc private func orderButtonDidTap(_ button: UIButton) {
         print("Order button tapped.")
+        
+        let orderVC = OrderViewController()
+        
+        navigationController?.pushViewController(orderVC, animated: true)
     }
     
     @objc private func addressButtonDidTap(_ button: UIButton) {
         print("Address button tapped.")
+        
+        let addressVC = SCAddressVC()
+        
+        if let sheet = addressVC.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersGrabberVisible = false
+        }
+        
+        self.present(addressVC, animated: true, completion: nil)
     }
     
 }
