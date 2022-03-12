@@ -9,6 +9,20 @@ import UIKit
 
 class SCHistoryCardCell: UITableViewCell {
     
+    override var frame: CGRect {
+        get {
+            return super.frame
+        }
+        set (newFrame) {
+            var frame =  newFrame
+            frame.origin.y += 4
+            frame.origin.x += 4
+            frame.size.height -= 2 * 5
+            frame.size.width -= 2 * 5
+            super.frame = frame
+        }
+    }
+    
     public static let identifier = "HistoryCell"
     private let historyIconView: UIImageView = {
         let imageView = UIImageView()
@@ -39,6 +53,7 @@ class SCHistoryCardCell: UITableViewCell {
     private func configure() {
         self.backgroundColor = .lightBrandLake
         self.layer.cornerRadius = 12
+        self.clipsToBounds = true
         
         configureIconView()
         configureStackView()
@@ -109,10 +124,22 @@ class SCHistoryCardCell: UITableViewCell {
         ])
     }
     
-    public func setData(addressTitle: String, date: String, isCompleted: Bool) {
+    public func setData(addressTitle: String, date: String, status: Status) {
         self.addressLabel.text = addressTitle
         self.dateLabel.text = date
-        self.completionLabel.text = isCompleted ? "Completed" : "Not Completed"
+        
+        switch status {
+        case .completed:
+            self.completionLabel.text = status.rawValue
+            self.completionLabel.textColor = .brandDark
+        case .proceeding:
+            self.completionLabel.text = status.rawValue
+            self.completionLabel.textColor = .brandGem
+        case .cancelled:
+            self.completionLabel.text = status.rawValue
+            self.completionLabel.textColor = .brandError
+        }
+
     }
     
     

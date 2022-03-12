@@ -15,6 +15,7 @@
 		BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */; };
 		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
 		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
+		BA0CCA2A27DD52410030DC0B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2927DD52410030DC0B /* History.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
 		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
@@ -108,6 +109,7 @@
 		BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCVerticalOrderInfoView.swift; sourceTree = "<group>"; };
 		BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDetailsViewController.swift; sourceTree = "<group>"; };
 		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
+		BA0CCA2927DD52410030DC0B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 			children = (
 				BA95397227D99031005A899A /* Saffy_Cleaning.xcdatamodeld */,
 				BAFC9B2B27DC3FB1000DDBCF /* Address.swift */,
+				BA0CCA2927DD52410030DC0B /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -748,6 +751,7 @@
 			files = (
 				BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */,
 				BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */,
+				BA0CCA2A27DD52410030DC0B /* History.swift in Sources */,
 				BA9539A427D990F5005A899A /* SCSubTitleLabel.swift in Sources */,
 				BAFC9B2627DC3BD7000DDBCF /* SCOrderInfoView.swift in Sources */,
 				BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */,
