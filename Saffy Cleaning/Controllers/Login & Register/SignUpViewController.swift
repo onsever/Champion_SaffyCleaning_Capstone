@@ -60,9 +60,9 @@ class SignUpViewController: UIViewController {
     // MARK: - Selectors
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        let signupService = FirebaseAuthService()
+        
         if let email = emailTextField.text, let password = passwordTextField.text {
-            signupService.createUser(email: email, password: password) {
+            FirebaseAuthService.service.createUser(email: email, password: password) {
                 [weak self] (success) in
                 guard let `self` = self else {return}
                 var message: String = ""

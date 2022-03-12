@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 import FBSDKLoginKit
 import FBSDKCoreKit
+
+
 
 class LoginViewController: UIViewController {
     
@@ -58,9 +61,8 @@ class LoginViewController: UIViewController {
     // MARK: - Selectors
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        let loginService = FirebaseAuthService()
         guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
-        loginService.signIn(email: username, pass: password) {[weak self] (success) in
+        FirebaseAuthService.service.signIn(email: username, pass: password) {[weak self] (success) in
             guard let `self` = self else { return }
             var message: String = ""
             if (success) {
@@ -87,26 +89,47 @@ class LoginViewController: UIViewController {
     
     @objc private func continueWithGoogleDidTapped(_ gesture: UITapGestureRecognizer) {
         googleSignInView.animateWithSpring()
+        GIDSignIn.sharedInstance.signIn(with: FirebaseAuthService.googleSignConfig, presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user = user else { return }
+            let authentication = user.authentication
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken ?? "", accessToken: authentication.accessToken)
+            FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
+                [weak self] (success) in
+                var message: String = ""
+                if (success) {
+                    message = "Login Success"
+                } else {
+                    message = "Login Failed"
+                }
+                self?.presentAlert(title: "Login with Google", message: message) {
+                    action in
+                    print("Positive action is tapped on.")
+                } negativeAction: { action in
+                    print("Negative action is tapped on.")
+                }
+            })
+            
+            
+        }
     }
     
     @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
         facebookSignInView.animateWithSpring()
-        let fireBaseService = FirebaseAuthService()
         LoginManager.init().logIn(permissions: [Permission.publicProfile, Permission.email], viewController: self) { (loginResult) in
           switch loginResult {
-          case .success(let granted, let declined, let token):
+          case .success(_, _, _):
               let facebookToken = AccessToken.current!.tokenString
               let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
-              fireBaseService.loginWithFacebook(credential: credential, completionBlock: {
+              FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
                   [weak self] (success) in
-                  guard let `self` = self else {return}
                   var message: String = ""
                   if (success) {
                       message = "Login Success"
                   } else {
                       message = "Login Failed"
                   }
-                  self.presentAlert(title: "Login with FB", message: message) {
+                  self?.presentAlert(title: "Login with FB", message: message) {
                       action in
                       print("Positive action is tapped on.")
                   } negativeAction: { action in

@@ -10,6 +10,8 @@ import CoreData
 import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
+import GoogleSignIn
+
 
 
 @main
@@ -24,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Init facebook sdk
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return GIDSignIn.sharedInstance.handle(url)
     }
     
     private func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
