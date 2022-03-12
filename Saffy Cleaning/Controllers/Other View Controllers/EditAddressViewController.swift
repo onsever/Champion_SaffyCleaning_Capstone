@@ -56,6 +56,7 @@ class EditAddressViewController: UIViewController {
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!
+    private let selectionPopUp = SCSelectionPopUp()
     
     public weak var delegate: EditAddressDelegate?
     
@@ -75,6 +76,8 @@ class EditAddressViewController: UIViewController {
         configureHorizontalStackView()
         configureVerticalStackView()
         configureAddButton()
+        
+        selectionPopUp.delegate = self
     }
     
     @objc private func didTapOk(_ button: UIBarButtonItem) {
@@ -95,6 +98,13 @@ class EditAddressViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc private func didTapHouseType(_ gesture: UITapGestureRecognizer) {
+        
+        selectionPopUp.modalPresentationStyle = .overCurrentContext
+        self.present(selectionPopUp, animated: true, completion: nil)
+        
+    }
+    
     public func setData(_ address: Address?) {
         
         if let address = address {
@@ -104,6 +114,14 @@ class EditAddressViewController: UIViewController {
             houseTypeView.getTextField().text = address.type
         }
         
+    }
+    
+}
+
+extension EditAddressViewController: SCSelectionPopUpDelegate {
+    
+    func didSelectRowAt(item: String) {
+        houseTypeView.getTextField().text = item
     }
     
 }
@@ -159,6 +177,11 @@ extension EditAddressViewController {
         contentView.addSubview(verticalStackView)
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
+        
+        houseTypeView.getTextField().isUserInteractionEnabled = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapHouseType(_:)))
+        houseTypeView.addGestureRecognizer(tap)
         
         for view in verticalStackView.arrangedSubviews {
             view.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
