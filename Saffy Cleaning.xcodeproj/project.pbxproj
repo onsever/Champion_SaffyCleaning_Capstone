@@ -11,6 +11,10 @@
 		0B53775227DB0D4A0085C110 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */; };
 		252CFC16CD57BB4032C4E2BE /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
 		B029D5559A50E4E49A9CB925 /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */; };
+		BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */; };
+		BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */; };
+		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
+		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
 		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
@@ -100,6 +104,10 @@
 		8DA4BFA633F1EBED2C258690 /* Pods-Saffy Cleaning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.debug.xcconfig"; sourceTree = "<group>"; };
 		8FF407DC294425913D66AABA /* Pods-Saffy Cleaning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.release.xcconfig"; sourceTree = "<group>"; };
 		AC672424CA58B06308BFF680 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCOtherDetailsView.swift; sourceTree = "<group>"; };
+		BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCVerticalOrderInfoView.swift; sourceTree = "<group>"; };
+		BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDetailsViewController.swift; sourceTree = "<group>"; };
+		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
@@ -406,6 +414,9 @@
 				BAFC9B2127DC3BC8000DDBCF /* SCWhenView.swift */,
 				BAFC9B2327DC3BCF000DDBCF /* SCWhereView.swift */,
 				BAFC9B2527DC3BD7000DDBCF /* SCOrderInfoView.swift */,
+				BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */,
+				BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */,
+				BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -487,6 +498,7 @@
 				BAFC9B2727DC3BE4000DDBCF /* WhenViewController.swift */,
 				BAFC9B2927DC3BE9000DDBCF /* WhereViewController.swift */,
 				BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */,
+				BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */,
 			);
 			path = "Sub View Controllers";
 			sourceTree = "<group>";
@@ -746,6 +758,7 @@
 				BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */,
 				BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */,
 				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
+				BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */,
 				BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */,
 				BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
@@ -762,6 +775,7 @@
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
+				BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */,
 				BAFC9B2827DC3BE4000DDBCF /* WhenViewController.swift in Sources */,
 				BA9539B827D99149005A899A /* SCCheckBox.swift in Sources */,
 				BA9539C527D991A7005A899A /* SCSelectionPopUp.swift in Sources */,
@@ -774,6 +788,7 @@
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
+				BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */,
 				BA77500627DD1D9A0065D22C /* EditAddressViewController.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
@@ -784,6 +799,7 @@
 				BA9539B427D9913D005A899A /* SCImageButton.swift in Sources */,
 				BAFC9B2227DC3BC8000DDBCF /* SCWhenView.swift in Sources */,
 				BAFC9B2A27DC3BE9000DDBCF /* WhereViewController.swift in Sources */,
+				BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */,
 				0B53775227DB0D4A0085C110 /* FirebaseAuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

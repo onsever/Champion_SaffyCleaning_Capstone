@@ -11,6 +11,7 @@ class OrderViewController: UIViewController {
     
     private lazy var whenView = SCWhenView(title: "When")
     private lazy var whereView = SCWhereView(title: "Where")
+    private lazy var otherDetailsView = SCOtherDetailsView(title: "Other details")
     
     // MARK: - WhenView Properties
     private var whenViewHeightAnchor: NSLayoutConstraint!
@@ -21,6 +22,31 @@ class OrderViewController: UIViewController {
     private var whereViewHeightAnchor: NSLayoutConstraint!
     private var whereViewDataSetHeightAnchor: NSLayoutConstraint!
     private var isWhereViewDataSet: Bool = false
+    
+    // MARK: - OtherDetails Properties
+    private var otherDetailsViewHeightAnchor: NSLayoutConstraint!
+    private var otherDetailsDataSetHeightAnchor: NSLayoutConstraint!
+    private var isOtherDetailsViewDataSet: Bool = false
+    
+    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.backgroundColor = .white
+        scrollView.contentSize = contentViewSize
+        scrollView.frame = view.bounds
+        scrollView.backgroundColor = .white
+        
+        return scrollView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.frame.size = contentViewSize
+        
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +54,16 @@ class OrderViewController: UIViewController {
         title = "Placing an order"
         view.backgroundColor = .white
         
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
         configureWhenView()
         configureWhereView()
+        configureOtherDetailsView()
         
         whenView.delegate = self
         whereView.delegate = self
+        otherDetailsView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +85,15 @@ class OrderViewController: UIViewController {
         else {
             whereViewHeightAnchor.isActive = true
             whereViewDataSetHeightAnchor.isActive = false
+        }
+        
+        if isOtherDetailsViewDataSet {
+            otherDetailsViewHeightAnchor.isActive = false
+            otherDetailsDataSetHeightAnchor.isActive = true
+        }
+        else {
+            otherDetailsViewHeightAnchor.isActive = true
+            otherDetailsDataSetHeightAnchor.isActive = false
         }
         
     }
@@ -99,15 +139,35 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
     
 }
 
+extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
+    
+    func addOtherDetails(pet: String, message: String, tips: String) {
+        self.navigationController?.popViewController(animated: true)
+        
+        self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, tips: tips)
+    }
+    
+    
+    func didTapEditButtonOtherView(_ button: UIButton) {
+        
+        let otherDetailsVC = OtherDetailsViewController()
+        self.navigationController?.pushViewController(otherDetailsVC, animated: true)
+        otherDetailsVC.delegate = self
+        
+    }
+    
+    
+}
+
 extension OrderViewController {
     
     private func configureWhenView() {
-        view.addSubview(whenView)
+        contentView.addSubview(whenView)
         
         NSLayoutConstraint.activate([
-            whenView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            whenView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            whenView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            whenView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            whenView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            whenView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
         
         whenViewHeightAnchor = whenView.heightAnchor.constraint(equalToConstant: 50)
@@ -118,18 +178,33 @@ extension OrderViewController {
     }
     
     private func configureWhereView() {
-        view.addSubview(whereView)
+        contentView.addSubview(whereView)
         
         NSLayoutConstraint.activate([
             whereView.topAnchor.constraint(equalTo: whenView.bottomAnchor, constant: 20),
-            whereView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            whereView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            whereView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            whereView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
         
         whereViewHeightAnchor = whereView.heightAnchor.constraint(equalToConstant: 50)
         whereViewDataSetHeightAnchor = whereView.heightAnchor.constraint(equalToConstant: 260)
         whereViewHeightAnchor.isActive = true
         whereViewDataSetHeightAnchor.isActive = false
+    }
+    
+    private func configureOtherDetailsView() {
+        contentView.addSubview(otherDetailsView)
+        
+        NSLayoutConstraint.activate([
+            otherDetailsView.topAnchor.constraint(equalTo: whereView.bottomAnchor, constant: 20),
+            otherDetailsView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            otherDetailsView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+        ])
+        
+        otherDetailsViewHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 50)
+        otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 400)
+        otherDetailsViewHeightAnchor.isActive = true
+        otherDetailsDataSetHeightAnchor.isActive = false
     }
     
 }
