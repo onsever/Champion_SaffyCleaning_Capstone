@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     @objc private func addressButtonDidTap(_ button: UIButton) {
         print("Address button tapped.")
         
-        let addressVC = SCAddressVC()
+        let addressVC = SCAddressVC(height: 380)
         
         if let sheet = addressVC.sheetPresentationController {
             sheet.detents = [.medium()]

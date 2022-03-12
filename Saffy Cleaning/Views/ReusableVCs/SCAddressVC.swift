@@ -7,14 +7,8 @@
 
 import UIKit
 
-class AddressCard {
-    var username: String
-    var address: String
-    
-    init(username: String, address: String) {
-        self.username = username
-        self.address = address
-    }
+protocol SCAddressVCDelegate: AnyObject {
+    func didSelectItem(_ address: Address)
 }
 
 class SCAddressVC: UIViewController {
@@ -58,15 +52,35 @@ class SCAddressVC: UIViewController {
     
     private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Add a new address")
     
-    private var addressArray = [AddressCard]()
-
+    private var addressArray = [Address]()
+    public weak var delegate: SCAddressVCDelegate?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public init(height: CGFloat?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        if let height = height {
+            containerView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+        else {
+            containerView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureContainerView()
         
-        //addressArray.append(AddressCard(username: "Onurcan Sever", address: "Test"))
-        //addressArray.append(AddressCard(username: "Mark Cheung", address: "Test"))
+        addressArray.append(Address(address: "550 Arthur Avenue,\n Freeport, IL 61032", contactPerson: "Onurcan Sever", contactNumber: "815-837-3463", type: "Apartment", sizes: "2,467"))
+        addressArray.append(Address(address: "North York", contactPerson: "Mark Cheung", contactNumber: "815-837-3463", type: "Condo", sizes: "1,467"))
         
         checkArrayCount()
     }
@@ -92,7 +106,6 @@ extension SCAddressVC {
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.widthAnchor.constraint(equalToConstant: view.frame.size.width - 20),
-            containerView.heightAnchor.constraint(equalToConstant: 380)
         ])
     }
     
@@ -185,8 +198,16 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCAddressCell.identifier, for: indexPath) as? SCAddressCell else { return UICollectionViewCell() }
         
+        let username = addressArray[indexPath.row].contactPerson
+        let phoneNumber = addressArray[indexPath.row].contactNumber
+        let address = addressArray[indexPath.row].address
+        let houseType = addressArray[indexPath.row].type
+        let houseSize = addressArray[indexPath.row].sizes
+        
         // Image upload is limited to 3 - 4
-        cell.setData(username: addressArray[indexPath.row].username, phoneNumber: "815-837-3463", imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: "550 Arthur Avenue, Freeport, IL 61032", houseType: "Apartment", houseSize: "2,467")
+        cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
+        
+        
         
        cell.delegate = self
         
@@ -201,6 +222,7 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         pageControl.currentPage = indexPath.row
+        delegate?.didSelectItem(addressArray[indexPath.row])
         
     }
     
