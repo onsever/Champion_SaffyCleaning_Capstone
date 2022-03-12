@@ -47,7 +47,7 @@ class WhenViewController: UIViewController {
         }
         
         durationView.getTextField().text = WhenViewController.durationText
-        
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,6 +55,8 @@ class WhenViewController: UIViewController {
         
         WhenViewController.selectedDate = datePicker.date
         WhenViewController.durationText = checkDurationText()
+        
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
