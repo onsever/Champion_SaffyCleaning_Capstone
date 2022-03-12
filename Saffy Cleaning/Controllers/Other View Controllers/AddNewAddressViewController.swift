@@ -53,6 +53,7 @@ class AddNewAddressViewController: UIViewController {
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private let addButton = SCMainButton(title: "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
+    private let selectionPopUp = SCSelectionPopUp()
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!
@@ -75,6 +76,8 @@ class AddNewAddressViewController: UIViewController {
         configureHorizontalStackView()
         configureVerticalStackView()
         configureAddButton()
+        
+        selectionPopUp.delegate = self
     }
     
     @objc private func didTapOk(_ button: UIBarButtonItem) {
@@ -95,6 +98,13 @@ class AddNewAddressViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc private func didTapHouseType(_ gesture: UITapGestureRecognizer) {
+        
+        selectionPopUp.modalPresentationStyle = .overCurrentContext
+        self.present(selectionPopUp, animated: true, completion: nil)
+        
+    }
+    
     public func setData(_ address: Address?) {
         
         if let address = address {
@@ -104,6 +114,14 @@ class AddNewAddressViewController: UIViewController {
             houseTypeView.getTextField().text = address.type
         }
         
+    }
+    
+}
+
+extension AddNewAddressViewController: SCSelectionPopUpDelegate {
+    
+    func didSelectRowAt(item: String) {
+        houseTypeView.getTextField().text = item
     }
     
 }
@@ -159,6 +177,11 @@ extension AddNewAddressViewController {
         contentView.addSubview(verticalStackView)
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
+        
+        houseTypeView.getTextField().isUserInteractionEnabled = false
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapHouseType(_:)))
+        houseTypeView.addGestureRecognizer(tap)
         
         for view in verticalStackView.arrangedSubviews {
             view.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
