@@ -37,6 +37,20 @@ class OtherDetailsViewController: UIViewController {
         noButton.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = true
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = false
+        
+    }
+    
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
         let pet = quantityTextField.text!
