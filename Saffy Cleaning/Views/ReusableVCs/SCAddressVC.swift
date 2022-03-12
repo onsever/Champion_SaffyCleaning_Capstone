@@ -32,7 +32,7 @@ class SCAddressVC: UIViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.numberOfPages = addressArray.count
+        pageControl.numberOfPages = SCAddressVC.addressArray.count
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
         pageControl.currentPageIndicatorTintColor = .brandGem
@@ -52,7 +52,8 @@ class SCAddressVC: UIViewController {
     
     private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Add a new address")
     
-    private var addressArray = [Address]()
+    private static var addressArray = [Address]()
+    private static var currentIndex: Int = 0
     public weak var delegate: SCAddressVCDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -73,25 +74,45 @@ class SCAddressVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureContainerView()
         
-        addressArray.append(Address(address: "550 Arthur Avenue,\n Freeport, IL 61032", contactPerson: "Onurcan Sever", contactNumber: "815-837-3463", type: "Apartment", sizes: "2,467"))
-        addressArray.append(Address(address: "North York", contactPerson: "Mark Cheung", contactNumber: "815-837-3463", type: "Condo", sizes: "1,467"))
+        //addressArray.append(Address(address: "550 Arthur Avenue,\n Freeport, IL 61032", contactPerson: "Onurcan Sever", contactNumber: "815-837-3463", type: "Apartment", sizes: "2,467"))
+        //addressArray.append(Address(address: "North York", contactPerson: "Mark Cheung", contactNumber: "815-837-3463", type: "Condo", sizes: "1,467"))
         
         checkArrayCount()
     }
     
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
         print("Add a new address tapped.")
+        
+        let vc = AddNewAddressViewController()
+        
+        vc.modalPresentationStyle = .fullScreen
+        vc.delegate = self
+        
+        self.present(vc, animated: true, completion: nil)
     }
-    
-
 }
 
+
+
+extension SCAddressVC: AddNewAddressDelegate {
+    
+    func didTapAddButton(_ address: Address) {
+        SCAddressVC.addressArray.append(address)
+        self.addressCollectionView.reloadData()
+        checkArrayCount()
+        print(address.address)
+    }
+    
+    
+}
+    
 extension SCAddressVC {
     
     private func configureContainerView() {
@@ -111,7 +132,7 @@ extension SCAddressVC {
     
     private func checkArrayCount() {
         
-        if addressArray.count == 0 || addressArray.isEmpty {
+        if SCAddressVC.addressArray.count == 0 || SCAddressVC.addressArray.isEmpty {
             configureEmptyView()
         }
         else {
@@ -187,7 +208,7 @@ extension SCAddressVC {
 extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        addressArray.count
+        SCAddressVC.addressArray.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -198,11 +219,11 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCAddressCell.identifier, for: indexPath) as? SCAddressCell else { return UICollectionViewCell() }
         
-        let username = addressArray[indexPath.row].contactPerson
-        let phoneNumber = addressArray[indexPath.row].contactNumber
-        let address = addressArray[indexPath.row].address
-        let houseType = addressArray[indexPath.row].type
-        let houseSize = addressArray[indexPath.row].sizes
+        let username = SCAddressVC.addressArray[indexPath.row].contactPerson
+        let phoneNumber = SCAddressVC.addressArray[indexPath.row].contactNumber
+        let address = SCAddressVC.addressArray[indexPath.row].address
+        let houseType = SCAddressVC.addressArray[indexPath.row].type
+        let houseSize = SCAddressVC.addressArray[indexPath.row].sizes
         
         // Image upload is limited to 3 - 4
         cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
@@ -222,7 +243,8 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         pageControl.currentPage = indexPath.row
-        delegate?.didSelectItem(addressArray[indexPath.row])
+        SCAddressVC.currentIndex = indexPath.row
+        delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
         
     }
     
@@ -232,14 +254,33 @@ extension SCAddressVC: SCAddressCellDelegate {
     
     func didTapEditButton(_ button: UIButton) {
         print("Edit button tapped.")
+        
+        let vc = EditAddressViewController()
+        vc.setData(SCAddressVC.addressArray[SCAddressVC.currentIndex])
+        vc.modalPresentationStyle = .fullScreen
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     func didTapDeleteButton(_ button: UIButton) {
         print("Delete button tapped.")
+        SCAddressVC.addressArray.remove(at: SCAddressVC.currentIndex)
+        checkArrayCount()
     }
     
     func didTapButton(_ username: String) {
         
+    }
+    
+    
+}
+
+extension SCAddressVC: EditAddressDelegate {
+    
+    func didTapSave(_ address: Address) {
+        SCAddressVC.addressArray[SCAddressVC.currentIndex] = address
+        self.addressCollectionView.reloadData()
+        checkArrayCount()
     }
     
     

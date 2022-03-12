@@ -24,6 +24,7 @@
 		BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */; };
 		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
 		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
+		BA77500627DD1D9A0065D22C /* EditAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA77500527DD1D9A0065D22C /* EditAddressViewController.swift */; };
 		BA95396A27D99031005A899A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396927D99031005A899A /* AppDelegate.swift */; };
 		BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396B27D99031005A899A /* SceneDelegate.swift */; };
 		BA95396E27D99031005A899A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* LoginViewController.swift */; };
@@ -62,6 +63,7 @@
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
+		BAEC381727DC762400496D81 /* AddNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEC381627DC762400496D81 /* AddNewAddressViewController.swift */; };
 		BAFC9B2227DC3BC8000DDBCF /* SCWhenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2127DC3BC8000DDBCF /* SCWhenView.swift */; };
 		BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2327DC3BCF000DDBCF /* SCWhereView.swift */; };
 		BAFC9B2627DC3BD7000DDBCF /* SCOrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2527DC3BD7000DDBCF /* SCOrderInfoView.swift */; };
@@ -111,6 +113,7 @@
 		BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		BA77500527DD1D9A0065D22C /* EditAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressViewController.swift; sourceTree = "<group>"; };
 		BA95396627D99031005A899A /* Saffy Cleaning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saffy Cleaning.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95396927D99031005A899A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA95396B27D99031005A899A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		BAEC381627DC762400496D81 /* AddNewAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressViewController.swift; sourceTree = "<group>"; };
 		BAFC9B2127DC3BC8000DDBCF /* SCWhenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCWhenView.swift; sourceTree = "<group>"; };
 		BAFC9B2327DC3BCF000DDBCF /* SCWhereView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCWhereView.swift; sourceTree = "<group>"; };
 		BAFC9B2527DC3BD7000DDBCF /* SCOrderInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOrderInfoView.swift; sourceTree = "<group>"; };
@@ -332,6 +336,7 @@
 		BA95399E27D99066005A899A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BAEC381527DC75EB00496D81 /* Other View Controllers */,
 				BAB5F35227D9AD240018A030 /* Tab Bar Controller */,
 				BAB5F35127D9AD180018A030 /* Login & Register */,
 			);
@@ -465,6 +470,15 @@
 				BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		BAEC381527DC75EB00496D81 /* Other View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BAEC381627DC762400496D81 /* AddNewAddressViewController.swift */,
+				BA77500527DD1D9A0065D22C /* EditAddressViewController.swift */,
+			);
+			path = "Other View Controllers";
 			sourceTree = "<group>";
 		};
 		BAFC9B2027DC3BB7000DDBCF /* Sub View Controllers */ = {
@@ -736,6 +750,7 @@
 				BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
+				BAEC381727DC762400496D81 /* AddNewAddressViewController.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
@@ -759,6 +774,7 @@
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
+				BA77500627DD1D9A0065D22C /* EditAddressViewController.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
