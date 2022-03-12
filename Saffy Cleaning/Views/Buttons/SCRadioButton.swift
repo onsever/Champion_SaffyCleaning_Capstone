@@ -19,6 +19,9 @@ class SCRadioButton: UIButton {
         super.init(frame: frame)
         
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.setImage(UIImage(named: "sc_radio_unselected"), for: .normal)
+        self.contentVerticalAlignment = .fill
+        self.contentHorizontalAlignment = .fill
     }
     
     required init?(coder: NSCoder) {
