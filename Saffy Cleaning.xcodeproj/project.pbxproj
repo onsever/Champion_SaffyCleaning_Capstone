@@ -349,7 +349,6 @@
 			children = (
 				BAEC381527DC75EB00496D81 /* Other View Controllers */,
 				BAB5F35227D9AD240018A030 /* Tab Bar Controller */,
-				BAB5F35127D9AD180018A030 /* Login & Register */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -482,6 +481,7 @@
 				BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */,
 				BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */,
 				BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */,
+				BAB5F35127D9AD180018A030 /* Login & Register */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
