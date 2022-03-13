@@ -165,7 +165,7 @@ class SCOtherDetailsView: UIView {
         ])
     }
     
-    public func setData(pet: String, message: String, tips: String, selectedItems: [ExtraService]) -> Bool {
+    public func setData(pet: String, message: String, tips: Double, selectedItems: [ExtraService]) -> Bool {
         
         self.petView.infoLabel.text = "Pet"
         self.messageView.infoLabel.text = "Message to cleaner"
@@ -173,7 +173,7 @@ class SCOtherDetailsView: UIView {
         
         self.petView.infoValue.text = pet
         self.messageView.infoValue.text = message
-        self.tipsView.infoValue.text = tips
+        self.tipsView.infoValue.text = String(format: "USD %.2f", tips)
         
         self.serviceArray = selectedItems
         

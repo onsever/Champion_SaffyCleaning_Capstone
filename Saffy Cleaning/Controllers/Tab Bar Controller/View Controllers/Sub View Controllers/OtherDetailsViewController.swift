@@ -8,7 +8,7 @@
 import UIKit
 
 protocol OtherDetailsViewDelegate: AnyObject {
-    func addOtherDetails(pet: String, message: String, tips: String, selectedItems: [ExtraService])
+    func addOtherDetails(pet: String, message: String, tips: Double, selectedItems: [ExtraService])
 }
 
 class OtherDetailsViewController: UIViewController {
@@ -33,6 +33,7 @@ class OtherDetailsViewController: UIViewController {
         
         return collectionView
     }()
+    private let tipsView = SCInfoView(placeholder: "tips amount", text: "Tips")
     
     public weak var delegate: OtherDetailsViewDelegate?
     private var serviceArray = [ExtraService]()
@@ -49,6 +50,7 @@ class OtherDetailsViewController: UIViewController {
         configureMessageTextField()
         configureServiceLabel()
         configureCollectionView()
+        configureTipsView()
         setData()
         
         yesButton.delegate = self
@@ -72,8 +74,9 @@ class OtherDetailsViewController: UIViewController {
         
         let pet = quantityTextField.text!
         let message = messageTextField.text!
+        let tips = Double(tipsView.getTextField().text!)!
         
-        delegate?.addOtherDetails(pet: pet, message: message, tips: "USD 10", selectedItems: selectedArray)
+        delegate?.addOtherDetails(pet: pet, message: message, tips: tips, selectedItems: selectedArray)
     }
     
     private func setData() {
@@ -234,6 +237,7 @@ extension OtherDetailsViewController {
     private func configureMessageLabel() {
         view.addSubview(messageLabel)
         messageLabel.text = "Message to cleaner"
+        messageLabel.font = .urbanistBold(size: 16)
         NSLayoutConstraint.activate([
             messageLabel.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 20),
             messageLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -257,6 +261,7 @@ extension OtherDetailsViewController {
         view.addSubview(extraServiceLabel)
         
         extraServiceLabel.text = "Extra services"
+        extraServiceLabel.font = .urbanistBold(size: 16)
         
         NSLayoutConstraint.activate([
             extraServiceLabel.topAnchor.constraint(equalTo: messageTextField.bottomAnchor, constant: 15),
@@ -278,6 +283,29 @@ extension OtherDetailsViewController {
             serviceCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             serviceCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             serviceCollectionView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+    }
+    
+    private func configureTipsView() {
+        view.addSubview(tipsView)
+        
+        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+        let image = UIImage(systemName: "dollarsign.circle.fill")
+        imageView.image = image
+        imageView.tintColor = .brandDark
+        let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        imageContainerView.addSubview(imageView)
+        tipsView.getTextField().rightViewMode = .always
+        tipsView.getTextField().rightView = imageContainerView
+        tipsView.getTextField().keyboardType = .numberPad
+        
+        tipsView.mainLabel.font = .urbanistBold(size: 16)
+        
+        NSLayoutConstraint.activate([
+            tipsView.topAnchor.constraint(equalTo: serviceCollectionView.bottomAnchor, constant: 15),
+            tipsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tipsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tipsView.heightAnchor.constraint(equalToConstant: 70)
         ])
     }
     

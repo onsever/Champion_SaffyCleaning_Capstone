@@ -13,7 +13,7 @@ class SCInfoView: UIView {
     private var labelText: String = ""
     
     private lazy var textField = SCTextField(placeholder: placeholderText)
-    private lazy var mainLabel = SCSubTitleLabel(text: labelText, isRequired: false, textColor: .brandDark)
+    public lazy var mainLabel = SCSubTitleLabel(text: labelText, isRequired: false, textColor: .brandDark)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
