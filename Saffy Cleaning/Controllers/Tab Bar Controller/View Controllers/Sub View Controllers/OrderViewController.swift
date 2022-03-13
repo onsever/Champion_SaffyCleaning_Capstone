@@ -206,7 +206,7 @@ extension OrderViewController {
         ])
         
         otherDetailsViewHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 50)
-        otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 550)
+        otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 480)
         otherDetailsViewHeightAnchor.isActive = true
         otherDetailsDataSetHeightAnchor.isActive = false
     }

@@ -126,18 +126,16 @@ class SCOtherDetailsView: UIView {
         stackView = UIStackView(arrangedSubviews: [petView, messageView, tipsView])
         
         self.addSubview(stackView)
-                
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fillEqually
         stackView.spacing = 0
-        stackView.backgroundColor = .yellow
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
-            stackView.heightAnchor.constraint(equalToConstant: 300)
+            stackView.heightAnchor.constraint(equalToConstant: 240)
         ])
         
     }
