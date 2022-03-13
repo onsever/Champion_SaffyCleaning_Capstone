@@ -41,7 +41,7 @@ class SCReviewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             userImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             userImageView.widthAnchor.constraint(equalToConstant: 60),
             userImageView.heightAnchor.constraint(equalToConstant: 60)
         ])

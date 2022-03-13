@@ -13,9 +13,19 @@ enum Status: String {
     case cancelled = "Cancelled"
 }
 
-class HistoryViewController: UITableViewController {
+class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private var historyArray = [History]()
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(SCReviewCell.self, forCellReuseIdentifier: SCReviewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.register(SCHistoryCardCell.self, forCellReuseIdentifier: SCHistoryCardCell.identifier)
+        tableView.allowsSelection = false
+        
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,21 +33,21 @@ class HistoryViewController: UITableViewController {
         title = "History"
         view.backgroundColor = .white
         
-        self.tableView.register(SCHistoryCardCell.self, forCellReuseIdentifier: SCHistoryCardCell.identifier)
+        configureTableView()
         setData()
         
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return historyArray.count
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCHistoryCardCell.identifier, for: indexPath) as? SCHistoryCardCell else { return UITableViewCell() }
         
@@ -46,8 +56,8 @@ class HistoryViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
 
@@ -59,6 +69,19 @@ extension HistoryViewController {
         historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .proceeding))
         historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .completed))
         historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .cancelled))
+    }
+    
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
 }
