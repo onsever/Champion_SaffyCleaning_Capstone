@@ -68,6 +68,8 @@
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
+		BAD694FD27DD79D000FF3445 /* ExtraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD694FC27DD79D000FF3445 /* ExtraService.swift */; };
+		BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD694FE27DD7A2A00FF3445 /* SCExtraServiceCell.swift */; };
 		BAEC381727DC762400496D81 /* AddNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEC381627DC762400496D81 /* AddNewAddressViewController.swift */; };
 		BAFC9B2227DC3BC8000DDBCF /* SCWhenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2127DC3BC8000DDBCF /* SCWhenView.swift */; };
 		BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2327DC3BCF000DDBCF /* SCWhereView.swift */; };
@@ -166,6 +168,8 @@
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		BAD694FC27DD79D000FF3445 /* ExtraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraService.swift; sourceTree = "<group>"; };
+		BAD694FE27DD7A2A00FF3445 /* SCExtraServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCExtraServiceCell.swift; sourceTree = "<group>"; };
 		BAEC381627DC762400496D81 /* AddNewAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressViewController.swift; sourceTree = "<group>"; };
 		BAFC9B2127DC3BC8000DDBCF /* SCWhenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCWhenView.swift; sourceTree = "<group>"; };
 		BAFC9B2327DC3BCF000DDBCF /* SCWhereView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCWhereView.swift; sourceTree = "<group>"; };
@@ -324,6 +328,7 @@
 				BA95397227D99031005A899A /* Saffy_Cleaning.xcdatamodeld */,
 				BAFC9B2B27DC3FB1000DDBCF /* Address.swift */,
 				BA0CCA2927DD52410030DC0B /* History.swift */,
+				BAD694FC27DD79D000FF3445 /* ExtraService.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -440,6 +445,7 @@
 				BA9539CB27D991D1005A899A /* SCInfoCell.swift */,
 				BA9539CD27D991D5005A899A /* SCAddressCell.swift */,
 				BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */,
+				BAD694FE27DD7A2A00FF3445 /* SCExtraServiceCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 				BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
+				BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */,
 				BAEC381727DC762400496D81 /* AddNewAddressViewController.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
@@ -776,6 +783,7 @@
 				BA9539B227D99136005A899A /* SCMainButton.swift in Sources */,
 				BA9539AA27D9910B005A899A /* SCMainLabel.swift in Sources */,
 				BA9539A627D990FE005A899A /* SCInfoLabel.swift in Sources */,
+				BAD694FD27DD79D000FF3445 /* ExtraService.swift in Sources */,
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,

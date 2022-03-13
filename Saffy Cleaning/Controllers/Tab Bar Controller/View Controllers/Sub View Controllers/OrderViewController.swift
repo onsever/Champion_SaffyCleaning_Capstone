@@ -96,6 +96,8 @@ class OrderViewController: UIViewController {
             otherDetailsDataSetHeightAnchor.isActive = false
         }
         
+        otherDetailsView.updateCollectionView()
+        
     }
 
 }
@@ -141,11 +143,13 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
 
 extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
     
-    func addOtherDetails(pet: String, message: String, tips: String) {
+    func addOtherDetails(pet: String, message: String, tips: String, selectedItems: [ExtraService]) {
         self.navigationController?.popViewController(animated: true)
         
-        self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, tips: tips)
+        self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, tips: tips, selectedItems: selectedItems)
+        
     }
+    
     
     
     func didTapEditButtonOtherView(_ button: UIButton) {
@@ -202,7 +206,7 @@ extension OrderViewController {
         ])
         
         otherDetailsViewHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 50)
-        otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 400)
+        otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 550)
         otherDetailsViewHeightAnchor.isActive = true
         otherDetailsDataSetHeightAnchor.isActive = false
     }

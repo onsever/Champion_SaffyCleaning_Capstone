@@ -28,8 +28,22 @@ class SCOtherDetailsView: UIView {
     private let petView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
     private let messageView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
     private let tipsView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
+    private let extraServicesLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
+    private lazy var serviceCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(SCExtraServiceCell.self, forCellWithReuseIdentifier: SCExtraServiceCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = false
+        layout.scrollDirection = .horizontal
+        
+        return collectionView
+    }()
     
     public weak var delegate: SCOtherDetailsViewDelegate?
+    private var serviceArray = [ExtraService]()
     private let padding: CGFloat = 20
     
     override init(frame: CGRect) {
@@ -116,7 +130,7 @@ class SCOtherDetailsView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
-        stackView.spacing = 10
+        stackView.spacing = 0
         stackView.backgroundColor = .yellow
         
         NSLayoutConstraint.activate([
@@ -128,7 +142,32 @@ class SCOtherDetailsView: UIView {
         
     }
     
-    public func setData(pet: String, message: String, tips: String) -> Bool {
+    private func configureCollectionView() {
+        serviceCollectionView.delegate = self
+        serviceCollectionView.dataSource = self
+        serviceCollectionView.clipsToBounds = false
+        serviceCollectionView.backgroundColor = .lightBrandLake3
+        self.addSubview(extraServicesLabel)
+        self.addSubview(serviceCollectionView)
+        
+        extraServicesLabel.text = "Extra services"
+        extraServicesLabel.font = UIFont.urbanistBold(size: 16)
+        
+        NSLayoutConstraint.activate([
+            extraServicesLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 15),
+            extraServicesLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            extraServicesLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+        ])
+        
+        NSLayoutConstraint.activate([
+            serviceCollectionView.topAnchor.constraint(equalTo: extraServicesLabel.bottomAnchor, constant: 0),
+            serviceCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            serviceCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            serviceCollectionView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+    }
+    
+    public func setData(pet: String, message: String, tips: String, selectedItems: [ExtraService]) -> Bool {
         
         self.petView.infoLabel.text = "Pet"
         self.messageView.infoLabel.text = "Message to cleaner"
@@ -138,9 +177,42 @@ class SCOtherDetailsView: UIView {
         self.messageView.infoValue.text = message
         self.tipsView.infoValue.text = tips
         
+        self.serviceArray = selectedItems
+        
         configureStackView()
+        configureCollectionView()
         
         return true
     }
+    
+    public func updateCollectionView() {
+        self.serviceCollectionView.reloadData()
+    }
 
+}
+
+extension SCOtherDetailsView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return serviceArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCExtraServiceCell.identifier, for: indexPath) as? SCExtraServiceCell else { return UICollectionViewCell() }
+        
+        cell.setData(image: serviceArray[indexPath.row].image, name: serviceArray[indexPath.row].name)
+        
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 60, height: 60)
+    }
+    
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol OtherDetailsViewDelegate: AnyObject {
-    func addOtherDetails(pet: String, message: String, tips: String)
+    func addOtherDetails(pet: String, message: String, tips: String, selectedItems: [ExtraService])
 }
 
 class OtherDetailsViewController: UIViewController {
@@ -20,8 +20,23 @@ class OtherDetailsViewController: UIViewController {
     private let quantityTextField = SCTextField(placeholder: "Describe quantity and type of pet in the place.")
     private let messageLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private let messageTextField = SCTextField(placeholder: "Leave a message to the cleaner...")
+    private let extraServiceLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
+    private lazy var serviceCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(SCExtraServiceCell.self, forCellWithReuseIdentifier: SCExtraServiceCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.allowsMultipleSelection = true
+        layout.scrollDirection = .horizontal
+        
+        return collectionView
+    }()
     
     public weak var delegate: OtherDetailsViewDelegate?
+    private var serviceArray = [ExtraService]()
+    private var selectedArray = [ExtraService]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +47,9 @@ class OtherDetailsViewController: UIViewController {
         configureQuantityTextField()
         configureMessageLabel()
         configureMessageTextField()
+        configureServiceLabel()
+        configureCollectionView()
+        setData()
         
         yesButton.delegate = self
         noButton.delegate = self
@@ -41,7 +59,6 @@ class OtherDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.tabBarController?.tabBar.isHidden = true
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,7 +73,15 @@ class OtherDetailsViewController: UIViewController {
         let pet = quantityTextField.text!
         let message = messageTextField.text!
         
-        delegate?.addOtherDetails(pet: pet, message: message, tips: "USD 10")
+        delegate?.addOtherDetails(pet: pet, message: message, tips: "USD 10", selectedItems: selectedArray)
+    }
+    
+    private func setData() {
+        
+        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
+        
     }
     
 
@@ -88,6 +113,58 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
         }
     }
     
+    
+}
+
+extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return serviceArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCExtraServiceCell.identifier, for: indexPath) as? SCExtraServiceCell else { return UICollectionViewCell() }
+        
+        cell.setData(image: serviceArray[indexPath.row].image, name: serviceArray[indexPath.row].name)
+        
+        return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 120)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! SCExtraServiceCell
+        
+        cell.setImageOpacity(opacity: 0.5)
+        
+        selectedArray.append(serviceArray[indexPath.row])
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! SCExtraServiceCell
+        
+        cell.setImageOpacity(opacity: 1)
+        
+        selectedArray.remove(at: indexPath.row)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
 }
 
@@ -136,7 +213,7 @@ extension OtherDetailsViewController {
         ])
         
         NSLayoutConstraint.activate([
-            horizontalStackView.topAnchor.constraint(equalTo: petView.bottomAnchor, constant: 20),
+            horizontalStackView.topAnchor.constraint(equalTo: petView.bottomAnchor, constant: 30),
             horizontalStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             horizontalStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             horizontalStackView.heightAnchor.constraint(equalToConstant: 30)
@@ -176,23 +253,32 @@ extension OtherDetailsViewController {
         ])
     }
     
+    private func configureServiceLabel() {
+        view.addSubview(extraServiceLabel)
+        
+        extraServiceLabel.text = "Extra services"
+        
+        NSLayoutConstraint.activate([
+            extraServiceLabel.topAnchor.constraint(equalTo: messageTextField.bottomAnchor, constant: 15),
+            extraServiceLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            extraServiceLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            extraServiceLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
+    private func configureCollectionView() {
+        serviceCollectionView.delegate = self
+        serviceCollectionView.dataSource = self
+        serviceCollectionView.clipsToBounds = false
+        serviceCollectionView.backgroundColor = .lightBrandLake2
+        view.addSubview(serviceCollectionView)
+        
+        NSLayoutConstraint.activate([
+            serviceCollectionView.topAnchor.constraint(equalTo: extraServiceLabel.bottomAnchor, constant: 15),
+            serviceCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            serviceCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            serviceCollectionView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+    }
+    
 }
-
-/*
- private func configureYesView() {
-     view.addSubview(yesButton)
-     view.addSubview(noButton)
-     
-     NSLayoutConstraint.activate([
-         yesButton.topAnchor.constraint(equalTo: petView.bottomAnchor, constant: 40),
-         yesButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-         yesButton.widthAnchor.constraint(equalToConstant: 15),
-         yesButton.heightAnchor.constraint(equalToConstant: 15),
-         
-         noButton.topAnchor.constraint(equalTo: petView.bottomAnchor, constant: 40),
-         noButton.leadingAnchor.constraint(equalTo: yesButton.trailingAnchor, constant: 30),
-         yesButton.widthAnchor.constraint(equalToConstant: 15),
-         yesButton.heightAnchor.constraint(equalToConstant: 15)
-     ])
- }
- */
