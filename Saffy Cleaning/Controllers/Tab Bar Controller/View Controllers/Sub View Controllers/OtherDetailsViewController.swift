@@ -78,9 +78,11 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
         case yesButton.radioButton:
             print("Yes Button clicked")
             yesButton.radioButton.isSelected = true
+            noButton.radioButton.isSelected = false
         case noButton.radioButton:
             print("No button clicked")
             noButton.radioButton.isSelected = true
+            yesButton.radioButton.isSelected = false
         default:
             break
         }
