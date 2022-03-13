@@ -136,6 +136,10 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? "0")
         
+        self.orderArray.remove(at: 0)
+        self.orderArray.insert(Order(name: "Basic cleaning hours (\(duration ?? "0") hrs)", cost: 30), at: 0)
+        self.tableView.reloadData()
+        
     }
     
     func didTapEditButtonWhenView(_ button: UIButton) {
