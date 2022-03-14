@@ -92,7 +92,11 @@ class SCAddressVC: UIViewController {
         
         let vc = AddNewAddressViewController()
         
-        vc.modalPresentationStyle = .fullScreen
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = false
+        }
+        
         vc.delegate = self
         
         self.present(vc, animated: true, completion: nil)

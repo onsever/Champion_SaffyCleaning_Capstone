@@ -27,7 +27,6 @@ class SCOtherDetailsView: UIView {
     public var stackView = UIStackView()
     private let petView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
     private let messageView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
-    private let tipsView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
     private let extraServicesLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private lazy var serviceCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -123,8 +122,7 @@ class SCOtherDetailsView: UIView {
     
     private func configureStackView() {
         
-        stackView = UIStackView(arrangedSubviews: [petView, messageView, tipsView])
-        
+        stackView = UIStackView(arrangedSubviews: [petView, messageView])
         self.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -135,7 +133,7 @@ class SCOtherDetailsView: UIView {
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
-            stackView.heightAnchor.constraint(equalToConstant: 240)
+            stackView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
     }
@@ -165,15 +163,13 @@ class SCOtherDetailsView: UIView {
         ])
     }
     
-    public func setData(pet: String, message: String, tips: Double, selectedItems: [ExtraService]) -> Bool {
+    public func setData(pet: String, message: String, selectedItems: [ExtraService]) -> Bool {
         
         self.petView.infoLabel.text = "Pet"
         self.messageView.infoLabel.text = "Message to cleaner"
-        self.tipsView.infoLabel.text = "Tips"
         
         self.petView.infoValue.text = pet
         self.messageView.infoValue.text = message
-        self.tipsView.infoValue.text = String(format: "USD %.2f", tips)
         
         self.serviceArray = selectedItems
         

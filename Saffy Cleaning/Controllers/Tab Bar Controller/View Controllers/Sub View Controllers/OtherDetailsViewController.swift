@@ -8,7 +8,7 @@
 import UIKit
 
 protocol OtherDetailsViewDelegate: AnyObject {
-    func addOtherDetails(pet: String, message: String, tips: Double, selectedItems: [ExtraService])
+    func addOtherDetails(pet: String, message: String, selectedItems: [ExtraService])
 }
 
 class OtherDetailsViewController: UIViewController {
@@ -22,18 +22,16 @@ class OtherDetailsViewController: UIViewController {
     private let messageTextField = SCTextField(placeholder: "Leave a message to the cleaner...")
     private let extraServiceLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private lazy var serviceCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = UIHelper.createThreeColumnFlowLayout(in: self.view)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SCExtraServiceCell.self, forCellWithReuseIdentifier: SCExtraServiceCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
-        layout.scrollDirection = .horizontal
         
         return collectionView
     }()
-    private let tipsView = SCInfoView(placeholder: "tips amount", text: "Tips")
     
     public weak var delegate: OtherDetailsViewDelegate?
     private var serviceArray = [ExtraService]()
@@ -46,11 +44,10 @@ class OtherDetailsViewController: UIViewController {
         configurePetView()
         configureHorizontalStackView()
         configureQuantityTextField()
-        configureMessageLabel()
-        configureMessageTextField()
         configureServiceLabel()
         configureCollectionView()
-        configureTipsView()
+        configureMessageLabel()
+        configureMessageTextField()
         setData()
         
         yesButton.delegate = self
@@ -74,13 +71,13 @@ class OtherDetailsViewController: UIViewController {
         
         let pet = quantityTextField.text!
         let message = messageTextField.text!
-        let tips = Double(tipsView.getTextField().text!)!
         
-        delegate?.addOtherDetails(pet: pet, message: message, tips: tips, selectedItems: selectedArray)
+        delegate?.addOtherDetails(pet: pet, message: message, selectedItems: selectedArray)
     }
     
     private func setData() {
         
+        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "garage\ncleaning"))
         serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
         serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
         serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
@@ -234,29 +231,6 @@ extension OtherDetailsViewController {
         ])
     }
     
-    private func configureMessageLabel() {
-        view.addSubview(messageLabel)
-        messageLabel.text = "Message to cleaner"
-        messageLabel.font = .urbanistBold(size: 16)
-        NSLayoutConstraint.activate([
-            messageLabel.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 20),
-            messageLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            messageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            messageLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
-    }
-    
-    private func configureMessageTextField() {
-        view.addSubview(messageTextField)
-        
-        NSLayoutConstraint.activate([
-            messageTextField.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10),
-            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            messageTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            messageTextField.heightAnchor.constraint(equalToConstant: 65)
-        ])
-    }
-    
     private func configureServiceLabel() {
         view.addSubview(extraServiceLabel)
         
@@ -264,7 +238,7 @@ extension OtherDetailsViewController {
         extraServiceLabel.font = .urbanistBold(size: 16)
         
         NSLayoutConstraint.activate([
-            extraServiceLabel.topAnchor.constraint(equalTo: messageTextField.bottomAnchor, constant: 15),
+            extraServiceLabel.topAnchor.constraint(equalTo: quantityTextField.bottomAnchor, constant: 15),
             extraServiceLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             extraServiceLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             extraServiceLabel.heightAnchor.constraint(equalToConstant: 20)
@@ -282,31 +256,58 @@ extension OtherDetailsViewController {
             serviceCollectionView.topAnchor.constraint(equalTo: extraServiceLabel.bottomAnchor, constant: 15),
             serviceCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             serviceCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            serviceCollectionView.heightAnchor.constraint(equalToConstant: 120)
+            serviceCollectionView.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
     
-    private func configureTipsView() {
-        view.addSubview(tipsView)
-        
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
-        let image = UIImage(systemName: "dollarsign.circle.fill")
-        imageView.image = image
-        imageView.tintColor = .brandDark
-        let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageContainerView.addSubview(imageView)
-        tipsView.getTextField().rightViewMode = .always
-        tipsView.getTextField().rightView = imageContainerView
-        tipsView.getTextField().keyboardType = .numberPad
-        
-        tipsView.mainLabel.font = .urbanistBold(size: 16)
+    private func configureMessageLabel() {
+        view.addSubview(messageLabel)
+        messageLabel.text = "Message to cleaner"
+        messageLabel.font = .urbanistBold(size: 16)
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: serviceCollectionView.bottomAnchor, constant: 20),
+            messageLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            messageLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
+    private func configureMessageTextField() {
+        view.addSubview(messageTextField)
         
         NSLayoutConstraint.activate([
-            tipsView.topAnchor.constraint(equalTo: serviceCollectionView.bottomAnchor, constant: 15),
-            tipsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            tipsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tipsView.heightAnchor.constraint(equalToConstant: 70)
+            messageTextField.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10),
+            messageTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            messageTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            messageTextField.heightAnchor.constraint(equalToConstant: 65)
         ])
     }
     
+    
+    
 }
+
+/*
+ private func configureTipsView() {
+     view.addSubview(tipsView)
+     
+     let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+     let image = UIImage(systemName: "dollarsign.circle.fill")
+     imageView.image = image
+     imageView.tintColor = .brandDark
+     let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+     imageContainerView.addSubview(imageView)
+     tipsView.getTextField().rightViewMode = .always
+     tipsView.getTextField().rightView = imageContainerView
+     tipsView.getTextField().keyboardType = .numberPad
+     
+     tipsView.mainLabel.font = .urbanistBold(size: 16)
+     
+     NSLayoutConstraint.activate([
+         tipsView.topAnchor.constraint(equalTo: serviceCollectionView.bottomAnchor, constant: 15),
+         tipsView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+         tipsView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+         tipsView.heightAnchor.constraint(equalToConstant: 70)
+     ])
+ }
+ */

@@ -179,17 +179,15 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
 
 extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
     
-    func addOtherDetails(pet: String, message: String, tips: Double, selectedItems: [ExtraService]) {
+    func addOtherDetails(pet: String, message: String, selectedItems: [ExtraService]) {
         self.navigationController?.popViewController(animated: true)
         
-        self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, tips: tips, selectedItems: selectedItems)
+        self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, selectedItems: selectedItems)
         
         for item in 0..<selectedItems.count {
             orderArray.append(Order(name: "Extra services \(item + 1)", cost: 15))
         }
-        
-        orderArray.append(Order(name: "Tips", cost: tips))
-        
+                
         self.tableView.reloadData()
         
     }

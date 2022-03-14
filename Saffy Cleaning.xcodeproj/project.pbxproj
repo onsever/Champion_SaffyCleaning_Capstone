@@ -16,6 +16,7 @@
 		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
 		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
 		BA0CCA2A27DD52410030DC0B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2927DD52410030DC0B /* History.swift */; };
+		BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
 		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
@@ -114,6 +115,7 @@
 		BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDetailsViewController.swift; sourceTree = "<group>"; };
 		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
 		BA0CCA2927DD52410030DC0B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				BA95397527D99032005A899A /* Assets.xcassets */,
 				BA95396B27D99031005A899A /* SceneDelegate.swift */,
 				BA95396927D99031005A899A /* AppDelegate.swift */,
+				BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
+				BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
