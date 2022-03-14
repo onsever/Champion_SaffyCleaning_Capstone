@@ -260,8 +260,13 @@ extension SCAddressVC: SCAddressCellDelegate {
         print("Edit button tapped.")
         
         let vc = EditAddressViewController()
+        
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = false
+        }
+        
         vc.setData(SCAddressVC.addressArray[SCAddressVC.currentIndex])
-        vc.modalPresentationStyle = .fullScreen
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }

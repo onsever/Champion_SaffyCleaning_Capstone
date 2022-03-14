@@ -15,14 +15,6 @@ protocol EditAddressDelegate: AnyObject {
 class EditAddressViewController: UIViewController {
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
-    
-    private lazy var mapView: MKMapView = {
-        let mapView = MKMapView()
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.isScrollEnabled = true
-        
-        return mapView
-    }()
         
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -71,7 +63,6 @@ class EditAddressViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        configureMapView()
         configureInfoLabel()
         configureHorizontalStackView()
         configureVerticalStackView()
@@ -128,24 +119,11 @@ extension EditAddressViewController: SCSelectionPopUpDelegate {
 
 extension EditAddressViewController {
     
-    
-    private func configureMapView() {
-        contentView.addSubview(mapView)
-        
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-            mapView.heightAnchor.constraint(equalToConstant: 400)
-        ])
-        
-    }
-    
     private func configureInfoLabel() {
         contentView.addSubview(infoLabel)
         
         NSLayoutConstraint.activate([
-            infoLabel.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 20),
+            infoLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
             infoLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             infoLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             infoLabel.heightAnchor.constraint(equalToConstant: 30)
