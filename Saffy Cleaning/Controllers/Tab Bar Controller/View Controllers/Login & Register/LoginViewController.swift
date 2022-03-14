@@ -67,6 +67,9 @@ class LoginViewController: UIViewController {
             var message: String = ""
             if (success) {
                 message = "User was successfully logged in."
+                
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                
             } else {
                 message = "There was an error"
             }
@@ -99,6 +102,9 @@ class LoginViewController: UIViewController {
                 var message: String = ""
                 if (success) {
                     message = "Login Success"
+                    
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                    
                 } else {
                     message = "Login Failed"
                 }
@@ -126,6 +132,9 @@ class LoginViewController: UIViewController {
                   var message: String = ""
                   if (success) {
                       message = "Login Success"
+                      
+                      (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                      
                   } else {
                       message = "Login Failed"
                   }

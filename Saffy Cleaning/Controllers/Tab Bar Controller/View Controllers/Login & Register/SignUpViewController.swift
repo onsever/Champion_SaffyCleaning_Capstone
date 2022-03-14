@@ -68,6 +68,9 @@ class SignUpViewController: UIViewController {
                 var message: String = ""
                 if (success) {
                     message = "User was successfully created"
+                    
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                    
                 }else {
                     message = "There was an error"
                 }

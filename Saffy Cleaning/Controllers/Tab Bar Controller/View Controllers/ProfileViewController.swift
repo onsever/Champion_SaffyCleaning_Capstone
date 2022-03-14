@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileViewController: UIViewController {
     
@@ -45,6 +46,18 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func editButtonTapped(_ button: UIBarButtonItem) {
+        
+    }
+    
+    @objc private func signOutButtonTapped(_ button: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(UINavigationController(rootViewController: LoginViewController()))
+        }
+        catch {
+            print(error.localizedDescription)
+        }
         
     }
     
@@ -109,7 +122,10 @@ extension ProfileViewController {
         
         let editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .done, target: self, action: #selector(editButtonTapped(_:)))
         
+        let signOutButton = UIBarButtonItem(image: UIImage(systemName: "power.circle"), style: .done, target: self, action: #selector(signOutButtonTapped(_:)))
+        
         navigationItem.rightBarButtonItems = [editButton, refreshButton]
+        navigationItem.leftBarButtonItem = signOutButton
         
     }
     
