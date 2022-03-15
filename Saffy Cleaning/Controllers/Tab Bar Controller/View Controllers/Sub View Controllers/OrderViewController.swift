@@ -28,6 +28,8 @@ class OrderViewController: UIViewController {
     private var otherDetailsDataSetHeightAnchor: NSLayoutConstraint!
     private var isOtherDetailsViewDataSet: Bool = false
     
+    private var tipsView = SCTipsView(title: "Tips")
+    
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
     private var tableHeightConstraint: NSLayoutConstraint!
     
@@ -78,12 +80,14 @@ class OrderViewController: UIViewController {
         configureWhenView()
         configureWhereView()
         configureOtherDetailsView()
+        configureTipsView()
         configureTableView()
         configurePayPalButton()
         
         whenView.delegate = self
         whereView.delegate = self
         otherDetailsView.delegate = self
+        tipsView.amountTextField.delegate = self
         
         self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
@@ -135,6 +139,10 @@ class OrderViewController: UIViewController {
     
     @objc private func paypalButtonTapped(_ button: UIButton) {
         print("Paypal button tapped")
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        
     }
 
 }
@@ -284,6 +292,23 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+extension OrderViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        guard let text = textField.text else { return false }
+        
+        orderDictionary["tips"] = Order(name: "Tips", cost: Double(text)!)
+        
+        self.tableView.reloadData()
+        
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+}
+
 extension OrderViewController {
     
     private func configureWhenView() {
@@ -332,6 +357,18 @@ extension OrderViewController {
         otherDetailsDataSetHeightAnchor.isActive = false
     }
     
+    private func configureTipsView() {
+        contentView.addSubview(tipsView)
+        tipsView.amountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        NSLayoutConstraint.activate([
+            tipsView.topAnchor.constraint(equalTo: otherDetailsView.bottomAnchor, constant: 20),
+            tipsView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tipsView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tipsView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+    }
+    
     private func configureTableView() {
         contentView.addSubview(tableView)
         tableView.delegate = self
@@ -339,7 +376,7 @@ extension OrderViewController {
         tableView.addTopBorder(with: .brandGem, andWidth: 1)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: otherDetailsView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: tipsView.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])

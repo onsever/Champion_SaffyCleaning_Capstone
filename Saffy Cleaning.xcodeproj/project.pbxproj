@@ -31,6 +31,7 @@
 		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
 		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
 		BA77500627DD1D9A0065D22C /* EditAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA77500527DD1D9A0065D22C /* EditAddressViewController.swift */; };
+		BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */; };
 		BA95396A27D99031005A899A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396927D99031005A899A /* AppDelegate.swift */; };
 		BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396B27D99031005A899A /* SceneDelegate.swift */; };
 		BA95396E27D99031005A899A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* LoginViewController.swift */; };
@@ -130,6 +131,7 @@
 		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		BA77500527DD1D9A0065D22C /* EditAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressViewController.swift; sourceTree = "<group>"; };
+		BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTipsView.swift; sourceTree = "<group>"; };
 		BA95396627D99031005A899A /* Saffy Cleaning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saffy Cleaning.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95396927D99031005A899A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA95396B27D99031005A899A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */,
 				BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */,
 				BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */,
+				BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */,
 				BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */,
 				BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */,
 				BA0CCA2A27DD52410030DC0B /* History.swift in Sources */,
