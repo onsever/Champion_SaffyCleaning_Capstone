@@ -29,6 +29,7 @@ class OrderViewController: UIViewController {
     private var isOtherDetailsViewDataSet: Bool = false
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
+    private var tableHeightConstraint: NSLayoutConstraint!
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -55,6 +56,8 @@ class OrderViewController: UIViewController {
         tableView.register(SCOrderCell.self, forCellReuseIdentifier: SCOrderCell.identifier)
         tableView.register(SCTotalCostView.self, forHeaderFooterViewReuseIdentifier: SCTotalCostView.identifier)
         tableView.allowsSelection = false
+        tableView.isUserInteractionEnabled = false
+        tableView.isScrollEnabled = false
         
         return tableView
     }()
@@ -81,6 +84,8 @@ class OrderViewController: UIViewController {
         whenView.delegate = self
         whereView.delegate = self
         otherDetailsView.delegate = self
+        
+        self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
         setData()
     }
@@ -119,12 +124,22 @@ class OrderViewController: UIViewController {
         
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        self.tableView.layer.removeAllAnimations()
+        tableHeightConstraint.constant = self.tableView.contentSize.height
+        UIView.animate(withDuration: 0.5) {
+            self.updateViewConstraints()
+        }
+        
+    }
+    
     @objc private func paypalButtonTapped(_ button: UIButton) {
         print("Paypal button tapped")
     }
     
     private func setData() {
-        orderArray.append(Order(name: "Basic cleaning hours (2 hrs)", cost: 30))
+        orderArray.append(Order(name: "Basic cleaning hours (2 hours)", cost: 30))
     }
 
 }
@@ -137,7 +152,7 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? "0")
         
         self.orderArray.remove(at: 0)
-        self.orderArray.insert(Order(name: "Basic cleaning hours (\(duration ?? "0") hrs)", cost: 30), at: 0)
+        self.orderArray.insert(Order(name: "Basic cleaning hours (\(duration ?? "0"))", cost: 30), at: 0)
         self.tableView.reloadData()
         
     }
@@ -235,6 +250,7 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.textColor = .brandDark
         header.textLabel?.font = UIFont.urbanistBold(size: 18)!
         header.textLabel?.frame = header.bounds
+        header.isUserInteractionEnabled = false
         
     }
     
@@ -252,6 +268,10 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         
         return view
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        view.tintColor = .white
     }
     
 }
@@ -314,8 +334,10 @@ extension OrderViewController {
             tableView.topAnchor.constraint(equalTo: otherDetailsView.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            tableView.heightAnchor.constraint(equalToConstant: 360)
         ])
+        
+        tableHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 360)
+        tableHeightConstraint.isActive = true
     }
     
     private func configurePayPalButton() {
@@ -323,7 +345,7 @@ extension OrderViewController {
         paypalButton.addTarget(self, action: #selector(paypalButtonTapped(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            paypalButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            paypalButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
             paypalButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             paypalButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             paypalButton.heightAnchor.constraint(equalToConstant: 50)

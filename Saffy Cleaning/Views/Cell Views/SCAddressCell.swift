@@ -112,7 +112,7 @@ class SCAddressCell: UICollectionViewCell {
         contentView.addSubview(imageCollectionView)
         
         NSLayoutConstraint.activate([
-            imageCollectionView.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 5),
+            imageCollectionView.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor, constant: 10),
             imageCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             imageCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             imageCollectionView.heightAnchor.constraint(equalToConstant: 60)
@@ -123,7 +123,7 @@ class SCAddressCell: UICollectionViewCell {
         contentView.addSubview(addressLabel)
         
         NSLayoutConstraint.activate([
-            addressLabel.topAnchor.constraint(equalTo: imageCollectionView.bottomAnchor, constant: 5),
+            addressLabel.topAnchor.constraint(equalTo: imageCollectionView.bottomAnchor, constant: 10),
             addressLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             addressLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             addressLabel.heightAnchor.constraint(equalToConstant: 20)
@@ -232,7 +232,7 @@ extension SCAddressCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 60, height: 60)
+        return CGSize(width: 75, height: 75)
     }
     
     

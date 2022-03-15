@@ -46,7 +46,7 @@ class AddNewAddressViewController: UIViewController {
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private let addButton = SCMainButton(title: "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
-    private let selectionPopUp = SCSelectionPopUp()
+    private let selectionPopUp = SCSelectionPopUp(isHouseType: true)
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!

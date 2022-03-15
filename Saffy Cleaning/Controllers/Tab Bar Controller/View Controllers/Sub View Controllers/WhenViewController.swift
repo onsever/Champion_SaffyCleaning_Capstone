@@ -27,6 +27,7 @@ class WhenViewController: UIViewController {
     }()
     
     private let durationView = SCInfoView(placeholder: "Choose a duration", text: "Duration")
+    private let selectionPopUp = SCSelectionPopUp(isHouseType: false)
     public weak var delegate: WhenViewDelegate?
     private static var selectedDate: Date? = nil
     private static var durationText: String? = nil
@@ -36,6 +37,8 @@ class WhenViewController: UIViewController {
 
         configureViewController()
         configureLayout()
+        
+        selectionPopUp.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +72,11 @@ class WhenViewController: UIViewController {
                 
         delegate?.addDate(date: date, time: time, duration: duration)
         
+    }
+    
+    @objc private func durationViewTapped(_ gesture: UITapGestureRecognizer) {
+        selectionPopUp.modalPresentationStyle = .overCurrentContext
+        self.present(selectionPopUp, animated: true, completion: nil)
     }
     
     private func configureViewController() {
@@ -117,9 +125,13 @@ extension WhenViewController {
         view.addSubview(datePicker)
         view.addSubview(durationView)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(durationViewTapped(_:)))
+        
         durationView.isUserInteractionEnabled = true
         durationView.getTextField().delegate = self
         durationView.getTextField().keyboardType = .numberPad
+        durationView.getTextField().isUserInteractionEnabled = false
+        durationView.addGestureRecognizer(tap)
                 
         NSLayoutConstraint.activate([
             datePicker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -153,6 +165,15 @@ extension WhenViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    
+}
+
+extension WhenViewController: SCSelectionPopUpDelegate {
+    
+    func didSelectRowAt(item: String) {
+        self.durationView.getTextField().text = item
     }
     
     

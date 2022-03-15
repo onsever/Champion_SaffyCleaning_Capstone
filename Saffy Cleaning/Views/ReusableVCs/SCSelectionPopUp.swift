@@ -16,9 +16,10 @@ class SCSelectionPopUp: UIViewController {
     private let containerView = UIView()
     private let seperatorView = UIView()
     private var tableView: UITableView!
-    private let selectionLabel = SCSubTitleLabel(text: "Select a House type", isRequired: false, textColor: .white)
+    private lazy var selectionLabel = SCSubTitleLabel(text: isHouseType! ? "Select a House type" : "Duration", isRequired: false, textColor: .white)
     private let identifier = "SelectionCell"
     private let houseTypes = ["Apartment", "Mansion", "Container House", "Cottage", "Villa"]
+    private let durations = ["2 hours", "3 hours", "4 hours", "5 hours", "6 hours"]
     private let dismissCrossMark: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +30,21 @@ class SCSelectionPopUp: UIViewController {
         return button
     }()
     public weak var delegate: SCSelectionPopUpDelegate?
-
+    private var isHouseType: Bool? = nil
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public init(isHouseType: Bool) {
+        super.init(nibName: nil, bundle: nil)
+        self.isHouseType = isHouseType
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -121,7 +136,12 @@ class SCSelectionPopUp: UIViewController {
 extension SCSelectionPopUp: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return houseTypes.count
+        
+        if isHouseType! {
+            return houseTypes.count
+        }
+        
+        return durations.count
     }
     
     
@@ -129,17 +149,33 @@ extension SCSelectionPopUp: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         
-        cell.textLabel?.text = houseTypes[indexPath.row]
-        cell.textLabel?.textColor = .white
-        cell.backgroundColor = .brandGem
-        cell.textLabel?.textAlignment = .center
+        if isHouseType! {
+            cell.textLabel?.text = houseTypes[indexPath.row]
+            cell.textLabel?.textColor = .white
+            cell.backgroundColor = .brandGem
+            cell.textLabel?.textAlignment = .center
+        }
+        else {
+            cell.textLabel?.text = durations[indexPath.row]
+            cell.textLabel?.textColor = .white
+            cell.backgroundColor = .brandGem
+            cell.textLabel?.textAlignment = .center
+        }
+        
         
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectRowAt(item: houseTypes[indexPath.row])
+        
+        if isHouseType! {
+            delegate?.didSelectRowAt(item: houseTypes[indexPath.row])
+        }
+        else {
+            delegate?.didSelectRowAt(item: durations[indexPath.row])
+        }
+        
         tableView.deselectRow(at: indexPath, animated: true)
         self.dismiss(animated: true, completion: nil)
     }

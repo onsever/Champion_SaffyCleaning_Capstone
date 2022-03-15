@@ -49,7 +49,7 @@ class EditAddressViewController: UIViewController {
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!
-    private let selectionPopUp = SCSelectionPopUp()
+    private let selectionPopUp = SCSelectionPopUp(isHouseType: true)
     
     public weak var delegate: EditAddressDelegate?
     
