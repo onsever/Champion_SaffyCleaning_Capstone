@@ -90,13 +90,3 @@ class SCReviewCell: UITableViewCell {
     }
     
 }
-
-/*
- : UITextField = {
-     let textField = UITextField()
-     textField.translatesAutoresizingMaskIntoConstraints = false
-     textField.adjustsFontSizeToFitWidth = false
-     
-     return textField
- }()
- */

@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController {
     }
     
     
-    @objc private func refreshButtonTapped(_ button: UIBarButtonItem) {
+    @objc private func changeButtonTapped(_ button: UIBarButtonItem) {
         
     }
     
@@ -118,7 +118,7 @@ extension ProfileViewController {
         view.backgroundColor = .white
         title = "Profile"
         
-        let refreshButton = UIBarButtonItem(image: UIImage(systemName: "gobackward"), style: .plain, target: self, action: #selector(refreshButtonTapped(_:)))
+        let refreshButton = UIBarButtonItem(image: UIImage(systemName: "gobackward"), style: .plain, target: self, action: #selector(changeButtonTapped(_:)))
         
         let editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .done, target: self, action: #selector(editButtonTapped(_:)))
         

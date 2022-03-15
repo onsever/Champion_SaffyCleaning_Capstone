@@ -42,6 +42,7 @@ class AddNewAddressViewController: UIViewController {
     private let buildingView = SCInfoView(placeholder: "e.g. Some example", text: "Building")
     private let districtView = SCInfoView(placeholder: "e.g. Some example", text: "District")
     private let houseTypeView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "House type")
+    private let houseSizeView = SCInfoView(placeholder: "e.g. Some example", text: "House size")
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private let addButton = SCMainButton(title: "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
@@ -84,12 +85,17 @@ class AddNewAddressViewController: UIViewController {
     
     @objc private func userDidTapAdd(_ button: UIButton) {
         
-        let address = streetView.getTextField().text!
+        let room = roomView.getTextField().text!
+        let flat = flatView.getTextField().text!
+        let street = streetView.getTextField().text!
+        let building = buildingView.getTextField().text!
+        let district = districtView.getTextField().text!
         let contactPerson = contactPersonView.getTextField().text!
         let contactNumber = contactNumberView.getTextField().text!
         let houseType = houseTypeView.getTextField().text!
+        let houseSize = houseSizeView.getTextField().text!
         
-        let newAddress = Address(address: address, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: "2.164")
+        let newAddress = Address(room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!))
         
         delegate?.didTapAddButton(newAddress)
         
@@ -106,7 +112,7 @@ class AddNewAddressViewController: UIViewController {
     public func setData(_ address: Address?) {
         
         if let address = address {
-            streetView.getTextField().text = address.address
+            streetView.getTextField().text = address.street
             contactPersonView.getTextField().text = address.contactPerson
             contactNumberView.getTextField().text = address.contactNumber
             houseTypeView.getTextField().text = address.type
@@ -158,7 +164,7 @@ extension AddNewAddressViewController {
     }
     
     private func configureVerticalStackView() {
-        verticalStackView = SCStackView(arrangedSubviews: [streetView, buildingView, districtView, houseTypeView, contactPersonView, contactNumberView])
+        verticalStackView = SCStackView(arrangedSubviews: [streetView, buildingView, districtView, houseTypeView, houseSizeView, contactPersonView, contactNumberView])
         contentView.addSubview(verticalStackView)
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
@@ -173,7 +179,7 @@ extension AddNewAddressViewController {
         }
         
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 10),
+            verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 0),
             verticalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             verticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             verticalStackView.heightAnchor.constraint(equalToConstant: 600)

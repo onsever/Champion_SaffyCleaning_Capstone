@@ -131,6 +131,7 @@ extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCExtraServiceCell.identifier, for: indexPath) as? SCExtraServiceCell else { return UICollectionViewCell() }
         
         cell.setData(image: serviceArray[indexPath.row].image, name: serviceArray[indexPath.row].name)
+        cell.setImageOpacity(opacity: 0.5)
         
         return cell
         
@@ -144,7 +145,7 @@ extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionView
         
         let cell = collectionView.cellForItem(at: indexPath) as! SCExtraServiceCell
         
-        cell.setImageOpacity(opacity: 0.5)
+        cell.setImageOpacity(opacity: 1)
         
         selectedArray.append(serviceArray[indexPath.row])
     }
@@ -153,7 +154,7 @@ extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionView
         
         let cell = collectionView.cellForItem(at: indexPath) as! SCExtraServiceCell
         
-        cell.setImageOpacity(opacity: 1)
+        cell.setImageOpacity(opacity: 0.5)
         
         selectedArray.remove(at: indexPath.row)
     }

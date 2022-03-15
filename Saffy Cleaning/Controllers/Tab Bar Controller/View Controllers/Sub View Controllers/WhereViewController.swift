@@ -56,7 +56,7 @@ class WhereViewController: UIViewController {
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
         if let selectedAddress = selectedAddress {
-            delegate?.addAddress(address: selectedAddress.address, contactPerson: selectedAddress.contactPerson, contactNumber: selectedAddress.contactNumber, type: selectedAddress.type, sizes: selectedAddress.sizes)
+            delegate?.addAddress(address: selectedAddress.street, contactPerson: selectedAddress.contactPerson, contactNumber: selectedAddress.contactNumber, type: selectedAddress.type, sizes: selectedAddress.sizes)
         }
          
     }
@@ -66,7 +66,7 @@ class WhereViewController: UIViewController {
 extension WhereViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
-        print(address.address)
+        print(address.street)
         selectedAddress = address
     }
     

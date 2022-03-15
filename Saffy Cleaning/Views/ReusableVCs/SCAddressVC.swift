@@ -111,7 +111,7 @@ extension SCAddressVC: AddNewAddressDelegate {
         SCAddressVC.addressArray.append(address)
         self.addressCollectionView.reloadData()
         checkArrayCount()
-        print(address.address)
+        print(address.street)
     }
     
     
@@ -225,7 +225,7 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         let username = SCAddressVC.addressArray[indexPath.row].contactPerson
         let phoneNumber = SCAddressVC.addressArray[indexPath.row].contactNumber
-        let address = SCAddressVC.addressArray[indexPath.row].address
+        let address = SCAddressVC.addressArray[indexPath.row].street
         let houseType = SCAddressVC.addressArray[indexPath.row].type
         let houseSize = SCAddressVC.addressArray[indexPath.row].sizes
         
