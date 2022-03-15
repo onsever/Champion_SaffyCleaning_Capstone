@@ -157,6 +157,16 @@ class OrderViewController: UIViewController {
     @objc private func textFieldDidChange(_ textField: UITextField) {
         
     }
+    
+    @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
+        guard let text = tipsView.amountTextField.text else { return }
+        
+        orderDictionary["tips"] = Order(name: "Tips", cost: Double(text) ?? 0)
+        
+        self.tableView.reloadData()
+        
+        tipsView.amountTextField.resignFirstResponder()
+    }
 
 }
 
@@ -382,6 +392,15 @@ extension OrderViewController {
     private func configureTipsView() {
         contentView.addSubview(tipsView)
         tipsView.amountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        let numberToolBar: UIToolbar = UIToolbar()
+        numberToolBar.barStyle = UIBarStyle.default
+        numberToolBar.items = [
+            UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped(_:)))
+        ]
+        
+        numberToolBar.sizeToFit()
+        tipsView.amountTextField.inputAccessoryView = numberToolBar
         
         NSLayoutConstraint.activate([
             tipsView.topAnchor.constraint(equalTo: otherDetailsView.bottomAnchor, constant: 20),
