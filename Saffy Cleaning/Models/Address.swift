@@ -8,6 +8,7 @@
 import Foundation
 
 class Address {
+    var name: String
     var room: String
     var flat: String
     var street: String
@@ -17,8 +18,11 @@ class Address {
     var contactNumber: String
     var type: String
     var sizes: String
+    var longitude: Double
+    var latitude: Double
     
-    init(room: String, flat: String, street: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String) {
+    init(name: String, room: String, flat: String, street: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double) {
+        self.name = name
         self.room = room
         self.flat = flat
         self.street = street
@@ -28,5 +32,7 @@ class Address {
         self.contactNumber = contactNumber
         self.type = type
         self.sizes = sizes
+        self.longitude = longitude
+        self.latitude = latitude
     }
 }

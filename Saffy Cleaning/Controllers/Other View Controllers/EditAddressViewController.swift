@@ -94,7 +94,7 @@ class EditAddressViewController: UIViewController {
         let houseType = houseTypeView.getTextField().text!
         let houseSize = houseSizeView.getTextField().text!
         
-        let newAddress = Address(room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!))
+        let newAddress = Address(name: "", room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
         
         delegate?.didTapSave(newAddress)
         
