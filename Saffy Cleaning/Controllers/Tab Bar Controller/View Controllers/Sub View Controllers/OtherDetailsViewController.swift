@@ -53,8 +53,10 @@ class OtherDetailsViewController: UIViewController {
         configureMessageTextField()
         setData()
         
-        noButton.radioButton.isSelected = true
-        OtherDetailsViewController.buttonName = "No"
+        if OtherDetailsViewController.buttonName == nil {
+            noButton.radioButton.isSelected = true
+            OtherDetailsViewController.buttonName = "No"
+        }
         
         yesButton.delegate = self
         noButton.delegate = self
@@ -68,6 +70,16 @@ class OtherDetailsViewController: UIViewController {
             quantityTextField.text = quantityText
             messageTextField.text = messageText
             
+        }
+        
+        if let buttonName = OtherDetailsViewController.buttonName {
+            print("Button name: \(buttonName)")
+            if buttonName == "Yes" {
+                yesButton.radioButton.isSelected = true
+            }
+            else if buttonName == "No" {
+                noButton.radioButton.isSelected = true
+            }
         }
         
         self.tabBarController?.tabBar.isHidden = true
