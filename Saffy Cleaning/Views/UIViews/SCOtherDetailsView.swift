@@ -25,7 +25,7 @@ class SCOtherDetailsView: UIView {
         return button
     }()
     public var stackView = UIStackView()
-    private let petView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
+    private let petView = SCOrderInfoView(backgroundColor: .lightBrandLake3, height: 25)
     private let messageView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
     private let extraServicesLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private lazy var serviceCollectionView: UICollectionView = {
@@ -103,37 +103,28 @@ class SCOtherDetailsView: UIView {
         ])
     }
     
-    private func configureOtherViews() {
-        self.addSubview(petView)
-        self.addSubview(messageView)
-        
-        NSLayoutConstraint.activate([
-            petView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            petView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            petView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            petView.heightAnchor.constraint(equalToConstant: 35),
-            
-            messageView.topAnchor.constraint(equalTo: petView.bottomAnchor, constant: 10),
-            messageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            messageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            messageView.heightAnchor.constraint(equalToConstant: 35)
-        ])
-    }
-    
     private func configureStackView() {
         
         stackView = UIStackView(arrangedSubviews: [petView, messageView])
         self.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fillProportionally
         stackView.spacing = 0
+        
+        petView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        messageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        messageView.infoValue.numberOfLines = 3
+        
+        for view in stackView.arrangedSubviews {
+            view.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        }
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 35),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
-            stackView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
     }
@@ -150,15 +141,15 @@ class SCOtherDetailsView: UIView {
         extraServicesLabel.font = UIFont.urbanistBold(size: 16)
         
         NSLayoutConstraint.activate([
-            extraServicesLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 15),
-            extraServicesLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            extraServicesLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            extraServicesLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20),
+            extraServicesLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 35),
+            extraServicesLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
         ])
         
         NSLayoutConstraint.activate([
             serviceCollectionView.topAnchor.constraint(equalTo: extraServicesLabel.bottomAnchor, constant: 0),
-            serviceCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            serviceCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            serviceCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 35),
+            serviceCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
             serviceCollectionView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }

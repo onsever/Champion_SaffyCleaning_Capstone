@@ -11,7 +11,8 @@ class SCOrderInfoView: UIView {
     
     public let infoLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     public let infoValue = SCMainLabel(fontSize: 16, textColor: .brandDark)
-
+    private var infoValueWidthAnchor: NSLayoutConstraint!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -46,7 +47,7 @@ class SCOrderInfoView: UIView {
         NSLayoutConstraint.activate([
             infoLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             infoLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -10),
+            infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             infoLabel.heightAnchor.constraint(equalToConstant: height),
         ])
         
@@ -55,14 +56,19 @@ class SCOrderInfoView: UIView {
     private func configureInfoValue() {
         self.addSubview(infoValue)
         infoValue.font = .urbanistRegular(size: 16)
-        infoValue.numberOfLines = 2
-        
+        infoValue.numberOfLines = 0
+        infoValue.lineBreakMode = .byWordWrapping
+        infoValue.textAlignment = .right
         NSLayoutConstraint.activate([
             infoValue.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             infoValue.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            infoValue.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            infoValue.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             infoValue.heightAnchor.constraint(equalToConstant: height),
         ])
+        
+        infoValueWidthAnchor =             infoValue.widthAnchor.constraint(equalToConstant: 200)
+        infoValueWidthAnchor.isActive = true
+        infoLabel.widthAnchor.constraint(equalToConstant: infoValueWidthAnchor.constant).isActive = true
         
     }
     

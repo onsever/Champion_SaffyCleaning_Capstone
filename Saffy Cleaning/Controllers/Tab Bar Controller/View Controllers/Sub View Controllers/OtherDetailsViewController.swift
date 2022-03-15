@@ -88,7 +88,7 @@ class OtherDetailsViewController: UIViewController {
         let pet = quantityTextField.text!
         let message = messageTextField.text!
         
-        delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!) \(pet)", message: message, selectedItems: selectedArray)
+        delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!)\n\(pet)", message: message, selectedItems: selectedArray)
     }
     
     private func setData() {

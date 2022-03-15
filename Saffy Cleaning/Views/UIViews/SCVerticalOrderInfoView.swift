@@ -68,7 +68,7 @@ class SCVerticalOrderInfoView: UIView {
             NSLayoutConstraint.activate([
                 infoLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
                 infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-                infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+                infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
                 infoLabel.heightAnchor.constraint(equalToConstant: height),
             ])
         }
@@ -90,7 +90,7 @@ class SCVerticalOrderInfoView: UIView {
         else {
             NSLayoutConstraint.activate([
                 infoValue.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 5),
-                infoValue.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+                infoValue.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
                 infoValue.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
                 infoValue.heightAnchor.constraint(equalToConstant: height),
             ])

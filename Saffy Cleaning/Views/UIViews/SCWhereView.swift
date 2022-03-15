@@ -98,8 +98,18 @@ class SCWhereView: UIView {
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fillProportionally
         stackView.spacing = 5
+        
+        addressView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        contactPersonView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        contactNumberView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        typeView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        sizesView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        for view in stackView.arrangedSubviews {
+            view.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+        }
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
