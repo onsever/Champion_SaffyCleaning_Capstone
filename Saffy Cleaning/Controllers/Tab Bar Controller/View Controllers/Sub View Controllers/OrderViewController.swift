@@ -32,6 +32,8 @@ class OrderViewController: UIViewController {
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
     private var tableHeightConstraint: NSLayoutConstraint!
+    private var otherDetailsDataSetCollectionViewEmptyConstraint: NSLayoutConstraint!
+    private var isArrayEmpty: Bool = false
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -115,8 +117,17 @@ class OrderViewController: UIViewController {
         }
         
         if isOtherDetailsViewDataSet {
-            otherDetailsViewHeightAnchor.isActive = false
-            otherDetailsDataSetHeightAnchor.isActive = true
+            
+            if isArrayEmpty {
+                otherDetailsViewHeightAnchor.isActive = false
+                otherDetailsDataSetHeightAnchor.isActive = false
+                otherDetailsDataSetCollectionViewEmptyConstraint.isActive = true
+            } else {
+                otherDetailsViewHeightAnchor.isActive = false
+                otherDetailsDataSetHeightAnchor.isActive = true
+                otherDetailsDataSetCollectionViewEmptyConstraint.isActive = false
+            }
+            
         }
         else {
             otherDetailsViewHeightAnchor.isActive = true
@@ -124,6 +135,8 @@ class OrderViewController: UIViewController {
         }
         
         otherDetailsView.updateCollectionView()
+        
+        print("Constant: \(otherDetailsDataSetHeightAnchor.constant)")
         
     }
     
@@ -200,7 +213,14 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
         self.navigationController?.popViewController(animated: true)
         
         self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, selectedItems: selectedItems)
+        
+        if selectedItems.count == 0 {
+            isArrayEmpty = true
+        } else {
+            isArrayEmpty = false
+        }
   
+        print("Selected items count: \(selectedItems.count)")
         
         orderDictionary.removeValue(forKey: "extra_\(1)")
         orderDictionary.removeValue(forKey: "extra_\(2)")
@@ -353,8 +373,10 @@ extension OrderViewController {
         
         otherDetailsViewHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 50)
         otherDetailsDataSetHeightAnchor = otherDetailsView.heightAnchor.constraint(equalToConstant: 400)
+        otherDetailsDataSetCollectionViewEmptyConstraint = otherDetailsView.heightAnchor.constraint(equalToConstant: 220)
         otherDetailsViewHeightAnchor.isActive = true
         otherDetailsDataSetHeightAnchor.isActive = false
+        otherDetailsDataSetCollectionViewEmptyConstraint.isActive = false
     }
     
     private func configureTipsView() {

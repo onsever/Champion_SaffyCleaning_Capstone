@@ -164,8 +164,12 @@ class SCOtherDetailsView: UIView {
         
         self.serviceArray = selectedItems
         
-        configureStackView()
-        configureCollectionView()
+        if selectedItems.count != 0 {
+            configureStackView()
+            configureCollectionView()
+        } else {
+            configureStackView()
+        }
         
         return true
     }
