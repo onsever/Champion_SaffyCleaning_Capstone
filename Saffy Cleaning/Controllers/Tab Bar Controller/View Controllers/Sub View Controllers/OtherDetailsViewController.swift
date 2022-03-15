@@ -36,7 +36,10 @@ class OtherDetailsViewController: UIViewController {
     public weak var delegate: OtherDetailsViewDelegate?
     private var serviceArray = [ExtraService]()
     private var selectedArray = [ExtraService]()
-
+    private static var buttonName: String? = nil
+    private static var quantityText: String? = nil
+    private static var messageText: String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,6 +53,9 @@ class OtherDetailsViewController: UIViewController {
         configureMessageTextField()
         setData()
         
+        noButton.radioButton.isSelected = true
+        OtherDetailsViewController.buttonName = "No"
+        
         yesButton.delegate = self
         noButton.delegate = self
     }
@@ -57,11 +63,21 @@ class OtherDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if let quantityText = OtherDetailsViewController.quantityText, let messageText = OtherDetailsViewController.messageText {
+            
+            quantityTextField.text = quantityText
+            messageTextField.text = messageText
+            
+        }
+        
         self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        OtherDetailsViewController.quantityText = quantityTextField.text
+        OtherDetailsViewController.messageText = messageTextField.text
         
         self.tabBarController?.tabBar.isHidden = false
         
@@ -72,7 +88,7 @@ class OtherDetailsViewController: UIViewController {
         let pet = quantityTextField.text!
         let message = messageTextField.text!
         
-        delegate?.addOtherDetails(pet: pet, message: message, selectedItems: selectedArray)
+        delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!) \(pet)", message: message, selectedItems: selectedArray)
     }
     
     private func setData() {
@@ -101,10 +117,12 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
         
         switch button {
         case yesButton.radioButton:
+            OtherDetailsViewController.buttonName = "Yes"
             print("Yes Button clicked")
             yesButton.radioButton.isSelected = true
             noButton.radioButton.isSelected = false
         case noButton.radioButton:
+            OtherDetailsViewController.buttonName = "No"
             print("No button clicked")
             noButton.radioButton.isSelected = true
             yesButton.radioButton.isSelected = false
