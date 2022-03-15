@@ -64,7 +64,7 @@ class OrderViewController: UIViewController {
     
     private let paypalButton = SCMainButton(title: "Pay with PayPal", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: 18)
     
-    private var orderArray = [Order]()
+    private var orderDictionary = [String: Order]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,7 +87,6 @@ class OrderViewController: UIViewController {
         
         self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
-        setData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,10 +136,6 @@ class OrderViewController: UIViewController {
     @objc private func paypalButtonTapped(_ button: UIButton) {
         print("Paypal button tapped")
     }
-    
-    private func setData() {
-        orderArray.append(Order(name: "Basic cleaning hours (2 hours)", cost: 30))
-    }
 
 }
 
@@ -151,8 +146,7 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? "0")
         
-        self.orderArray.remove(at: 0)
-        self.orderArray.insert(Order(name: "Basic cleaning hours (\(duration ?? "0"))", cost: 30), at: 0)
+        orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? "0"))", cost: 30)
         self.tableView.reloadData()
         
     }
@@ -184,8 +178,8 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
         
         self.isWhereViewDataSet = self.whereView.setData(address: address, contactPerson: contactPerson, contactNumber: contactNumber, type: type, sizes: sizes)
         
-        orderArray.append(Order(name: "Travelling expenses", cost: 3))
-        orderArray.append(Order(name: "Sizes add up", cost: 10))
+        orderDictionary["travel_expense"] = Order(name: "Travelling expenses", cost: 3)
+        orderDictionary["sizes"] = Order(name: "Sizes add up", cost: 10)
         
         self.tableView.reloadData()
     }
@@ -198,9 +192,20 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
         self.navigationController?.popViewController(animated: true)
         
         self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, selectedItems: selectedItems)
+  
+        
+        orderDictionary.removeValue(forKey: "extra_\(1)")
+        orderDictionary.removeValue(forKey: "extra_\(2)")
+        orderDictionary.removeValue(forKey: "extra_\(3)")
+        orderDictionary.removeValue(forKey: "extra_\(4)")
+        orderDictionary.removeValue(forKey: "extra_\(5)")
+        orderDictionary.removeValue(forKey: "extra_\(6)")
         
         for item in 0..<selectedItems.count {
-            orderArray.append(Order(name: "Extra services \(item + 1)", cost: 15))
+            print("Before adding: \(orderDictionary.values)")
+            orderDictionary["extra_\(item + 1)"] = Order(name: "Extra services \(item + 1)", cost: 15)
+            print("After adding: \(orderDictionary.values)")
+            print("Selected items: \(selectedItems)")
         }
                 
         self.tableView.reloadData()
@@ -227,14 +232,17 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orderArray.count
+        return orderDictionary.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCOrderCell.identifier, for: indexPath) as? SCOrderCell else { return UITableViewCell() }
         
-        cell.setData(title: orderArray[indexPath.row].name, value: orderArray[indexPath.row].cost)
+        let key = Array(orderDictionary).sorted(by: {$0.key < $1.key})[indexPath.row].key
+        let value = orderDictionary[key]
+        
+        cell.setData(title: value!.name, value: value!.cost)
         
         return cell
         
@@ -260,7 +268,7 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         
         var totalCost: Double = 0
         
-        for item in orderArray {
+        for item in orderDictionary.values {
             totalCost += item.cost
         }
         
