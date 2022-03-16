@@ -97,10 +97,20 @@ class OtherDetailsViewController: UIViewController {
     
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
-        let pet = quantityTextField.text!
-        let message = messageTextField.text!
+        if quantityTextField.text == "" || messageTextField.text == "" {
+            
+            self.presentAlert(title: "Empty Fields", message: "Please fill all the fields.", positiveAction: { action in
+                
+            }, negativeAction: nil)
+            
+        }
+        else {
+            let pet = quantityTextField.text!
+            let message = messageTextField.text!
+            
+            delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!)\n\(pet)", message: message, selectedItems: selectedArray)
+        }
         
-        delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!)\n\(pet)", message: message, selectedItems: selectedArray)
     }
     
     private func setData() {
