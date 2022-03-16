@@ -90,7 +90,7 @@ class SCAddressVC: UIViewController {
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
         print("Add a new address tapped.")
         
-        let vc = AddNewAddressViewController()
+        let vc = AddressViewController()
         
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -98,6 +98,9 @@ class SCAddressVC: UIViewController {
         }
         
         vc.delegate = self
+        vc.dataSource = self
+        
+        vc.setEditingMode(isEditing: false)
         
         self.present(vc, animated: true, completion: nil)
     }
@@ -105,13 +108,52 @@ class SCAddressVC: UIViewController {
 
 
 
-extension SCAddressVC: AddNewAddressDelegate {
+extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
+    
+    func didTapSave(_ address: Address) {
+        SCAddressVC.addressArray[SCAddressVC.currentIndex] = address
+        self.addressCollectionView.reloadData()
+        checkArrayCount()
+    }
+    
     
     func didTapAddButton(_ address: Address) {
         SCAddressVC.addressArray.append(address)
         self.addressCollectionView.reloadData()
         checkArrayCount()
         print(address.street)
+    }
+    
+    
+}
+
+extension SCAddressVC: SCAddressCellDelegate {
+    
+    func didTapEditButton(_ button: UIButton) {
+        print("Edit button tapped.")
+        
+        let vc = AddressViewController()
+        
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = false
+        }
+        
+        vc.setData(SCAddressVC.addressArray[SCAddressVC.currentIndex])
+        vc.delegate = self
+        vc.dataSource = self
+        vc.setEditingMode(isEditing: true)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func didTapDeleteButton(_ button: UIButton) {
+        print("Delete button tapped.")
+        SCAddressVC.addressArray.remove(at: SCAddressVC.currentIndex)
+        checkArrayCount()
+    }
+    
+    func didTapButton(_ username: String) {
+        
     }
     
     
@@ -251,46 +293,5 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
         
     }
-    
-}
-
-extension SCAddressVC: SCAddressCellDelegate {
-    
-    func didTapEditButton(_ button: UIButton) {
-        print("Edit button tapped.")
-        
-        let vc = EditAddressViewController()
-        
-        if let sheet = vc.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = false
-        }
-        
-        vc.setData(SCAddressVC.addressArray[SCAddressVC.currentIndex])
-        vc.delegate = self
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    func didTapDeleteButton(_ button: UIButton) {
-        print("Delete button tapped.")
-        SCAddressVC.addressArray.remove(at: SCAddressVC.currentIndex)
-        checkArrayCount()
-    }
-    
-    func didTapButton(_ username: String) {
-        
-    }
-    
-    
-}
-
-extension SCAddressVC: EditAddressDelegate {
-    
-    func didTapSave(_ address: Address) {
-        SCAddressVC.addressArray[SCAddressVC.currentIndex] = address
-        self.addressCollectionView.reloadData()
-        checkArrayCount()
-    }
-    
     
 }
