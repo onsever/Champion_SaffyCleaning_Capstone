@@ -68,6 +68,7 @@ class OrderViewController: UIViewController {
     }()
     
     private let paypalButton = SCMainButton(title: "Pay with PayPal", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: 18)
+    private let confirmationPopUp = SCConfirmationPopUp()
     
     private var orderDictionary = [String: Order]()
 
@@ -91,6 +92,7 @@ class OrderViewController: UIViewController {
         whereView.delegate = self
         otherDetailsView.delegate = self
         tipsView.amountTextField.delegate = self
+        confirmationPopUp.delegate = self
         
         self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         
@@ -153,7 +155,8 @@ class OrderViewController: UIViewController {
     
     @objc private func paypalButtonTapped(_ button: UIButton) {
         print("Paypal button tapped and result cost is \(resultTotalCost)")
-        
+        confirmationPopUp.setOrderNumber(orderNumber: "456-878-996")
+        self.present(confirmationPopUp, animated: true, completion: nil)
         for (key, value) in orderDictionary {
             print("\(key) : \(value)")
         }
@@ -349,6 +352,15 @@ extension OrderViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+}
+
+extension OrderViewController: SCConfirmationPopUpDelegate {
+    
+    func didTapConfirmationButton(_ button: UIButton) {
+        print("Order confirmation button pressed.")
+        self.navigationController?.popViewController(animated: true)
     }
     
 }
