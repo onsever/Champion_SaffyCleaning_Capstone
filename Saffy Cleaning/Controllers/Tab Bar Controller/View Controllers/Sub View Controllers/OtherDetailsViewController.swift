@@ -56,6 +56,7 @@ class OtherDetailsViewController: UIViewController {
         if OtherDetailsViewController.buttonName == nil {
             noButton.radioButton.isSelected = true
             OtherDetailsViewController.buttonName = "No"
+            quantityTextField.isUserInteractionEnabled = false
         }
         
         yesButton.delegate = self
@@ -90,14 +91,14 @@ class OtherDetailsViewController: UIViewController {
         
         OtherDetailsViewController.quantityText = quantityTextField.text
         OtherDetailsViewController.messageText = messageTextField.text
-        
+                
         self.tabBarController?.tabBar.isHidden = false
         
     }
     
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
-        if quantityTextField.text == "" || messageTextField.text == "" {
+        if (quantityTextField.text == "" && OtherDetailsViewController.buttonName == "Yes") || messageTextField.text == "" {
             
             self.presentAlert(title: "Empty Fields", message: "Please fill all the fields.", positiveAction: { action in
                 
@@ -108,7 +109,11 @@ class OtherDetailsViewController: UIViewController {
             let pet = quantityTextField.text!
             let message = messageTextField.text!
             
-            delegate?.addOtherDetails(pet: "\(OtherDetailsViewController.buttonName!)\n\(pet)", message: message, selectedItems: selectedArray)
+            delegate?.addOtherDetails(
+                pet: OtherDetailsViewController.buttonName == "Yes" ? "\(OtherDetailsViewController.buttonName!)\n\(pet)" : "\(OtherDetailsViewController.buttonName!)",
+                message: message,
+                selectedItems: selectedArray)
+            
         }
         
     }
@@ -143,11 +148,14 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
             print("Yes Button clicked")
             yesButton.radioButton.isSelected = true
             noButton.radioButton.isSelected = false
+            quantityTextField.isUserInteractionEnabled = true
         case noButton.radioButton:
             OtherDetailsViewController.buttonName = "No"
             print("No button clicked")
             noButton.radioButton.isSelected = true
             yesButton.radioButton.isSelected = false
+            quantityTextField.isUserInteractionEnabled = false
+            quantityTextField.text = nil
         default:
             break
         }
