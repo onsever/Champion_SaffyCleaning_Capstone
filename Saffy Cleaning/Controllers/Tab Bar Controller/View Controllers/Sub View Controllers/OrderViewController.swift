@@ -227,7 +227,7 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
 
 extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
     
-    func addOtherDetails(pet: String, message: String, selectedItems: [ExtraService]) {
+    func addOtherDetails(pet: String, message: String, selectedItems: [Int : ExtraService]) {
         self.navigationController?.popViewController(animated: true)
         
         self.isOtherDetailsViewDataSet = self.otherDetailsView.setData(pet: pet, message: message, selectedItems: selectedItems)

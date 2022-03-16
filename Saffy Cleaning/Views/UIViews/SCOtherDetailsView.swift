@@ -42,7 +42,7 @@ class SCOtherDetailsView: UIView {
     }()
     
     public weak var delegate: SCOtherDetailsViewDelegate?
-    private var serviceArray = [ExtraService]()
+    private var serviceArray = [Int : ExtraService]()
     private let padding: CGFloat = 20
     
     override init(frame: CGRect) {
@@ -154,7 +154,7 @@ class SCOtherDetailsView: UIView {
         ])
     }
     
-    public func setData(pet: String, message: String, selectedItems: [ExtraService]) -> Bool {
+    public func setData(pet: String, message: String, selectedItems: [Int : ExtraService]) -> Bool {
         
         self.petView.infoLabel.text = "Pet"
         self.messageView.infoLabel.text = "Message to cleaner"
@@ -194,7 +194,10 @@ extension SCOtherDetailsView: UICollectionViewDelegate, UICollectionViewDataSour
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCExtraServiceCell.identifier, for: indexPath) as? SCExtraServiceCell else { return UICollectionViewCell() }
         
-        cell.setData(image: serviceArray[indexPath.row].image, name: serviceArray[indexPath.row].name)
+        let key = Array(serviceArray).sorted(by: {$0.key < $1.key})[indexPath.row].key
+        let value = serviceArray[key]
+        
+        cell.setData(image: value!.image, name: value!.name)
         
         return cell
         
