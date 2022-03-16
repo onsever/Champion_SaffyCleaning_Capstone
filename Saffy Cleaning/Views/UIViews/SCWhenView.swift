@@ -108,7 +108,7 @@ class SCWhenView: UIView {
         
     }
     
-    public func setData(date: String, time: String, duration: String) -> Bool {
+    public func setData(date: String, time: String, duration: Int) -> Bool {
         
         self.dateView.infoLabel.text = "Date"
         self.timeView.infoLabel.text = "Time"
@@ -116,7 +116,7 @@ class SCWhenView: UIView {
         
         self.dateView.infoValue.text = date
         self.timeView.infoValue.text = time
-        self.durationView.infoValue.text = duration
+        self.durationView.infoValue.text = "\(duration) hours"
         
         configureStackView()
         

@@ -172,12 +172,12 @@ class OrderViewController: UIViewController {
 
 extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
     
-    func addDate(date: String, time: String, duration: String?) {
+    func addDate(date: String, time: String, duration: Int?) {
         self.navigationController?.popViewController(animated: true)
         
-        self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? "0")
+        self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? 0)
         
-        orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? "0"))", cost: 30)
+        orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? 0) hours)", cost: Double((duration ?? 0) * 30))
         self.tableView.reloadData()
         
     }

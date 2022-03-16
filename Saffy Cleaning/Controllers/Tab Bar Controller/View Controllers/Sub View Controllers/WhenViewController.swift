@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WhenViewDelegate: AnyObject {
-    func addDate(date: String, time: String, duration: String?)
+    func addDate(date: String, time: String, duration: Int?)
 }
 
 class WhenViewController: UIViewController {
@@ -66,12 +66,19 @@ class WhenViewController: UIViewController {
         print(formatDate(date: datePicker.date))
         print(formatTime(date: datePicker.date))
         
-        let date = formatDate(date: datePicker.date)
-        let time = formatTime(date: datePicker.date)
-        let duration = checkDurationText()
+        if durationView.getTextField().text == "" {
+            self.presentAlert(title: "Empty Field", message: "Please choose a duration.", positiveAction: { action in
                 
-        delegate?.addDate(date: date, time: time, duration: duration)
-        
+            }, negativeAction: nil)
+        }
+        else {
+            let date = formatDate(date: datePicker.date)
+            let time = formatTime(date: datePicker.date)
+            let duration = Int((durationView.getTextField().text!).prefix(1))!
+                    
+            delegate?.addDate(date: date, time: time, duration: duration)
+        }
+
     }
     
     @objc private func durationViewTapped(_ gesture: UITapGestureRecognizer) {
