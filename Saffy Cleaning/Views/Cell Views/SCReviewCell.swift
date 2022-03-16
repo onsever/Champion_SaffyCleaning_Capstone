@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum Rating: String {
+    case oneStar = "sc_rating_1"
+    case twoStar = "sc_rating_2"
+    case threeStar = "sc_rating_3"
+    case fourStar = "sc_rating_4"
+    case fiveStar = "sc_rating_5"
+}
+
 class SCReviewCell: UITableViewCell {
     
     public static let identifier = "ReviewCell"
@@ -60,9 +68,10 @@ class SCReviewCell: UITableViewCell {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 15, trailing: 5)
         
         NSLayoutConstraint.activate([
-            ratingImageView.widthAnchor.constraint(equalToConstant: 75),
+            ratingImageView.widthAnchor.constraint(equalToConstant: 80),
+            ratingImageView.heightAnchor.constraint(equalToConstant: 18),
             reviewLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            reviewLabel.heightAnchor.constraint(equalToConstant: 70)
+            reviewLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         NSLayoutConstraint.activate([
@@ -83,10 +92,23 @@ class SCReviewCell: UITableViewCell {
         ])
     }
     
-    public func setData(userImage: UIImage?, ratingCount: Int, userReview: String, currentDate: String) {
+    public func setData(userImage: UIImage?, ratingCount: Rating, userReview: String, currentDate: String) {
         self.userImageView.image = userImage?.withRenderingMode(.alwaysOriginal)
         self.reviewLabel.text = userReview
         self.dateLabel.text = currentDate
+        
+        switch ratingCount {
+        case .oneStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)?.withRenderingMode(.alwaysOriginal)
+        case .twoStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .threeStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .fourStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .fiveStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        }
     }
     
 }

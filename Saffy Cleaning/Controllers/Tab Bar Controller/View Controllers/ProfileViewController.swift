@@ -62,8 +62,9 @@ class ProfileViewController: UIViewController {
     }
     
     private func setData() {
-        reviewArray.append(Review(date: "17-Nov-21", info: "Effective and polite kasjddsakjdashkldahsljkdhjaskdajhksldasljkhdasjhdjsahkldashjkdsajhkldasljkhdasjhkdasjhlkdasljasdkadsljksaddhjaskdhsajldsahjlkdsahjldasljh"))
-        reviewArray.append(Review(date: "17-Nov-21", info: "Effective and polite"))
+        reviewArray.append(Review(user: "Mark", userImage: UIImage(named: "carpet")!, date: "17-Nov-2021", info: "Effective and polite", ratingCount: .fiveStar))
+        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "He didn't cleaned home enough!", ratingCount: .oneStar))
+        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.", ratingCount: .oneStar))
     }
     
 }
@@ -74,7 +75,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCReviewCell.identifier, for: indexPath) as? SCReviewCell else { return UITableViewCell() }
         
-        cell.setData(userImage: UIImage(named: "carpet"), ratingCount: 4, userReview: reviewArray[indexPath.row].info, currentDate: reviewArray[indexPath.row].date)
+        cell.setData(userImage: reviewArray[indexPath.row].userImage, ratingCount: reviewArray[indexPath.row].ratingCount, userReview: reviewArray[indexPath.row].info, currentDate: reviewArray[indexPath.row].date)
         
         return cell
     }
@@ -195,14 +196,4 @@ extension ProfileViewController {
         ])
     }
     
-}
-
-class Review {
-    var date: String
-    var info: String
-    
-    init(date: String, info: String) {
-        self.date = date
-        self.info = info
-    }
 }
