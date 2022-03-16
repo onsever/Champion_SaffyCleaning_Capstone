@@ -56,6 +56,7 @@ class SCAddressVC: UIViewController {
     private static var addressArray = [Address]()
     private static var currentIndex: Int = 0
     public weak var delegate: SCAddressVCDelegate?
+    private static var selectedIndex: Int? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -84,6 +85,14 @@ class SCAddressVC: UIViewController {
         checkArrayCount()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedIndex = SCAddressVC.selectedIndex {
+            addressCollectionView.selectItem(at: IndexPath(row: selectedIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        }
+    }
+    
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
         print("Add a new address tapped.")
         
@@ -101,6 +110,27 @@ class SCAddressVC: UIViewController {
         
         self.present(vc, animated: true, completion: nil)
     }
+    
+    public func getCurrentAddress() -> Address? {
+        
+        if SCAddressVC.addressArray.count == 0 {
+            return nil
+        }
+        
+        guard let selectedIndex = SCAddressVC.selectedIndex else { return nil }
+        
+        return SCAddressVC.addressArray[selectedIndex]
+    }
+    
+    public func getAllAddresses() -> [Address]? {
+        
+        if SCAddressVC.addressArray.count == 0 {
+            return nil
+        }
+        
+        return SCAddressVC.addressArray
+    }
+    
 }
 
 
@@ -321,11 +351,13 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             pageControl.currentPage = indexPath.row
             SCAddressVC.currentIndex = indexPath.row
             delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
+            SCAddressVC.selectedIndex = indexPath.row
         }
         else {
             pageControl.currentPage = indexPath.row
             SCAddressVC.currentIndex = indexPath.row
             delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row - 1])
+            SCAddressVC.selectedIndex = nil
         }
         
     }

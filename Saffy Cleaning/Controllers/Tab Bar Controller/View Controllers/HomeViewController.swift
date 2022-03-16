@@ -47,9 +47,27 @@ class HomeViewController: UIViewController {
             sheet.detents = [.medium()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
+            sheet.delegate = self
         }
         
         self.present(addressVC, animated: true, completion: nil)
+    }
+    
+}
+
+extension HomeViewController: UISheetPresentationControllerDelegate {
+    
+    // Note: Inherited from UIAdaptivePresentationControllerDelegate
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("Dismissed")
+        
+        guard let vc = presentationController.presentedViewController as? SCAddressVC else { return }
+        
+        guard let address = vc.getCurrentAddress() else { return }
+        guard let allAddresses = vc.getAllAddresses() else { return }
+        
+        print(address.contactPerson)
+        print(allAddresses)
     }
     
 }
