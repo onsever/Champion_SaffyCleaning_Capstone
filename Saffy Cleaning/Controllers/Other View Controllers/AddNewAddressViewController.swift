@@ -116,6 +116,11 @@ class AddNewAddressViewController: UIViewController {
             contactPersonView.getTextField().text = address.contactPerson
             contactNumberView.getTextField().text = address.contactNumber
             houseTypeView.getTextField().text = address.type
+            roomView.getTextField().text = address.room
+            flatView.getTextField().text = address.flat
+            buildingView.getTextField().text = address.building
+            districtView.getTextField().text = address.district
+            houseSizeView.getTextField().text = address.sizes
         }
         
     }
