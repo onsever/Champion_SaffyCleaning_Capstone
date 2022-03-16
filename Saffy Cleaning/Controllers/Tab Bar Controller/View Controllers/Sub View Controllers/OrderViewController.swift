@@ -34,6 +34,7 @@ class OrderViewController: UIViewController {
     private var tableHeightConstraint: NSLayoutConstraint!
     private var otherDetailsDataSetCollectionViewEmptyConstraint: NSLayoutConstraint!
     private var isArrayEmpty: Bool = false
+    private var resultTotalCost: Double = 0
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -151,7 +152,11 @@ class OrderViewController: UIViewController {
     }
     
     @objc private func paypalButtonTapped(_ button: UIButton) {
-        print("Paypal button tapped")
+        print("Paypal button tapped and result cost is \(resultTotalCost)")
+        
+        for (key, value) in orderDictionary {
+            print("\(key) : \(value)")
+        }
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -239,6 +244,13 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
         orderDictionary.removeValue(forKey: "extra_\(5)")
         orderDictionary.removeValue(forKey: "extra_\(6)")
         
+        if !(pet.prefix(2) == "No") {
+            orderDictionary["pets"] = Order(name: "Pets add up", cost: 10)
+        }
+        else {
+            orderDictionary.removeValue(forKey: "pets")
+        }
+        
         for item in 0..<selectedItems.count {
             print("Before adding: \(orderDictionary.values)")
             orderDictionary["extra_\(item + 1)"] = Order(name: "Extra services \(item + 1)", cost: 15)
@@ -309,6 +321,8 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         for item in orderDictionary.values {
             totalCost += item.cost
         }
+        
+        resultTotalCost = totalCost
         
         view.setData(cost: totalCost)
         
@@ -438,14 +452,4 @@ extension OrderViewController {
         ])
     }
     
-}
-
-class Order {
-    var name: String
-    var cost: Double
-    
-    init(name: String, cost: Double) {
-        self.name = name
-        self.cost = cost
-    }
 }
