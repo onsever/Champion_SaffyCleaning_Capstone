@@ -232,7 +232,7 @@ extension SCAddressCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 75, height: 75)
+        return CGSize(width: 65, height: 65)
     }
     
     
