@@ -20,6 +20,7 @@ class SCAddressVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(SCAddressCell.self, forCellWithReuseIdentifier: SCAddressCell.identifier)
+        collectionView.register(SCEmptyAddressCell.self, forCellWithReuseIdentifier: SCEmptyAddressCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.isPagingEnabled = true
@@ -32,7 +33,7 @@ class SCAddressVC: UIViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.numberOfPages = SCAddressVC.addressArray.count
+        pageControl.numberOfPages = SCAddressVC.addressArray.count + 1
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
         pageControl.currentPageIndicatorTintColor = .brandGem
@@ -80,10 +81,6 @@ class SCAddressVC: UIViewController {
         super.viewDidLoad()
         
         configureContainerView()
-        
-        //addressArray.append(Address(address: "550 Arthur Avenue,\n Freeport, IL 61032", contactPerson: "Onurcan Sever", contactNumber: "815-837-3463", type: "Apartment", sizes: "2,467"))
-        //addressArray.append(Address(address: "North York", contactPerson: "Mark Cheung", contactNumber: "815-837-3463", type: "Condo", sizes: "1,467"))
-        
         checkArrayCount()
     }
     
@@ -158,7 +155,29 @@ extension SCAddressVC: SCAddressCellDelegate {
     
     
 }
+
+extension SCAddressVC: SCEmptyAddressCellDelegate {
     
+    func addNewAddressTapped(_ gesture: UITapGestureRecognizer) {
+        
+        let vc = AddressViewController()
+        
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = false
+        }
+        
+        vc.delegate = self
+        vc.dataSource = self
+        
+        vc.setEditingMode(isEditing: false)
+        
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+}
+
 extension SCAddressVC {
     
     private func configureContainerView() {
@@ -254,7 +273,7 @@ extension SCAddressVC {
 extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        SCAddressVC.addressArray.count
+        return SCAddressVC.addressArray.count + 1
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -263,22 +282,32 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCAddressCell.identifier, for: indexPath) as? SCAddressCell else { return UICollectionViewCell() }
+        let cells: UICollectionViewCell?
         
-        let username = SCAddressVC.addressArray[indexPath.row].contactPerson
-        let phoneNumber = SCAddressVC.addressArray[indexPath.row].contactNumber
-        let address = SCAddressVC.addressArray[indexPath.row].street
-        let houseType = SCAddressVC.addressArray[indexPath.row].type
-        let houseSize = SCAddressVC.addressArray[indexPath.row].sizes
+        if indexPath.row < SCAddressVC.addressArray.count {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCAddressCell.identifier, for: indexPath) as? SCAddressCell else { return UICollectionViewCell() }
+            
+            let username = SCAddressVC.addressArray[indexPath.row].contactPerson
+            let phoneNumber = SCAddressVC.addressArray[indexPath.row].contactNumber
+            let address = SCAddressVC.addressArray[indexPath.row].street
+            let houseType = SCAddressVC.addressArray[indexPath.row].type
+            let houseSize = SCAddressVC.addressArray[indexPath.row].sizes
+            
+            cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
+            
+            
+           cells = cell
+           cell.delegate = self
+        }
+        else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCEmptyAddressCell.identifier, for: indexPath) as? SCEmptyAddressCell else { return UICollectionViewCell() }
+            
+            cell.delegate = self
+            cells = cell
+        }
         
-        // Image upload is limited to 3 - 4
-        cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
         
-        
-        
-       cell.delegate = self
-        
-        return cell
+        return cells!
         
     }
     
@@ -288,9 +317,16 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        pageControl.currentPage = indexPath.row
-        SCAddressVC.currentIndex = indexPath.row
-        delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
+        if indexPath.row < SCAddressVC.addressArray.count {
+            pageControl.currentPage = indexPath.row
+            SCAddressVC.currentIndex = indexPath.row
+            delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
+        }
+        else {
+            pageControl.currentPage = indexPath.row
+            SCAddressVC.currentIndex = indexPath.row
+            delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row - 1])
+        }
         
     }
     
