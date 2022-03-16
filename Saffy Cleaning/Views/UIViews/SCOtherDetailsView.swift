@@ -26,7 +26,7 @@ class SCOtherDetailsView: UIView {
     }()
     public var stackView = UIStackView()
     private let petView = SCOrderInfoView(backgroundColor: .lightBrandLake3, height: 25)
-    private let messageView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 30)
+    private let messageView = SCVerticalOrderInfoView(backgroundColor: .lightBrandLake3, height: 40)
     private let extraServicesLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private lazy var serviceCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -113,7 +113,7 @@ class SCOtherDetailsView: UIView {
         stackView.spacing = 0
         
         petView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        messageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        messageView.heightAnchor.constraint(equalToConstant: 90).isActive = true
         
         messageView.infoValue.numberOfLines = 3
         
