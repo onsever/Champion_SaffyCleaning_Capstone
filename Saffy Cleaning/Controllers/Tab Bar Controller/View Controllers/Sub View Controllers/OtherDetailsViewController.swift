@@ -29,6 +29,8 @@ class OtherDetailsViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
+        layout.scrollDirection = .horizontal
+        collectionView.isScrollEnabled = false
         
         return collectionView
     }()
@@ -135,10 +137,12 @@ class OtherDetailsViewController: UIViewController {
     
     private func setData() {
         
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "garage\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_garage")!, name: "Garage\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_carpet")!, name: "Carpet\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_laundry")!, name: "Laundry\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_oven")!, name: "Oven\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_toilet")!, name: "Toilet\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_utensil")!, name: "Utensil\nCleaning"))
         
     }
     
