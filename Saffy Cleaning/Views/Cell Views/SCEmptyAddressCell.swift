@@ -53,9 +53,9 @@ class SCEmptyAddressCell: UICollectionViewCell {
         emptyView.addGestureRecognizer(tap)
         
         NSLayoutConstraint.activate([
-            emptyView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 5),
-            emptyView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            emptyView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            emptyView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 0),
+            emptyView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            emptyView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             emptyView.heightAnchor.constraint(equalToConstant: 240),
         ])
         

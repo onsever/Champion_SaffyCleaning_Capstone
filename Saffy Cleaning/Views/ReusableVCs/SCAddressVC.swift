@@ -258,9 +258,9 @@ extension SCAddressVC {
         containerView.addSubview(addressCollectionView)
         
         NSLayoutConstraint.activate([
-            addressCollectionView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 5),
-            addressCollectionView.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            addressCollectionView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            addressCollectionView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 0),
+            addressCollectionView.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            addressCollectionView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             addressCollectionView.heightAnchor.constraint(equalToConstant: 240),
         ])
     }
@@ -286,9 +286,9 @@ extension SCAddressVC {
         emptyView.addGestureRecognizer(tap)
         
         NSLayoutConstraint.activate([
-            emptyView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 5),
-            emptyView.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            emptyView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            emptyView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 0),
+            emptyView.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            emptyView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             emptyView.heightAnchor.constraint(equalToConstant: 240),
         ])
         
@@ -372,6 +372,14 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             SCAddressVC.selectedIndex = nil
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
 }
