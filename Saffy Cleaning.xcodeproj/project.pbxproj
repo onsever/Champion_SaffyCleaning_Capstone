@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		0B53774F27DB04350085C110 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B53774E27DB04350085C110 /* GoogleService-Info.plist */; };
 		0B53775227DB0D4A0085C110 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */; };
-		252CFC16CD57BB4032C4E2BE /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
-		B029D5559A50E4E49A9CB925 /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */; };
+		9948F2F131DF33626DA9041E /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
+		A960D7155FAF79E23F7B3A49 /* Pods_Saffy_Cleaning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CB77A01156971B4D97934A /* Pods_Saffy_Cleaning.framework */; };
 		BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */; };
 		BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */; };
 		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
@@ -83,7 +83,7 @@
 		BAFC9B2827DC3BE4000DDBCF /* WhenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2727DC3BE4000DDBCF /* WhenViewController.swift */; };
 		BAFC9B2A27DC3BE9000DDBCF /* WhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2927DC3BE9000DDBCF /* WhereViewController.swift */; };
 		BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2B27DC3FB1000DDBCF /* Address.swift */; };
-		D922A77F850873A4E7982687 /* Pods_Saffy_Cleaning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8596857A81C4DC473DA8600 /* Pods_Saffy_Cleaning.framework */; };
+		D36BBDFA37AE5F73824E7C43 /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBAC70885754639C25FFCF1 /* Pods_Saffy_CleaningTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,15 +104,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0886986748DD21DB2CC14626 /* Pods-Saffy CleaningTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.debug.xcconfig"; sourceTree = "<group>"; };
+		01A20B736B5760B11C1CE5FF /* Pods-Saffy CleaningTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.release.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.release.xcconfig"; sourceTree = "<group>"; };
+		086D31684F62F2F7499F4A38 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; sourceTree = "<group>"; };
+		0A8A6E0BF918584517C77853 /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		0B53774E27DB04350085C110 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
-		2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C8CF8174B661D95C9004E6B /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_CleaningTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8DA4BFA633F1EBED2C258690 /* Pods-Saffy Cleaning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.debug.xcconfig"; sourceTree = "<group>"; };
-		8FF407DC294425913D66AABA /* Pods-Saffy Cleaning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.release.xcconfig"; sourceTree = "<group>"; };
-		AC672424CA58B06308BFF680 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1DACB2E24FA6067C18AEDA42 /* Pods-Saffy CleaningTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.debug.xcconfig"; sourceTree = "<group>"; };
+		21CB77A01156971B4D97934A /* Pods_Saffy_Cleaning.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		597A371BD1229052592937F5 /* Pods-Saffy Cleaning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.release.xcconfig"; sourceTree = "<group>"; };
+		7BBAC70885754639C25FFCF1 /* Pods_Saffy_CleaningTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_CleaningTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCOtherDetailsView.swift; sourceTree = "<group>"; };
 		BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCVerticalOrderInfoView.swift; sourceTree = "<group>"; };
 		BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDetailsViewController.swift; sourceTree = "<group>"; };
@@ -189,8 +189,8 @@
 		BAFC9B2727DC3BE4000DDBCF /* WhenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhenViewController.swift; sourceTree = "<group>"; };
 		BAFC9B2927DC3BE9000DDBCF /* WhereViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhereViewController.swift; sourceTree = "<group>"; };
 		BAFC9B2B27DC3FB1000DDBCF /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		C386D2770B319A360BB1CC08 /* Pods-Saffy CleaningTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.release.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.release.xcconfig"; sourceTree = "<group>"; };
-		F8596857A81C4DC473DA8600 /* Pods_Saffy_Cleaning.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1AA584226A3294613B0C8F2 /* Pods-Saffy Cleaning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.debug.xcconfig"; sourceTree = "<group>"; };
+		D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D922A77F850873A4E7982687 /* Pods_Saffy_Cleaning.framework in Frameworks */,
+				A960D7155FAF79E23F7B3A49 /* Pods_Saffy_Cleaning.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B029D5559A50E4E49A9CB925 /* Pods_Saffy_CleaningTests.framework in Frameworks */,
+				D36BBDFA37AE5F73824E7C43 /* Pods_Saffy_CleaningTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				252CFC16CD57BB4032C4E2BE /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */,
+				9948F2F131DF33626DA9041E /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,25 +229,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		8C4322D7B3443F48EF21404E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F8596857A81C4DC473DA8600 /* Pods_Saffy_Cleaning.framework */,
-				2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */,
-				404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A9D7182A337F8C4302F18BAD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8DA4BFA633F1EBED2C258690 /* Pods-Saffy Cleaning.debug.xcconfig */,
-				8FF407DC294425913D66AABA /* Pods-Saffy Cleaning.release.xcconfig */,
-				3C8CF8174B661D95C9004E6B /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */,
-				AC672424CA58B06308BFF680 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */,
-				0886986748DD21DB2CC14626 /* Pods-Saffy CleaningTests.debug.xcconfig */,
-				C386D2770B319A360BB1CC08 /* Pods-Saffy CleaningTests.release.xcconfig */,
+				C1AA584226A3294613B0C8F2 /* Pods-Saffy Cleaning.debug.xcconfig */,
+				597A371BD1229052592937F5 /* Pods-Saffy Cleaning.release.xcconfig */,
+				0A8A6E0BF918584517C77853 /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */,
+				086D31684F62F2F7499F4A38 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */,
+				1DACB2E24FA6067C18AEDA42 /* Pods-Saffy CleaningTests.debug.xcconfig */,
+				01A20B736B5760B11C1CE5FF /* Pods-Saffy CleaningTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -287,7 +277,7 @@
 				BA95398C27D99032005A899A /* Saffy CleaningUITests */,
 				BA95396727D99031005A899A /* Products */,
 				A9D7182A337F8C4302F18BAD /* Pods */,
-				8C4322D7B3443F48EF21404E /* Frameworks */,
+				C5E6D8E6250BFA19DF2A6378 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -530,6 +520,16 @@
 			path = "Sub View Controllers";
 			sourceTree = "<group>";
 		};
+		C5E6D8E6250BFA19DF2A6378 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21CB77A01156971B4D97934A /* Pods_Saffy_Cleaning.framework */,
+				D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */,
+				7BBAC70885754639C25FFCF1 /* Pods_Saffy_CleaningTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -537,11 +537,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA95399327D99032005A899A /* Build configuration list for PBXNativeTarget "Saffy Cleaning" */;
 			buildPhases = (
-				8DEBBFE7FAFC72BE13F8699C /* [CP] Check Pods Manifest.lock */,
+				15959C2E4BAFA1DBA05218EC /* [CP] Check Pods Manifest.lock */,
 				BA95396227D99031005A899A /* Sources */,
 				BA95396327D99031005A899A /* Frameworks */,
 				BA95396427D99031005A899A /* Resources */,
-				A672A8BA02F5137D34C0A6CB /* [CP] Embed Pods Frameworks */,
+				D00293510599DFF245F04A17 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -556,7 +556,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA95399627D99032005A899A /* Build configuration list for PBXNativeTarget "Saffy CleaningTests" */;
 			buildPhases = (
-				EC42DCDF1D01D716E33C3DDD /* [CP] Check Pods Manifest.lock */,
+				DB87C064D97657211DB48524 /* [CP] Check Pods Manifest.lock */,
 				BA95397B27D99032005A899A /* Sources */,
 				BA95397C27D99032005A899A /* Frameworks */,
 				BA95397D27D99032005A899A /* Resources */,
@@ -575,11 +575,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA95399927D99032005A899A /* Build configuration list for PBXNativeTarget "Saffy CleaningUITests" */;
 			buildPhases = (
-				3E72EC5E6A0AA4E4E3CED200 /* [CP] Check Pods Manifest.lock */,
+				1E8F3987279F02D92483DCC3 /* [CP] Check Pods Manifest.lock */,
 				BA95398527D99032005A899A /* Sources */,
 				BA95398627D99032005A899A /* Frameworks */,
 				BA95398727D99032005A899A /* Resources */,
-				136A7E17E5257639772947D9 /* [CP] Embed Pods Frameworks */,
+				065C5BC3B91A3C2E70BBE5D4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -666,7 +666,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		136A7E17E5257639772947D9 /* [CP] Embed Pods Frameworks */ = {
+		065C5BC3B91A3C2E70BBE5D4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -683,29 +683,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3E72EC5E6A0AA4E4E3CED200 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Saffy Cleaning-Saffy CleaningUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8DEBBFE7FAFC72BE13F8699C /* [CP] Check Pods Manifest.lock */ = {
+		15959C2E4BAFA1DBA05218EC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -727,7 +705,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A672A8BA02F5137D34C0A6CB /* [CP] Embed Pods Frameworks */ = {
+		1E8F3987279F02D92483DCC3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Saffy Cleaning-Saffy CleaningUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D00293510599DFF245F04A17 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -744,7 +744,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EC42DCDF1D01D716E33C3DDD /* [CP] Check Pods Manifest.lock */ = {
+		DB87C064D97657211DB48524 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1002,7 +1002,7 @@
 		};
 		BA95399427D99032005A899A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8DA4BFA633F1EBED2C258690 /* Pods-Saffy Cleaning.debug.xcconfig */;
+			baseConfigurationReference = C1AA584226A3294613B0C8F2 /* Pods-Saffy Cleaning.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1031,7 +1031,7 @@
 		};
 		BA95399527D99032005A899A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FF407DC294425913D66AABA /* Pods-Saffy Cleaning.release.xcconfig */;
+			baseConfigurationReference = 597A371BD1229052592937F5 /* Pods-Saffy Cleaning.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1060,7 +1060,7 @@
 		};
 		BA95399727D99032005A899A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0886986748DD21DB2CC14626 /* Pods-Saffy CleaningTests.debug.xcconfig */;
+			baseConfigurationReference = 1DACB2E24FA6067C18AEDA42 /* Pods-Saffy CleaningTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1081,7 +1081,7 @@
 		};
 		BA95399827D99032005A899A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C386D2770B319A360BB1CC08 /* Pods-Saffy CleaningTests.release.xcconfig */;
+			baseConfigurationReference = 01A20B736B5760B11C1CE5FF /* Pods-Saffy CleaningTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1102,7 +1102,7 @@
 		};
 		BA95399A27D99032005A899A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C8CF8174B661D95C9004E6B /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */;
+			baseConfigurationReference = 0A8A6E0BF918584517C77853 /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1121,7 +1121,7 @@
 		};
 		BA95399B27D99032005A899A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC672424CA58B06308BFF680 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */;
+			baseConfigurationReference = 086D31684F62F2F7499F4A38 /* Pods-Saffy Cleaning-Saffy CleaningUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

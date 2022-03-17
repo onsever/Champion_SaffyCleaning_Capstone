@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PayPalCheckout
 
 class OrderViewController: UIViewController {
     
@@ -67,7 +68,7 @@ class OrderViewController: UIViewController {
         return tableView
     }()
     
-    private let paypalButton = SCMainButton(title: "Pay with PayPal", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: 18)
+    private let paypalButton = PayPalButton(label: .checkout)
     
     private var orderDictionary = [String: Order]()
 
@@ -442,14 +443,46 @@ extension OrderViewController {
     
     private func configurePayPalButton() {
         contentView.addSubview(paypalButton)
-        paypalButton.addTarget(self, action: #selector(paypalButtonTapped(_:)), for: .touchUpInside)
-        
+        paypalButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             paypalButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
             paypalButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             paypalButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             paypalButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+        paypalButton.setTitleColor(UIColor.brandDark, for: .normal)
+        paypalButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 150, bottom: 0, right: 0)
+        paypalButton.layer.shadowColor = UIColor.gray.cgColor
+        paypalButton.layer.shadowOffset = CGSize(width: 1.0, height: 4.0)
+        paypalButton.layer.shadowRadius = 10
+        paypalButton.layer.masksToBounds = false
+        paypalButton.layer.shadowOpacity = 0.5
+        paypalButton.imageView?.image = UIImage()
     }
     
+    private func configurePayPalCheckout() {
+        Checkout.setCreateOrderCallback { createOrderAction in
+            let amount = PurchaseUnit.Amount(currencyCode: .cad, value: String(format: "%.2f", self.resultTotalCost))
+            let purchaseUnit = PurchaseUnit(amount: amount)
+            let order = OrderRequest(intent: .capture, purchaseUnits: [purchaseUnit])
+
+            createOrderAction.create(order: order)
+        }
+
+        Checkout.setOnApproveCallback { approval in
+             approval.actions.capture { (response, error) in
+                print("Order successfully captured: \(response?.data)")
+            }
+        }
+        
+        Checkout.setOnCancelCallback {
+            print("Order Cancel")
+        }
+        
+        Checkout.setOnErrorCallback {err in
+            print(err.error)
+        }
+        
+
+    }
 }
