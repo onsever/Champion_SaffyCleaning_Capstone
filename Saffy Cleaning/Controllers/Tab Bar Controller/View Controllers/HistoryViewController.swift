@@ -19,7 +19,6 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(SCReviewCell.self, forCellReuseIdentifier: SCReviewCell.identifier)
         tableView.separatorStyle = .none
         tableView.register(SCHistoryCardCell.self, forCellReuseIdentifier: SCHistoryCardCell.identifier)
         tableView.allowsSelection = false
