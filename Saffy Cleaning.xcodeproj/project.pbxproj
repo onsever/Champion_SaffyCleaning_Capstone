@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0B53774F27DB04350085C110 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B53774E27DB04350085C110 /* GoogleService-Info.plist */; };
 		0B53775227DB0D4A0085C110 /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */; };
+		0B70E51F27E282630094F284 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E51E27E282630094F284 /* Constants.swift */; };
+		0B70E52127E282E50094F284 /* FirebaseDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52027E282E50094F284 /* FirebaseDBService.swift */; };
+		0B70E52427E292A00094F284 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52327E292A00094F284 /* Helpers.swift */; };
+		0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52527E2A3650094F284 /* DataMapper.swift */; };
 		252CFC16CD57BB4032C4E2BE /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
 		B029D5559A50E4E49A9CB925 /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */; };
 		BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */; };
@@ -109,6 +113,10 @@
 		0886986748DD21DB2CC14626 /* Pods-Saffy CleaningTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0B53774E27DB04350085C110 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
+		0B70E51E27E282630094F284 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0B70E52027E282E50094F284 /* FirebaseDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDBService.swift; sourceTree = "<group>"; };
+		0B70E52327E292A00094F284 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0B70E52527E2A3650094F284 /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
 		2F4D287A27980C64A0808B13 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C8CF8174B661D95C9004E6B /* Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning-Saffy CleaningUITests/Pods-Saffy Cleaning-Saffy CleaningUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		404710E31F5EDAE0C105C219 /* Pods_Saffy_CleaningTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_CleaningTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */,
+				0B70E52027E282E50094F284 /* FirebaseDBService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -317,6 +326,9 @@
 				BA95399E27D99066005A899A /* Controllers */,
 				BA95399D27D99058005A899A /* Views */,
 				BA95399C27D99053005A899A /* Models */,
+				0B70E51E27E282630094F284 /* Constants.swift */,
+				0B70E52327E292A00094F284 /* Helpers.swift */,
+				0B70E52527E2A3650094F284 /* DataMapper.swift */,
 			);
 			path = "Saffy Cleaning";
 			sourceTree = "<group>";
@@ -783,6 +795,7 @@
 				BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */,
 				BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */,
 				BA0CCA2A27DD52410030DC0B /* History.swift in Sources */,
+				0B70E52427E292A00094F284 /* Helpers.swift in Sources */,
 				BAF8453427E239EB002ADA10 /* SCEmptyAddressCell.swift in Sources */,
 				BA9539A427D990F5005A899A /* SCSubTitleLabel.swift in Sources */,
 				BA8180BE27E18B1200C1CA14 /* UserOrder.swift in Sources */,
@@ -814,6 +827,8 @@
 				BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */,
 				BAD694FD27DD79D000FF3445 /* ExtraService.swift in Sources */,
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
+				0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */,
+				0B70E51F27E282630094F284 /* Constants.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
 				BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */,
@@ -824,6 +839,7 @@
 				BA95396E27D99031005A899A /* LoginViewController.swift in Sources */,
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
 				BA65DB6027DA6E2E0007A915 /* UIFont+Ext.swift in Sources */,
+				0B70E52127E282E50094F284 /* FirebaseDBService.swift in Sources */,
 				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,

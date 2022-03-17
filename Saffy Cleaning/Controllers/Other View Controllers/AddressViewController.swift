@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
 
 protocol AddressVCDelegate: AnyObject {
     func didTapAddButton(_ address: Address)
@@ -17,6 +18,8 @@ protocol AddressVCDataSource: AnyObject {
 }
 
 class AddressViewController: UIViewController {
+    
+    private lazy var ref = Database.database().reference()
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
         
@@ -101,6 +104,8 @@ class AddressViewController: UIViewController {
         let houseSize = houseSizeView.getTextField().text!
         
         let newAddress = Address(name: "", room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
+        let NSDict = try! DictionaryEncoder.encode(newAddress)
+        FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
         
         if isEditingMode {
             dataSource?.didTapSave(newAddress)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Address {
+class Address: Codable {
     var name: String
     var room: String
     var flat: String

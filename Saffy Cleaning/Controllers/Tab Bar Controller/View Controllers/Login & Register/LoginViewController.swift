@@ -63,17 +63,14 @@ class LoginViewController: UIViewController {
         button.animateWithSpring()
         guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
         FirebaseAuthService.service.signIn(email: username, pass: password) {[weak self] (success) in
-            guard let `self` = self else { return }
             var message: String = ""
             if (success) {
                 message = "User was successfully logged in."
-                
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
-                
             } else {
-                message = "There was an error"
+                message = "Password is not currect"
             }
-            self.presentAlert(title: "Login", message: message) { action in
+            self?.presentAlert(title: "Login", message: message) { action in
                 print("Positive action is tapped on.")
             } negativeAction: { action in
                 print("Negative action is tapped on.")
@@ -131,8 +128,6 @@ class LoginViewController: UIViewController {
                   [weak self] (success) in
                   var message: String = ""
                   if (success) {
-                      message = "Login Success"
-                      
                       (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                       
                   } else {

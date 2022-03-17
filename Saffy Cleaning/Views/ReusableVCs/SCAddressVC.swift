@@ -33,7 +33,7 @@ class SCAddressVC: UIViewController {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.numberOfPages = SCAddressVC.addressArray.count + 1
+        pageControl.numberOfPages = addressArray.count + 1
         pageControl.currentPage = 0
         pageControl.isUserInteractionEnabled = false
         pageControl.currentPageIndicatorTintColor = .brandGem
@@ -53,7 +53,7 @@ class SCAddressVC: UIViewController {
     
     private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Add a new address")
     
-    private static var addressArray = [Address]()
+    private lazy var addressArray = [Address]()
     private static var currentIndex: Int = 0
     public weak var delegate: SCAddressVCDelegate?
     private static var selectedIndex: Int? = nil
@@ -82,15 +82,26 @@ class SCAddressVC: UIViewController {
         super.viewDidLoad()
         
         configureContainerView()
-        checkArrayCount()
+
+        // TODO: - update
+        FirebaseDBService.service.readAddress() {[weak self](address) in
+            if let address = address {
+                DispatchQueue.main.async {
+                    self?.addressArray = address
+                    self?.checkArrayCount()
+                    self?.addressCollectionView.reloadData()
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let selectedIndex = SCAddressVC.selectedIndex {
-            addressCollectionView.selectItem(at: IndexPath(row: selectedIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-        }
+        
+//        if let selectedIndex = SCAddressVC.selectedIndex {
+//            addressCollectionView.selectItem(at: IndexPath(row: selectedIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+//        }
     }
     
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
@@ -113,22 +124,22 @@ class SCAddressVC: UIViewController {
     
     public func getCurrentAddress() -> Address? {
         
-        if SCAddressVC.addressArray.count == 0 {
+        if addressArray.count == 0 {
             return nil
         }
         
         guard let selectedIndex = SCAddressVC.selectedIndex else { return nil }
         
-        return SCAddressVC.addressArray[selectedIndex]
+        return addressArray[selectedIndex]
     }
     
     public func getAllAddresses() -> [Address]? {
         
-        if SCAddressVC.addressArray.count == 0 {
+        if addressArray.count == 0 {
             return nil
         }
         
-        return SCAddressVC.addressArray
+        return addressArray
     }
     
 }
@@ -138,14 +149,14 @@ class SCAddressVC: UIViewController {
 extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
     
     func didTapSave(_ address: Address) {
-        SCAddressVC.addressArray[SCAddressVC.currentIndex] = address
+        addressArray[SCAddressVC.currentIndex] = address
         self.addressCollectionView.reloadData()
         checkArrayCount()
     }
     
     
     func didTapAddButton(_ address: Address) {
-        SCAddressVC.addressArray.append(address)
+        addressArray.append(address)
         self.addressCollectionView.reloadData()
         checkArrayCount()
         print(address.street)
@@ -166,7 +177,7 @@ extension SCAddressVC: SCAddressCellDelegate {
             sheet.prefersGrabberVisible = false
         }
         
-        vc.setData(SCAddressVC.addressArray[SCAddressVC.currentIndex])
+        vc.setData(addressArray[SCAddressVC.currentIndex])
         vc.delegate = self
         vc.dataSource = self
         vc.setEditingMode(isEditing: true)
@@ -175,7 +186,7 @@ extension SCAddressVC: SCAddressCellDelegate {
     
     func didTapDeleteButton(_ button: UIButton) {
         print("Delete button tapped.")
-        SCAddressVC.addressArray.remove(at: SCAddressVC.currentIndex)
+        addressArray.remove(at: SCAddressVC.currentIndex)
         checkArrayCount()
     }
     
@@ -227,7 +238,8 @@ extension SCAddressVC {
     
     private func checkArrayCount() {
         
-        if SCAddressVC.addressArray.count == 0 || SCAddressVC.addressArray.isEmpty {
+        if addressArray.count == 0 || addressArray.isEmpty {
+            print(addressArray.count)
             configureEmptyView()
         }
         else {
@@ -303,7 +315,7 @@ extension SCAddressVC {
 extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return SCAddressVC.addressArray.count + 1
+        return addressArray.count + 1
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -314,14 +326,14 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         
         let cells: UICollectionViewCell?
         
-        if indexPath.row < SCAddressVC.addressArray.count {
+        if indexPath.row < addressArray.count {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCAddressCell.identifier, for: indexPath) as? SCAddressCell else { return UICollectionViewCell() }
             
-            let username = SCAddressVC.addressArray[indexPath.row].contactPerson
-            let phoneNumber = SCAddressVC.addressArray[indexPath.row].contactNumber
-            let address = SCAddressVC.addressArray[indexPath.row].street
-            let houseType = SCAddressVC.addressArray[indexPath.row].type
-            let houseSize = SCAddressVC.addressArray[indexPath.row].sizes
+            let username = addressArray[indexPath.row].contactPerson
+            let phoneNumber = addressArray[indexPath.row].contactNumber
+            let address = addressArray[indexPath.row].street
+            let houseType = addressArray[indexPath.row].type
+            let houseSize = addressArray[indexPath.row].sizes
             
             cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
             
@@ -347,16 +359,16 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        if indexPath.row < SCAddressVC.addressArray.count {
+        if indexPath.row < addressArray.count {
             pageControl.currentPage = indexPath.row
             SCAddressVC.currentIndex = indexPath.row
-            delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row])
+            delegate?.didSelectItem(addressArray[indexPath.row])
             SCAddressVC.selectedIndex = indexPath.row
         }
         else {
             pageControl.currentPage = indexPath.row
             SCAddressVC.currentIndex = indexPath.row
-            delegate?.didSelectItem(SCAddressVC.addressArray[indexPath.row - 1])
+            delegate?.didSelectItem(addressArray[indexPath.row - 1])
             SCAddressVC.selectedIndex = nil
         }
         

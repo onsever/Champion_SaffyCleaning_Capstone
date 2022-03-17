@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+
+struct Constants {
+    static let userTypes = "userTypes"
+    
+    static let userAddress = "userAddress"
+}
+
+
+enum UserType : String {
+    case user, worker
+}
