@@ -159,6 +159,7 @@ extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
         addressArray.append(address)
         self.addressCollectionView.reloadData()
         checkArrayCount()
+        self.pageControl.numberOfPages = addressArray.count + 1
         print(address.street)
     }
     
