@@ -16,9 +16,10 @@ class UserOrder {
     public var pet: String
     public var message: String
     public var selectedItems: [ExtraService]
+    public var tips: Double?
     public var totalCost: Double
     
-    init(date: String, time: String, duration: Int, address: Address, pet: String, message: String, selectedItems: [ExtraService], totalCost: Double) {
+    init(date: String, time: String, duration: Int, address: Address, pet: String, message: String, selectedItems: [ExtraService], tips: Double?, totalCost: Double) {
         self.date = date
         self.time = time
         self.duration = duration
@@ -26,6 +27,7 @@ class UserOrder {
         self.pet = pet
         self.message = message
         self.selectedItems = selectedItems
+        self.tips = tips
         self.totalCost = totalCost
     }
 }

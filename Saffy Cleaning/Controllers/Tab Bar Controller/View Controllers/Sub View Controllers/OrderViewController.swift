@@ -36,6 +36,16 @@ class OrderViewController: UIViewController {
     private var isArrayEmpty: Bool = false
     private var resultTotalCost: Double = 0
     
+    // MARK: - Order Button Properties
+    private var selectedDate: String? = nil
+    private var selectedTime: String? = nil
+    private var selectedDuration: Int? = nil
+    private var selectedAddress: Address? = nil
+    private var selectedPetMessage: String? = nil
+    private var selectedMessage: String? = nil
+    private var selectedItemsArray = [ExtraService]()
+    private var selectedTips: Double? = nil
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.backgroundColor = .white
@@ -91,7 +101,6 @@ class OrderViewController: UIViewController {
         whenView.delegate = self
         whereView.delegate = self
         otherDetailsView.delegate = self
-        tipsView.amountTextField.delegate = self
         confirmationPopUp.delegate = self
         
         self.tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
@@ -138,9 +147,7 @@ class OrderViewController: UIViewController {
         }
         
         otherDetailsView.updateCollectionView()
-        
-        print("Constant: \(otherDetailsDataSetHeightAnchor.constant)")
-        
+                
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -157,12 +164,24 @@ class OrderViewController: UIViewController {
         print("Paypal button tapped and result cost is \(resultTotalCost)")
         confirmationPopUp.setOrderNumber(orderNumber: "456-878-996")
         self.present(confirmationPopUp, animated: true, completion: nil)
-        for (key, value) in orderDictionary {
-            print("\(key) : \(value)")
+                
+        guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
+            return
         }
-    }
-    
-    @objc private func textFieldDidChange(_ textField: UITextField) {
+        
+        if let selectedTips = selectedTips {
+            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray, tips: selectedTips, totalCost: resultTotalCost)
+            
+            print("User order with tips amount of \(userOrder.tips!)")
+            print("User order with services \(userOrder.selectedItems)")
+        }
+        else {
+            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray, tips: 0, totalCost: resultTotalCost)
+            
+            print("User order without tips amount of \(userOrder.tips!)")
+            print("User order with services \(userOrder.selectedItems)")
+        }
+        
         
     }
     
@@ -170,6 +189,7 @@ class OrderViewController: UIViewController {
         guard let text = tipsView.amountTextField.text else { return }
         
         orderDictionary["tips"] = Order(name: "Tips", cost: Double(text) ?? 0)
+        selectedTips = Double(text) ?? 0
         
         self.tableView.reloadData()
         
@@ -186,6 +206,9 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? 0)
         
         orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? 0) hours)", cost: Double((duration ?? 0) * 30))
+        selectedDate = date
+        selectedTime = time
+        selectedDuration = duration ?? 0
         self.tableView.reloadData()
         
     }
@@ -212,13 +235,15 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
     }
     
     
-    func addAddress(address: String, contactPerson: String, contactNumber: String, type: String, sizes: String) {
+    func addAddress(address: Address) {
         self.navigationController?.popViewController(animated: true)
         
-        self.isWhereViewDataSet = self.whereView.setData(address: address, contactPerson: contactPerson, contactNumber: contactNumber, type: type, sizes: sizes)
+        self.isWhereViewDataSet = self.whereView.setData(address: address.street, contactPerson: address.contactPerson, contactNumber: address.contactNumber, type: address.type, sizes: address.sizes)
         
         orderDictionary["travel_expense"] = Order(name: "Travelling expenses", cost: 3)
         orderDictionary["sizes"] = Order(name: "Sizes add up", cost: 10)
+        
+        selectedAddress = address
         
         self.tableView.reloadData()
     }
@@ -237,9 +262,7 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
         } else {
             isArrayEmpty = false
         }
-  
-        print("Selected items count: \(selectedItems.count)")
-        
+          
         orderDictionary.removeValue(forKey: "extra_\(1)")
         orderDictionary.removeValue(forKey: "extra_\(2)")
         orderDictionary.removeValue(forKey: "extra_\(3)")
@@ -255,11 +278,17 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
         }
         
         for item in 0..<selectedItems.count {
-            print("Before adding: \(orderDictionary.values)")
             orderDictionary["extra_\(item + 1)"] = Order(name: "Extra services \(item + 1)", cost: 15)
-            print("After adding: \(orderDictionary.values)")
-            print("Selected items: \(selectedItems)")
         }
+        
+        selectedItemsArray.removeAll()
+        
+        for (_, value) in selectedItems {
+            selectedItemsArray.append(value)
+        }
+                
+        selectedPetMessage = pet
+        selectedMessage = message
                 
         self.tableView.reloadData()
         
@@ -339,23 +368,6 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension OrderViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        guard let text = textField.text else { return false }
-        
-        orderDictionary["tips"] = Order(name: "Tips", cost: Double(text)!)
-        
-        self.tableView.reloadData()
-        
-        textField.resignFirstResponder()
-        
-        return true
-    }
-    
-}
-
 extension OrderViewController: SCConfirmationPopUpDelegate {
     
     func didTapConfirmationButton(_ button: UIButton) {
@@ -417,7 +429,6 @@ extension OrderViewController {
     
     private func configureTipsView() {
         contentView.addSubview(tipsView)
-        tipsView.amountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         let numberToolBar: UIToolbar = UIToolbar()
         numberToolBar.barStyle = UIBarStyle.default
