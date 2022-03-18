@@ -84,7 +84,7 @@ class SCAddressVC: UIViewController {
         configureContainerView()
 
         // TODO: - update
-        FirebaseDBService.service.readAddress() {[weak self](address) in
+        FirebaseDBService.service.retrieveAddress() {[weak self](address) in
             if let address = address {
                 DispatchQueue.main.async {
                     self?.addressArray = address

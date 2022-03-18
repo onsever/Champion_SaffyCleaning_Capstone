@@ -170,14 +170,16 @@ class OrderViewController: UIViewController {
         }
         
         if let selectedTips = selectedTips {
-            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray, tips: selectedTips, totalCost: resultTotalCost)
-            
+            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map { $0.name }, tips: selectedTips, totalCost: resultTotalCost)
+                let orderDict = try! DictionaryEncoder.encode(userOrder)
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
             print("User order with tips amount of \(userOrder.tips!)")
             print("User order with services \(userOrder.selectedItems)")
         }
         else {
-            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray, tips: 0, totalCost: resultTotalCost)
-            
+            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
+                let orderDict = try! DictionaryEncoder.encode(userOrder)
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
             print("User order without tips amount of \(userOrder.tips!)")
             print("User order with services \(userOrder.selectedItems)")
         }

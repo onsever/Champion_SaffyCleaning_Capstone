@@ -35,7 +35,15 @@ class FirebaseDBService {
         ref.child(user.uid).childByAutoId().setValue(value)
     }
     
-    func readAddress(completion: @escaping([Address]?) -> Void) {
+    func createNewOrder(value:NSDictionary) {
+        let ref = db.child(Constants.userOrders)
+        ref.child(user.uid).childByAutoId().setValue(value)
+    }
+    
+    func retrieveOrder(completion: @escaping([UserOrder]?)-> Void) {
+    }
+    
+    func retrieveAddress(completion: @escaping([Address]?) -> Void) {
         var addresses = [Address]()
         addresses = []
         let ref = db.child(Constants.userAddress)
