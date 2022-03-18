@@ -11,7 +11,7 @@ import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
 import GoogleSignIn
-
+import PayPalCheckout
 
 
 @main
@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         // Init facebook sdk
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        // PayPal checkout SDK
+        let config = CheckoutConfig(
+                clientID: "ASKI-6_GIMUgF05CvCeESVs2wRnnNm0b17whgZGIGVnUAkgMh4MBK2Z6fMDPuh8ktPQ37C-xI_AyKKKe",
+                returnUrl: "com.onurcansever.saffycleaning://paypalpay",
+                environment: .sandbox
+            )
+        Checkout.set(config: config)
         return true
     }
     

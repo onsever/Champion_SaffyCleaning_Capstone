@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PayPalCheckout
 
 class OrderViewController: UIViewController {
     
@@ -77,7 +78,7 @@ class OrderViewController: UIViewController {
         return tableView
     }()
     
-    private let paypalButton = SCMainButton(title: "Pay with PayPal", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: 18)
+    private let paypalButton = PayPalButton(label: .checkout)
     private let confirmationPopUp = SCConfirmationPopUp()
     
     private var orderDictionary = [String: Order]()
@@ -97,6 +98,7 @@ class OrderViewController: UIViewController {
         configureTipsView()
         configureTableView()
         configurePayPalButton()
+        configurePayPalCheckout()
         
         whenView.delegate = self
         whereView.delegate = self
@@ -160,32 +162,32 @@ class OrderViewController: UIViewController {
         
     }
     
-    @objc private func paypalButtonTapped(_ button: UIButton) {
-        print("Paypal button tapped and result cost is \(resultTotalCost)")
-        confirmationPopUp.setOrderNumber(orderNumber: "456-878-996")
-        self.present(confirmationPopUp, animated: true, completion: nil)
+    // @objc private func paypalButtonTapped(_ button: UIButton) {
+    //     print("Paypal button tapped and result cost is \(resultTotalCost)")
+    //     confirmationPopUp.setOrderNumber(orderNumber: "456-878-996")
+    //     self.present(confirmationPopUp, animated: true, completion: nil)
                 
-        guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
-            return
-        }
+    //     guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
+    //         return
+    //     }
         
-        if let selectedTips = selectedTips {
-            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map { $0.name }, tips: selectedTips, totalCost: resultTotalCost)
-                let orderDict = try! DictionaryEncoder.encode(userOrder)
-                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
-            print("User order with tips amount of \(userOrder.tips!)")
-            print("User order with services \(userOrder.selectedItems)")
-        }
-        else {
-            let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
-                let orderDict = try! DictionaryEncoder.encode(userOrder)
-                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
-            print("User order without tips amount of \(userOrder.tips!)")
-            print("User order with services \(userOrder.selectedItems)")
-        }
+    //     if let selectedTips = selectedTips {
+    //         let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map { $0.name }, tips: selectedTips, totalCost: resultTotalCost)
+    //             let orderDict = try! DictionaryEncoder.encode(userOrder)
+    //             FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+    //         print("User order with tips amount of \(userOrder.tips!)")
+    //         print("User order with services \(userOrder.selectedItems)")
+    //     }
+    //     else {
+    //         let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
+    //             let orderDict = try! DictionaryEncoder.encode(userOrder)
+    //             FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+    //         print("User order without tips amount of \(userOrder.tips!)")
+    //         print("User order with services \(userOrder.selectedItems)")
+    //     }
         
         
-    }
+    // }
     
     @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
         guard let text = tipsView.amountTextField.text else { return }
@@ -467,14 +469,64 @@ extension OrderViewController {
     
     private func configurePayPalButton() {
         contentView.addSubview(paypalButton)
-        paypalButton.addTarget(self, action: #selector(paypalButtonTapped(_:)), for: .touchUpInside)
-        
+        paypalButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             paypalButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
             paypalButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             paypalButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             paypalButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+        paypalButton.setTitleColor(UIColor.brandDark, for: .normal)
+        paypalButton.layer.shadowColor = UIColor.gray.cgColor
+        paypalButton.layer.shadowOffset = CGSize(width: 1.0, height: 4.0)
+        paypalButton.layer.shadowRadius = 10
+        paypalButton.layer.masksToBounds = false
+        paypalButton.layer.shadowOpacity = 0.5
     }
     
+    private func configurePayPalCheckout() {
+        // acc: sb-08udj14512915@personal.example.com
+        // pw: j/d05n=A
+        Checkout.setCreateOrderCallback { createOrderAction in
+            let amount = PurchaseUnit.Amount(currencyCode: .cad, value: String(format:"%.2f" ,self.resultTotalCost))
+            let purchaseUnit = PurchaseUnit(amount: amount)
+            let order = OrderRequest(intent: .capture, purchaseUnits: [purchaseUnit])
+
+            createOrderAction.create(order: order)
+        }
+
+        Checkout.setOnApproveCallback { approval in
+            approval.actions.capture { [self] (response, error) in
+                // get order id from paypal response
+                confirmationPopUp.setOrderNumber(orderNumber: String(describing: response!.data.id))
+                self.present(confirmationPopUp, animated: true, completion: nil)
+                
+                // consider add validation in every field
+                guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
+                    return
+                }
+                
+                let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
+                let orderDict = try! DictionaryEncoder.encode(userOrder)
+                
+                if let selectedTips = selectedTips {
+                    userOrder.tips = selectedTips
+                }
+                else {
+                    userOrder.tips = selectedTips
+                }
+
+                // create order record in firebase
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+            }
+        }
+        
+        Checkout.setOnCancelCallback {
+            print("Order Cancel")
+        }
+        
+        Checkout.setOnErrorCallback {err in
+            print(err.error)
+        }
+    }
 }
