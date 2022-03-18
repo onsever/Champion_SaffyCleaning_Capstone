@@ -8,7 +8,7 @@
 import UIKit
 
 protocol OtherDetailsViewDelegate: AnyObject {
-    func addOtherDetails(pet: String, message: String, selectedItems: [ExtraService])
+    func addOtherDetails(pet: String, message: String, selectedItems: [Int : ExtraService])
 }
 
 class OtherDetailsViewController: UIViewController {
@@ -29,6 +29,8 @@ class OtherDetailsViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
+        layout.scrollDirection = .horizontal
+        collectionView.isScrollEnabled = false
         
         return collectionView
     }()
@@ -36,6 +38,8 @@ class OtherDetailsViewController: UIViewController {
     public weak var delegate: OtherDetailsViewDelegate?
     private var serviceArray = [ExtraService]()
     private var selectedArray = [ExtraService]()
+    private var selectedDictionary = [Int : ExtraService]()
+    private static var selectedIndexes = [Int : IndexPath]()
     private static var buttonName: String? = nil
     private static var quantityText: String? = nil
     private static var messageText: String? = nil
@@ -96,6 +100,19 @@ class OtherDetailsViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if OtherDetailsViewController.selectedIndexes.count != 0 {
+            for (_, value) in OtherDetailsViewController.selectedIndexes {
+                self.serviceCollectionView.delegate?.collectionView?(self.serviceCollectionView, didSelectItemAt: value)
+            }
+            
+        }
+        
+        
+    }
+    
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
         if (quantityTextField.text == "" && OtherDetailsViewController.buttonName == "Yes") || messageTextField.text == "" {
@@ -112,7 +129,7 @@ class OtherDetailsViewController: UIViewController {
             delegate?.addOtherDetails(
                 pet: OtherDetailsViewController.buttonName == "Yes" ? "\(OtherDetailsViewController.buttonName!)\n\(pet)" : "\(OtherDetailsViewController.buttonName!)",
                 message: message,
-                selectedItems: selectedArray)
+                selectedItems: selectedDictionary)
             
         }
         
@@ -120,10 +137,12 @@ class OtherDetailsViewController: UIViewController {
     
     private func setData() {
         
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "garage\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
-        serviceArray.append(ExtraService(image: UIImage(named: "carpet")!, name: "carpet\ncleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_garage")!, name: "Garage\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_carpet")!, name: "Carpet\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_laundry")!, name: "Laundry\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_oven")!, name: "Oven\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_toilet")!, name: "Toilet\nCleaning"))
+        serviceArray.append(ExtraService(image: UIImage(named: "sc_utensil")!, name: "Utensil\nCleaning"))
         
     }
     
@@ -195,7 +214,8 @@ extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionView
         
         cell.setImageOpacity(opacity: 1)
         
-        selectedArray.append(serviceArray[indexPath.row])
+        selectedDictionary[indexPath.row] = serviceArray[indexPath.row]
+        OtherDetailsViewController.selectedIndexes[indexPath.row] = indexPath
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -204,7 +224,8 @@ extension OtherDetailsViewController: UICollectionViewDelegate, UICollectionView
         
         cell.setImageOpacity(opacity: 0.5)
         
-        selectedArray.remove(at: indexPath.row)
+        selectedDictionary.removeValue(forKey: indexPath.row)
+        OtherDetailsViewController.selectedIndexes.removeValue(forKey: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

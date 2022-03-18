@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum Rating: String {
+    case oneStar = "sc_rating_1"
+    case twoStar = "sc_rating_2"
+    case threeStar = "sc_rating_3"
+    case fourStar = "sc_rating_4"
+    case fiveStar = "sc_rating_5"
+}
+
 class SCReviewCell: UITableViewCell {
     
     public static let identifier = "ReviewCell"
@@ -40,7 +48,7 @@ class SCReviewCell: UITableViewCell {
         self.addSubview(userImageView)
         
         NSLayoutConstraint.activate([
-            userImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 25),
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             userImageView.widthAnchor.constraint(equalToConstant: 60),
             userImageView.heightAnchor.constraint(equalToConstant: 60)
@@ -54,19 +62,19 @@ class SCReviewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .leading
-        stackView.spacing = UIStackView.noIntrinsicMetric
+        stackView.spacing = 10
         
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 15, trailing: 5)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 5)
         
         NSLayoutConstraint.activate([
-            ratingImageView.widthAnchor.constraint(equalToConstant: 75),
+            ratingImageView.widthAnchor.constraint(equalToConstant: 80),
+            ratingImageView.heightAnchor.constraint(equalToConstant: 18),
             reviewLabel.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            reviewLabel.heightAnchor.constraint(equalToConstant: 70)
         ])
         
         NSLayoutConstraint.activate([
-            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 25),
             stackView.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -83,10 +91,24 @@ class SCReviewCell: UITableViewCell {
         ])
     }
     
-    public func setData(userImage: UIImage?, ratingCount: Int, userReview: String, currentDate: String) {
+    public func setData(userImage: UIImage?, ratingCount: Rating, userReview: String, currentDate: String) {
         self.userImageView.image = userImage?.withRenderingMode(.alwaysOriginal)
         self.reviewLabel.text = userReview
         self.dateLabel.text = currentDate
+        reviewLabel.numberOfLines = 0
+        
+        switch ratingCount {
+        case .oneStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)?.withRenderingMode(.alwaysOriginal)
+        case .twoStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .threeStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .fourStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case .fiveStar:
+            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        }
     }
     
 }

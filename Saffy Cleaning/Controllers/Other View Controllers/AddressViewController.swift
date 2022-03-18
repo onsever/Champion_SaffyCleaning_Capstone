@@ -1,5 +1,5 @@
 //
-//  AddNewAddressViewController.swift
+//  AddressViewController.swift
 //  Saffy Cleaning
 //
 //  Created by Onurcan Sever on 2022-03-12.
@@ -7,12 +7,19 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
 
-protocol AddNewAddressDelegate: AnyObject {
+protocol AddressVCDelegate: AnyObject {
     func didTapAddButton(_ address: Address)
 }
 
-class AddNewAddressViewController: UIViewController {
+protocol AddressVCDataSource: AnyObject {
+    func didTapSave(_ address: Address)
+}
+
+class AddressViewController: UIViewController {
+    
+    private lazy var ref = Database.database().reference()
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
         
@@ -45,18 +52,20 @@ class AddNewAddressViewController: UIViewController {
     private let houseSizeView = SCInfoView(placeholder: "e.g. Some example", text: "House size")
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
-    private let addButton = SCMainButton(title: "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
+    private lazy var addButton = SCMainButton(title: isEditingMode ? "Save" : "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
     private let selectionPopUp = SCSelectionPopUp(isHouseType: true)
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!
     
-    public weak var delegate: AddNewAddressDelegate?
+    public weak var delegate: AddressVCDelegate?
+    public weak var dataSource: AddressVCDataSource?
+    private var isEditingMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Add new address"
+        title = isEditingMode ? "Edit the address" : "Add new address"
         view.backgroundColor = .white
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "OK", style: .done, target: self, action: #selector(didTapOk(_:)))
@@ -65,9 +74,8 @@ class AddNewAddressViewController: UIViewController {
         scrollView.addSubview(contentView)
         
         
-        view.addTopBorder(with: .brandGem, andWidth: 4)
-        view.addLeftBorder(with: .brandGem, andWidth: 4)
-        view.addRightBorder(with: .brandGem, andWidth: 4)
+        view.layer.borderColor = UIColor.brandGem.cgColor
+        view.layer.borderWidth = 3
         view.layer.cornerRadius = 15
         view.clipsToBounds = true
         
@@ -96,8 +104,14 @@ class AddNewAddressViewController: UIViewController {
         let houseSize = houseSizeView.getTextField().text!
         
         let newAddress = Address(name: "", room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
+        let NSDict = try! DictionaryEncoder.encode(newAddress)
+        FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
         
-        delegate?.didTapAddButton(newAddress)
+        if isEditingMode {
+            dataSource?.didTapSave(newAddress)
+        } else {
+            delegate?.didTapAddButton(newAddress)
+        }
         
         self.dismiss(animated: true, completion: nil)
     }
@@ -125,9 +139,13 @@ class AddNewAddressViewController: UIViewController {
         
     }
     
+    public func setEditingMode(isEditing: Bool) {
+        self.isEditingMode = isEditing
+    }
+    
 }
 
-extension AddNewAddressViewController: SCSelectionPopUpDelegate {
+extension AddressViewController: SCSelectionPopUpDelegate {
     
     func didSelectRowAt(item: String) {
         houseTypeView.getTextField().text = item
@@ -135,7 +153,7 @@ extension AddNewAddressViewController: SCSelectionPopUpDelegate {
     
 }
 
-extension AddNewAddressViewController {
+extension AddressViewController {
     
     private func configureInfoLabel() {
         contentView.addSubview(infoLabel)

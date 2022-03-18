@@ -6,7 +6,6 @@
 //
 
 import FirebaseAuth
-import Foundation
 import GoogleSignIn
 
 class FirebaseAuthService {
