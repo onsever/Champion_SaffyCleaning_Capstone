@@ -487,7 +487,10 @@ extension OrderViewController {
     private func configurePayPalCheckout() {
         // acc: sb-08udj14512915@personal.example.com
         // pw: j/d05n=A
-        Checkout.setCreateOrderCallback { createOrderAction in
+        Checkout.setCreateOrderCallback { [weak self] createOrderAction in
+            
+            guard let self = self else { return }
+            
             let amount = PurchaseUnit.Amount(currencyCode: .cad, value: String(format:"%.2f" ,self.resultTotalCost))
             let purchaseUnit = PurchaseUnit(amount: amount)
             let order = OrderRequest(intent: .capture, purchaseUnits: [purchaseUnit])
@@ -495,29 +498,40 @@ extension OrderViewController {
             createOrderAction.create(order: order)
         }
 
-        Checkout.setOnApproveCallback { approval in
-            approval.actions.capture { [self] (response, error) in
-                // get order id from paypal response
-                confirmationPopUp.setOrderNumber(orderNumber: String(describing: response!.data.id))
-                self.present(confirmationPopUp, animated: true, completion: nil)
+        Checkout.setOnApproveCallback { [weak self] approval in
+            approval.actions.capture { [weak self] (response, error) in
                 
-                // consider add validation in every field
-                guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
+                guard let self = self else { return }
+                
+                if error != nil {
+                    self.presentAlert(title: "Error!", message: "There is an error with the payment. Please try again!", positiveAction: { action in
+                        print("Positive button tapped.")
+                    }, negativeAction: nil)
+                    
                     return
                 }
                 
-                let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
-                let orderDict = try! DictionaryEncoder.encode(userOrder)
+                // get order id from paypal response
+                self.confirmationPopUp.setOrderNumber(orderNumber: String(describing: response!.data.id))
+                self.present(self.confirmationPopUp, animated: true, completion: nil)
                 
-                if let selectedTips = selectedTips {
-                    userOrder.tips = selectedTips
+                // consider add validation in every field
+                guard let selectedDate = self.selectedDate, let selectedTime = self.selectedTime, let selectedDuration = self.selectedDuration, let selectedAddress = self.selectedAddress, let selectedPetMessage = self.selectedPetMessage, let selectedMessage = self.selectedMessage else {
+                    return
+                }
+                
+                if let selectedTips = self.selectedTips {
+                    let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: selectedTips, totalCost: self.resultTotalCost)
+                    let orderDict = try! DictionaryEncoder.encode(userOrder)
+                    FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
                 }
                 else {
-                    userOrder.tips = selectedTips
+                    let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost)
+                    let orderDict = try! DictionaryEncoder.encode(userOrder)
+                    FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
                 }
 
-                // create order record in firebase
-                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+                
             }
         }
         
