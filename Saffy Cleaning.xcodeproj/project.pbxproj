@@ -23,6 +23,8 @@
 		BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
+		BA408B0F27E40C690087FFA1 /* SCChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA408B0E27E40C690087FFA1 /* SCChatCell.swift */; };
+		BA408B1127E414300087FFA1 /* SCCorneredCompletionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA408B1027E414300087FFA1 /* SCCorneredCompletionLabel.swift */; };
 		BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */; };
 		BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */; };
 		BA65DB5627DA69A50007A915 /* Urbanist-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */; };
@@ -131,6 +133,8 @@
 		BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		BA408B0E27E40C690087FFA1 /* SCChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCChatCell.swift; sourceTree = "<group>"; };
+		BA408B1027E414300087FFA1 /* SCCorneredCompletionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCorneredCompletionLabel.swift; sourceTree = "<group>"; };
 		BA65DB5027DA69A50007A915 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
 		BA65DB5127DA69A50007A915 /* Urbanist-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Regular.ttf"; sourceTree = "<group>"; };
 		BA65DB5227DA69A50007A915 /* Urbanist-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -411,6 +415,7 @@
 				BA9539A727D99106005A899A /* SCCompletionLabel.swift */,
 				BA9539A927D9910B005A899A /* SCMainLabel.swift */,
 				BA9539AB27D99110005A899A /* SCTitleLabel.swift */,
+				BA408B1027E414300087FFA1 /* SCCorneredCompletionLabel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -482,6 +487,7 @@
 				BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */,
 				BAC1742F27DDAD0400C429BE /* SCTotalCostView.swift */,
 				BAF8453327E239EB002ADA10 /* SCEmptyAddressCell.swift */,
+				BA408B0E27E40C690087FFA1 /* SCChatCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -819,6 +825,7 @@
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
+				BA408B1127E414300087FFA1 /* SCCorneredCompletionLabel.swift in Sources */,
 				BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */,
 				BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */,
 				BA9539B227D99136005A899A /* SCMainButton.swift in Sources */,
@@ -829,6 +836,7 @@
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
 				0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */,
 				0B70E51F27E282630094F284 /* Constants.swift in Sources */,
+				BA408B0F27E40C690087FFA1 /* SCChatCell.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
 				BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */,
