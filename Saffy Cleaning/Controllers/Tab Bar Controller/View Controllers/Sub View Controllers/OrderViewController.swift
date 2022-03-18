@@ -451,18 +451,18 @@ extension OrderViewController {
             paypalButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         paypalButton.setTitleColor(UIColor.brandDark, for: .normal)
-        paypalButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 150, bottom: 0, right: 0)
         paypalButton.layer.shadowColor = UIColor.gray.cgColor
         paypalButton.layer.shadowOffset = CGSize(width: 1.0, height: 4.0)
         paypalButton.layer.shadowRadius = 10
         paypalButton.layer.masksToBounds = false
         paypalButton.layer.shadowOpacity = 0.5
-        paypalButton.imageView?.image = UIImage()
     }
     
     private func configurePayPalCheckout() {
+        // acc: sb-08udj14512915@personal.example.com
+        // pw: j/d05n=A
         Checkout.setCreateOrderCallback { createOrderAction in
-            let amount = PurchaseUnit.Amount(currencyCode: .cad, value: String(format: "%.2f", self.resultTotalCost))
+            let amount = PurchaseUnit.Amount(currencyCode: .cad, value: String(format:"%.2f" ,self.resultTotalCost))
             let purchaseUnit = PurchaseUnit(amount: amount)
             let order = OrderRequest(intent: .capture, purchaseUnits: [purchaseUnit])
 
@@ -471,7 +471,7 @@ extension OrderViewController {
 
         Checkout.setOnApproveCallback { approval in
              approval.actions.capture { (response, error) in
-                print("Order successfully captured: \(response?.data)")
+                 print("Order successfully captured: \(String(describing: response?.data.id))")
             }
         }
         
@@ -482,7 +482,5 @@ extension OrderViewController {
         Checkout.setOnErrorCallback {err in
             print(err.error)
         }
-        
-
     }
 }
