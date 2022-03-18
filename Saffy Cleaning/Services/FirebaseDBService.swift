@@ -52,6 +52,7 @@ class FirebaseDBService {
                 for key in dict.keys {
                     if let item = dict[key] as? Dictionary<String, Any> {
                         let street = item["street"] ?? ""
+                        let postalCode = item["postalCode"] ?? ""
                         let district = item["district"] ?? ""
                         let building = item["building"] ?? ""
                         let type = item["type"] ?? ""
@@ -68,6 +69,7 @@ class FirebaseDBService {
                             room: room as! String,
                             flat: flat as! String,
                             street: street as! String,
+                            postalCode: postalCode as! String,
                             building: building as! String,
                             district: district as! String,
                             contactPerson: contactPerson as! String,

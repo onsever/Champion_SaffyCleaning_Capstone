@@ -46,6 +46,7 @@ class AddressViewController: UIViewController {
     private let roomView = SCInfoView(placeholder: "e.g. Room A", text: "Room")
     private let flatView = SCInfoView(placeholder: "e.g. Flat 2", text: "Flat")
     private let streetView = SCInfoView(placeholder: "e.g. Some example", text: "Street")
+    private let postalCodeView = SCInfoView(placeholder: "e.g. M2S0K2", text: "Postal Code")
     private let buildingView = SCInfoView(placeholder: "e.g. Some example", text: "Building")
     private let districtView = SCInfoView(placeholder: "e.g. Some example", text: "District")
     private let houseTypeView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "House type")
@@ -96,6 +97,7 @@ class AddressViewController: UIViewController {
         let room = roomView.getTextField().text!
         let flat = flatView.getTextField().text!
         let street = streetView.getTextField().text!
+        let postalCode = postalCodeView.getTextField().text!
         let building = buildingView.getTextField().text!
         let district = districtView.getTextField().text!
         let contactPerson = contactPersonView.getTextField().text!
@@ -103,7 +105,7 @@ class AddressViewController: UIViewController {
         let houseType = houseTypeView.getTextField().text!
         let houseSize = houseSizeView.getTextField().text!
         
-        let newAddress = Address(name: "", room: room, flat: flat, street: street, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
+        let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
         let NSDict = try! DictionaryEncoder.encode(newAddress)
         FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
         
@@ -182,14 +184,14 @@ extension AddressViewController {
             horizontalStackView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 20),
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             horizontalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            horizontalStackView.heightAnchor.constraint(equalToConstant: 100)
+            horizontalStackView.heightAnchor.constraint(equalToConstant: 85)
         ])
     }
     
     private func configureVerticalStackView() {
-        verticalStackView = SCStackView(arrangedSubviews: [streetView, buildingView, districtView, houseTypeView, houseSizeView, contactPersonView, contactNumberView])
+        verticalStackView = SCStackView(arrangedSubviews: [streetView, postalCodeView, buildingView, districtView, houseTypeView, houseSizeView, contactPersonView, contactNumberView])
         contentView.addSubview(verticalStackView)
-        verticalStackView.spacing = 10
+        verticalStackView.spacing = 14
         verticalStackView.distribution = .fillEqually
         
         houseTypeView.getTextField().isUserInteractionEnabled = false
@@ -205,7 +207,7 @@ extension AddressViewController {
             verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 0),
             verticalStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             verticalStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            verticalStackView.heightAnchor.constraint(equalToConstant: 600)
+            verticalStackView.heightAnchor.constraint(equalToConstant: 650)
         ])
     }
     
