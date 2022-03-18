@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 protocol WhereViewDelegate: AnyObject {
-    func addAddress(address: String, contactPerson: String, contactNumber: String, type: String, sizes: String)
+    func addAddress(address: Address)
 }
 
 class WhereViewController: UIViewController {
@@ -56,7 +56,7 @@ class WhereViewController: UIViewController {
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
         if let selectedAddress = selectedAddress {
-            delegate?.addAddress(address: selectedAddress.street, contactPerson: selectedAddress.contactPerson, contactNumber: selectedAddress.contactNumber, type: selectedAddress.type, sizes: selectedAddress.sizes)
+            delegate?.addAddress(address: selectedAddress)
         }
          
     }
