@@ -10,11 +10,16 @@ import Foundation
 
 struct Constants {
     static let userTypes = "userTypes"
-    
     static let userAddress = "userAddress"
+    static let userOrders = "userOrders"
+    static let userProfiles = "userProfiles"
 }
 
 
 enum UserType : String {
     case user, worker
+}
+
+enum UserOrderType : String {
+    case pending, paymentSuccess, opening, applied, matched, proceeding, completed
 }
