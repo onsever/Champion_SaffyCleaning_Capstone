@@ -129,6 +129,7 @@ class AddressViewController: UIViewController {
         
         if let address = address {
             streetView.getTextField().text = address.street
+            postalCodeView.getTextField().text = address.postalCode
             contactPersonView.getTextField().text = address.contactPerson
             contactNumberView.getTextField().text = address.contactNumber
             houseTypeView.getTextField().text = address.type
