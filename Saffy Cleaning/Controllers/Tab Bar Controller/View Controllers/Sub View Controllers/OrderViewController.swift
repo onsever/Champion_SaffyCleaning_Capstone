@@ -162,33 +162,6 @@ class OrderViewController: UIViewController {
         
     }
     
-    // @objc private func paypalButtonTapped(_ button: UIButton) {
-    //     print("Paypal button tapped and result cost is \(resultTotalCost)")
-    //     confirmationPopUp.setOrderNumber(orderNumber: "456-878-996")
-    //     self.present(confirmationPopUp, animated: true, completion: nil)
-                
-    //     guard let selectedDate = selectedDate, let selectedTime = selectedTime, let selectedDuration = selectedDuration, let selectedAddress = selectedAddress, let selectedPetMessage = selectedPetMessage, let selectedMessage = selectedMessage else {
-    //         return
-    //     }
-        
-    //     if let selectedTips = selectedTips {
-    //         let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map { $0.name }, tips: selectedTips, totalCost: resultTotalCost)
-    //             let orderDict = try! DictionaryEncoder.encode(userOrder)
-    //             FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
-    //         print("User order with tips amount of \(userOrder.tips!)")
-    //         print("User order with services \(userOrder.selectedItems)")
-    //     }
-    //     else {
-    //         let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: selectedItemsArray.map {$0.name}, tips: 0, totalCost: resultTotalCost)
-    //             let orderDict = try! DictionaryEncoder.encode(userOrder)
-    //             FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
-    //         print("User order without tips amount of \(userOrder.tips!)")
-    //         print("User order with services \(userOrder.selectedItems)")
-    //     }
-        
-        
-    // }
-    
     @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
         guard let text = tipsView.amountTextField.text else { return }
         
@@ -520,17 +493,14 @@ extension OrderViewController {
                     return
                 }
                 
+                let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost)
+                
                 if let selectedTips = self.selectedTips {
-                    let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: selectedTips, totalCost: self.resultTotalCost)
-                    let orderDict = try! DictionaryEncoder.encode(userOrder)
-                    FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
-                }
-                else {
-                    let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost)
-                    let orderDict = try! DictionaryEncoder.encode(userOrder)
-                    FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+                    userOrder.tips = selectedTips
                 }
 
+                let orderDict = try! DictionaryEncoder.encode(userOrder)
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
                 
             }
         }

@@ -19,6 +19,7 @@
 		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
 		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
 		BA0CCA2A27DD52410030DC0B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2927DD52410030DC0B /* History.swift */; };
+		BA14E4AC27E555370099A801 /* SCEmptyPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */; };
 		BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
@@ -91,7 +92,7 @@
 		BAFC9B2A27DC3BE9000DDBCF /* WhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2927DC3BE9000DDBCF /* WhereViewController.swift */; };
 		BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2B27DC3FB1000DDBCF /* Address.swift */; };
 		BCD544187844C6CFEE9428A1 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
-		D36BBDFA37AE5F73824E7C43 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		D36BBDFA37AE5F73824E7C43 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		DA8400E897B2B87935FCF5A8 /* Pods_Saffy_Cleaning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C925F0101EA82673F24E9F51 /* Pods_Saffy_Cleaning.framework */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +131,7 @@
 		BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherDetailsViewController.swift; sourceTree = "<group>"; };
 		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
 		BA0CCA2927DD52410030DC0B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCEmptyPhotoCell.swift; sourceTree = "<group>"; };
 		BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D36BBDFA37AE5F73824E7C43 /* BuildFile in Frameworks */,
+				D36BBDFA37AE5F73824E7C43 /* (null) in Frameworks */,
 				0F76F659EB22794DED270E8D /* Pods_Saffy_CleaningTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,6 +482,7 @@
 				BAC1742F27DDAD0400C429BE /* SCTotalCostView.swift */,
 				BAF8453327E239EB002ADA10 /* SCEmptyAddressCell.swift */,
 				BA408B0E27E40C690087FFA1 /* SCChatCell.swift */,
+				BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -831,6 +834,7 @@
 				BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */,
 				BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */,
 				BA9539B227D99136005A899A /* SCMainButton.swift in Sources */,
+				BA14E4AC27E555370099A801 /* SCEmptyPhotoCell.swift in Sources */,
 				BA9539AA27D9910B005A899A /* SCMainLabel.swift in Sources */,
 				BA9539A627D990FE005A899A /* SCInfoLabel.swift in Sources */,
 				BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */,

@@ -8,6 +8,8 @@
 import UIKit
 import MapKit
 import FirebaseDatabase
+import Photos
+import PhotosUI
 
 protocol AddressVCDelegate: AnyObject {
     func didTapAddButton(_ address: Address)
@@ -54,14 +56,31 @@ class AddressViewController: UIViewController {
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private lazy var addButton = SCMainButton(title: isEditingMode ? "Save" : "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
+    private let addPhotosLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private let selectionPopUp = SCSelectionPopUp(isHouseType: true)
     
     private var horizontalStackView: SCStackView!
     private var verticalStackView: SCStackView!
     
+    private lazy var imageCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(SCHousePhotoCell.self, forCellWithReuseIdentifier: SCHousePhotoCell.identifier)
+        collectionView.register(SCEmptyPhotoCell.self, forCellWithReuseIdentifier: SCEmptyPhotoCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        layout.scrollDirection = .horizontal
+        
+        return collectionView
+    }()
+    
     public weak var delegate: AddressVCDelegate?
     public weak var dataSource: AddressVCDataSource?
     private var isEditingMode: Bool = false
+    private var imageArray = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,8 +102,9 @@ class AddressViewController: UIViewController {
         configureInfoLabel()
         configureHorizontalStackView()
         configureVerticalStackView()
+        configureAddPhotosLabel()
+        configureImageCollectionView()
         configureAddButton()
-        
         selectionPopUp.delegate = self
     }
     
@@ -156,6 +176,92 @@ extension AddressViewController: SCSelectionPopUpDelegate {
     
 }
 
+extension AddressViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageArray.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cells: UICollectionViewCell?
+        
+        if indexPath.row < imageArray.count {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
+            
+            cell.setData(image: imageArray[indexPath.row])
+            
+            cells = cell
+        }
+        else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCEmptyPhotoCell.identifier, for: indexPath) as? SCEmptyPhotoCell else { return UICollectionViewCell() }
+            
+            cell.delegate = self
+            cells = cell
+        }
+        
+        return cells!
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 75, height: 75)
+    }
+    
+}
+
+extension AddressViewController: SCEmptyPhotoCellDelegate {
+    
+    func addPhotoCellTapped(_ gesture: UITapGestureRecognizer) {
+        
+        var config = PHPickerConfiguration(photoLibrary: .shared())
+        config.selectionLimit = 4
+        config.filter = .any(of: [.images, .livePhotos])
+        
+        let vc = PHPickerViewController(configuration: config)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
+}
+
+extension AddressViewController: PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        picker.dismiss(animated: true, completion: nil)
+        self.imageArray.removeAll()
+        let group = DispatchGroup()
+        
+        results.forEach { result in
+            group.enter()
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] reading, error in
+                
+                defer {
+                    group.leave()
+                }
+                
+                guard let self = self else { return }
+                guard let image = reading as? UIImage, error == nil else { return }
+                
+                self.imageArray.append(image)
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print(self.imageArray.count)
+            self.imageCollectionView.reloadData()
+        }
+        
+    }
+    
+}
+
 extension AddressViewController {
     
     private func configureInfoLabel() {
@@ -212,12 +318,35 @@ extension AddressViewController {
         ])
     }
     
+    private func configureAddPhotosLabel() {
+        contentView.addSubview(addPhotosLabel)
+        addPhotosLabel.text = "Add Photos"
+        
+        NSLayoutConstraint.activate([
+            addPhotosLabel.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 20),
+            addPhotosLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            addPhotosLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            addPhotosLabel.heightAnchor.constraint(equalToConstant: 16)
+        ])
+    }
+    
+    private func configureImageCollectionView() {
+        contentView.addSubview(imageCollectionView)
+        
+        NSLayoutConstraint.activate([
+            imageCollectionView.topAnchor.constraint(equalTo: addPhotosLabel.bottomAnchor, constant: 20),
+            imageCollectionView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            imageCollectionView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            imageCollectionView.heightAnchor.constraint(equalToConstant: 80)
+        ])
+    }
+    
     private func configureAddButton() {
         contentView.addSubview(addButton)
         addButton.addTarget(self, action: #selector(userDidTapAdd(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            addButton.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 20),
+            addButton.topAnchor.constraint(equalTo: imageCollectionView.bottomAnchor, constant: 20),
             addButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             addButton.heightAnchor.constraint(equalToConstant: 50)
