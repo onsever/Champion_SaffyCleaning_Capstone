@@ -21,5 +21,5 @@ enum UserType : String {
 }
 
 enum UserOrderType : String {
-    case pending, paymentSuccess, opening, applied, matched, proceeding, completed
+    case pending, opening, applied, matched, proceeding, completed, cancelled
 }
