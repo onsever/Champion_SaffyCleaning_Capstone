@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.isScrollEnabled = true
+        mapView.showsCompass = false
         
         return mapView
     }()

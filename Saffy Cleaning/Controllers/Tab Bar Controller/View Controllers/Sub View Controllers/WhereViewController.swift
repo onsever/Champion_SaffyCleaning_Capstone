@@ -15,11 +15,12 @@ protocol WhereViewDelegate: AnyObject {
 class WhereViewController: UIViewController {
     
     private lazy var mapView: MKMapView = {
-            let mapView = MKMapView()
-            mapView.translatesAutoresizingMaskIntoConstraints = false
-            mapView.isScrollEnabled = true
+        let mapView = MKMapView()
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.isScrollEnabled = true
+        mapView.showsCompass = false
             
-            return mapView
+        return mapView
     }()
     
     public weak var delegate: WhereViewDelegate?
