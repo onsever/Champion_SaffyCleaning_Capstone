@@ -68,6 +68,15 @@ extension WhereViewController: SCAddressVCDelegate {
     func didSelectItem(_ address: Address) {
         print(address.street)
         selectedAddress = address
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
+        let addressLocation = MKPointAnnotation()
+        addressLocation.title = "Testing"
+        addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
+        mapView.addAnnotation(addressLocation)
+        
     }
     
     

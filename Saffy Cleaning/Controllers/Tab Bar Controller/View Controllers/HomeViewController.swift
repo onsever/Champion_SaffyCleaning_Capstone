@@ -47,10 +47,28 @@ class HomeViewController: UIViewController {
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
             sheet.delegate = self
+            addressVC.delegate = self
         }
         
         self.present(addressVC, animated: true, completion: nil)
     }
+    
+}
+
+extension HomeViewController: SCAddressVCDelegate {
+    
+    func didSelectItem(_ address: Address) {
+        print(address.sizes)
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
+        let addressLocation = MKPointAnnotation()
+        addressLocation.title = "Testing"
+        addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
+        mapView.addAnnotation(addressLocation)
+    }
+    
     
 }
 
@@ -64,6 +82,14 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
         
         guard let address = vc.getCurrentAddress() else { return }
         guard let allAddresses = vc.getAllAddresses() else { return }
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
+        let addressLocation = MKPointAnnotation()
+        addressLocation.title = "Testing"
+        addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
+        mapView.addAnnotation(addressLocation)
         
         print(address.contactPerson)
         print(allAddresses)
