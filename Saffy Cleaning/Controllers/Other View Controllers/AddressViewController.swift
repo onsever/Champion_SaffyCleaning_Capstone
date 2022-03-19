@@ -91,6 +91,8 @@ class AddressViewController: UIViewController {
     @objc private func didTapOk(_ button: UIBarButtonItem) {
         
     }
+ 
+        
     
     @objc private func userDidTapAdd(_ button: UIButton) {
         
@@ -104,16 +106,31 @@ class AddressViewController: UIViewController {
         let contactNumber = contactNumberView.getTextField().text!
         let houseType = houseTypeView.getTextField().text!
         let houseSize = houseSizeView.getTextField().text!
+        LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self](location) in
+            if let location = location {
+                DispatchQueue.main.async {
+                    let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude)
+                    let NSDict = try! DictionaryEncoder.encode(newAddress)
+                    FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                    if
+                        ((self?.isEditingMode) != nil) {
+                        self?.dataSource?.didTapSave(newAddress)
+                    } else {
+                        self?.delegate?.didTapAddButton(newAddress)
+                    }
+                }
+            }
+            
+        })
+//        let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
+//        let NSDict = try! DictionaryEncoder.encode(newAddress)
+//        FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
         
-        let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: 30, latitude: 30)
-        let NSDict = try! DictionaryEncoder.encode(newAddress)
-        FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
-        
-        if isEditingMode {
-            dataSource?.didTapSave(newAddress)
-        } else {
-            delegate?.didTapAddButton(newAddress)
-        }
+//        if isEditingMode {
+//            dataSource?.didTapSave(newAddress)
+//        } else {
+//            delegate?.didTapAddButton(newAddress)
+//        }
         
         self.dismiss(animated: true, completion: nil)
     }

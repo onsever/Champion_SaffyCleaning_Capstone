@@ -14,6 +14,8 @@
 		0B70E52427E292A00094F284 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52327E292A00094F284 /* Helpers.swift */; };
 		0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52527E2A3650094F284 /* DataMapper.swift */; };
 		0F76F659EB22794DED270E8D /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410EFF279D6AA0052EDB46F6 /* Pods_Saffy_CleaningTests.framework */; };
+		2580FDF227E55F66005D6A87 /* LocationSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2580FDF127E55F65005D6A87 /* LocationSearchService.swift */; };
+		2580FDF427E5608B005D6A87 /* SearchLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2580FDF327E5608B005D6A87 /* SearchLocationData.swift */; };
 		BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2127DD3AF00030DC0B /* SCOtherDetailsView.swift */; };
 		BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2327DD3C330030DC0B /* SCVerticalOrderInfoView.swift */; };
 		BA0CCA2627DD3F180030DC0B /* OtherDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2527DD3F180030DC0B /* OtherDetailsViewController.swift */; };
@@ -91,7 +93,7 @@
 		BAFC9B2A27DC3BE9000DDBCF /* WhereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2927DC3BE9000DDBCF /* WhereViewController.swift */; };
 		BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2B27DC3FB1000DDBCF /* Address.swift */; };
 		BCD544187844C6CFEE9428A1 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
-		D36BBDFA37AE5F73824E7C43 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		D36BBDFA37AE5F73824E7C43 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		DA8400E897B2B87935FCF5A8 /* Pods_Saffy_Cleaning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C925F0101EA82673F24E9F51 /* Pods_Saffy_Cleaning.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +124,8 @@
 		0B70E52027E282E50094F284 /* FirebaseDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDBService.swift; sourceTree = "<group>"; };
 		0B70E52327E292A00094F284 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0B70E52527E2A3650094F284 /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
+		2580FDF127E55F65005D6A87 /* LocationSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchService.swift; sourceTree = "<group>"; };
+		2580FDF327E5608B005D6A87 /* SearchLocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationData.swift; sourceTree = "<group>"; };
 		410EFF279D6AA0052EDB46F6 /* Pods_Saffy_CleaningTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_CleaningTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A53EA120C8204668263CE7D /* Pods-Saffy CleaningTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy CleaningTests.debug.xcconfig"; path = "Target Support Files/Pods-Saffy CleaningTests/Pods-Saffy CleaningTests.debug.xcconfig"; sourceTree = "<group>"; };
 		71C8BC4D80DCD56EEAE12B21 /* Pods-Saffy Cleaning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.release.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,7 +227,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D36BBDFA37AE5F73824E7C43 /* BuildFile in Frameworks */,
+				D36BBDFA37AE5F73824E7C43 /* (null) in Frameworks */,
 				0F76F659EB22794DED270E8D /* Pods_Saffy_CleaningTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +248,7 @@
 			children = (
 				0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */,
 				0B70E52027E282E50094F284 /* FirebaseDBService.swift */,
+				2580FDF127E55F65005D6A87 /* LocationSearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				BA8180BB27E18ACB00C1CA14 /* Order.swift */,
 				BA8180BD27E18B1200C1CA14 /* UserOrder.swift */,
 				BAF8453527E25A65002ADA10 /* Review.swift */,
+				2580FDF327E5608B005D6A87 /* SearchLocationData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -850,6 +856,7 @@
 				BA9539BE27D99165005A899A /* SCSignInView.swift in Sources */,
 				BA65DB6027DA6E2E0007A915 /* UIFont+Ext.swift in Sources */,
 				0B70E52127E282E50094F284 /* FirebaseDBService.swift in Sources */,
+				2580FDF227E55F66005D6A87 /* LocationSearchService.swift in Sources */,
 				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
@@ -864,6 +871,7 @@
 				BAC1743027DDAD0400C429BE /* SCTotalCostView.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
 				BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */,
+				2580FDF427E5608B005D6A87 /* SearchLocationData.swift in Sources */,
 				BA9539AC27D99110005A899A /* SCTitleLabel.swift in Sources */,
 				BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */,
 				BA9539B427D9913D005A899A /* SCImageButton.swift in Sources */,
