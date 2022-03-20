@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 protocol SCAddressCellDelegate: AnyObject {
     func didTapEditButton(_ button: UIButton)
@@ -19,7 +20,7 @@ class SCAddressCell: UICollectionViewCell {
     public weak var delegate: SCAddressCellDelegate?
     private let padding: CGFloat = 20
     private let fontSize: CGFloat = 15
-    private var imageArray = [UIImage]()
+    private var imageArray = [String]()
     
     override var isSelected: Bool {
         didSet {
@@ -200,7 +201,7 @@ class SCAddressCell: UICollectionViewCell {
         delegate?.didTapEditButton(button)
     }
     
-    public func setData(username: String, phoneNumber: String, imageArray: [UIImage], address: String, houseType: String, houseSize: String) {
+    public func setData(username: String, phoneNumber: String, imageArray: [String], address: String, houseType: String, houseSize: String) {
         self.usernameLabel.text = username
         self.phoneLabel.text = phoneNumber
         self.imageArray = imageArray
@@ -225,7 +226,20 @@ extension SCAddressCell: UICollectionViewDelegate, UICollectionViewDataSource, U
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
         
-        cell.setData(image: imageArray[indexPath.row])
+        let storage = Storage.storage().reference()
+        let ref = storage.child(Constants.addressImages)
+        for filesName in imageArray {
+            ref.child("\(filesName).png").getData(maxSize: 20*1024*1025, completion: { data, error in
+                guard error == nil else{
+                    print("Failed to get data")
+                    return
+                }
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    cell.setData(image: image)
+                }
+            })
+        }
         
         return cell
         
