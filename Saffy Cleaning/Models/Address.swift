@@ -21,8 +21,9 @@ class Address: Codable {
     var sizes: String
     var longitude: Double
     var latitude: Double
+    var images: [String]
     
-    init(name: String, room: String, flat: String, street: String, postalCode: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double) {
+    init(name: String, room: String, flat: String, street: String, postalCode: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double, images: [String]) {
         self.name = name
         self.room = room
         self.flat = flat
@@ -36,5 +37,6 @@ class Address: Codable {
         self.sizes = sizes
         self.longitude = longitude
         self.latitude = latitude
+        self.images = images
     }
 }

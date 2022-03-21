@@ -335,9 +335,9 @@ extension SCAddressVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             let address = addressArray[indexPath.row].street
             let houseType = addressArray[indexPath.row].type
             let houseSize = addressArray[indexPath.row].sizes
+            let imageArray = addressArray[indexPath.row].images
             
-            cell.setData(username: username, phoneNumber: phoneNumber, imageArray: [UIImage(systemName: "person.fill")!, UIImage(named: "carpet")!, UIImage(systemName: "person")!, UIImage(named: "carpet")!], address: address, houseType: houseType, houseSize: houseSize)
-            
+            cell.setData(username: username, phoneNumber: phoneNumber, imageArray: imageArray, address: address, houseType: houseType, houseSize: houseSize)
             
            cells = cell
            cell.delegate = self

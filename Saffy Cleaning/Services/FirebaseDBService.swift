@@ -47,7 +47,13 @@ extension FirebaseDBService {
     
     public func saveAddress(value:NSDictionary) {
         let ref = db.child(Constants.userAddress)
-        ref.child(user.uid).childByAutoId().setValue(value)
+        ref.child(user.uid).childByAutoId().setValue(value, withCompletionBlock: {err, _ in
+            guard err == nil else{
+                print(err.debugDescription)
+                return
+            }
+            print("successfully saved address")
+        })
     }
     
     public func retrieveAddress(completion: @escaping([Address]?) -> Void) {
@@ -71,6 +77,7 @@ extension FirebaseDBService {
                         let room = item["room"] ?? ""
                         let latitude = item["latitude"] ?? 0
                         let longitude = item["longitude"] ?? 0
+                        let images = item["images"] ?? []
                         let newAddress = Address(
                             name: name as! String,
                             room: room as! String,
@@ -84,7 +91,9 @@ extension FirebaseDBService {
                             type: type as! String,
                             sizes: sizes as! String,
                             longitude: longitude as! Double,
-                            latitude: latitude as! Double)
+                            latitude: latitude as! Double,
+                            images: images as! [String]
+                        )
                         addresses.append(newAddress)
                     }
                 }
