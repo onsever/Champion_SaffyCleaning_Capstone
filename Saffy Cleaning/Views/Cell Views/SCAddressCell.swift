@@ -228,18 +228,16 @@ extension SCAddressCell: UICollectionViewDelegate, UICollectionViewDataSource, U
         
         let storage = Storage.storage().reference()
         let ref = storage.child(Constants.addressImages)
-        for filesName in imageArray {
-            ref.child("\(filesName).png").getData(maxSize: 20*1024*1025, completion: { data, error in
-                guard error == nil else{
-                    print("Failed to get data")
-                    return
-                }
-                let image = UIImage(data: data!)
-                DispatchQueue.main.async {
-                    cell.setData(image: image)
-                }
-            })
-        }
+        ref.child("\(imageArray[indexPath.row]).png").getData(maxSize: 20*1024*1025, completion: { data, error in
+            guard error == nil else{
+                print("Failed to get data")
+                return
+            }
+            let image = UIImage(data: data!)
+            DispatchQueue.main.async {
+                cell.setData(image: image)
+            }
+        })
         
         return cell
         
