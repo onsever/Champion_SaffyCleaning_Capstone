@@ -41,6 +41,8 @@
 		BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */; };
 		BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BB27E18ACB00C1CA14 /* Order.swift */; };
 		BA8180BE27E18B1200C1CA14 /* UserOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BD27E18B1200C1CA14 /* UserOrder.swift */; };
+		BA9320CA27E820D400AE1E46 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9320C927E820D400AE1E46 /* User.swift */; };
+		BA9320CC27E825D400AE1E46 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9320CB27E825D400AE1E46 /* Credentials.swift */; };
 		BA95396A27D99031005A899A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396927D99031005A899A /* AppDelegate.swift */; };
 		BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396B27D99031005A899A /* SceneDelegate.swift */; };
 		BA95396E27D99031005A899A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95396D27D99031005A899A /* LoginViewController.swift */; };
@@ -81,6 +83,7 @@
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
 		BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */; };
 		BAC1743027DDAD0400C429BE /* SCTotalCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC1742F27DDAD0400C429BE /* SCTotalCostView.swift */; };
+		BAD0D87F27E84F1A004198F8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */; };
 		BAD694FD27DD79D000FF3445 /* ExtraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD694FC27DD79D000FF3445 /* ExtraService.swift */; };
 		BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD694FE27DD7A2A00FF3445 /* SCExtraServiceCell.swift */; };
 		BAEC381727DC762400496D81 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEC381627DC762400496D81 /* AddressViewController.swift */; };
@@ -155,6 +158,8 @@
 		BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTipsView.swift; sourceTree = "<group>"; };
 		BA8180BB27E18ACB00C1CA14 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BA8180BD27E18B1200C1CA14 /* UserOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrder.swift; sourceTree = "<group>"; };
+		BA9320C927E820D400AE1E46 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BA9320CB27E825D400AE1E46 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		BA95396627D99031005A899A /* Saffy Cleaning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Saffy Cleaning.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA95396927D99031005A899A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA95396B27D99031005A899A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +204,7 @@
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOrderCell.swift; sourceTree = "<group>"; };
 		BAC1742F27DDAD0400C429BE /* SCTotalCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTotalCostView.swift; sourceTree = "<group>"; };
+		BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		BAD694FC27DD79D000FF3445 /* ExtraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraService.swift; sourceTree = "<group>"; };
 		BAD694FE27DD7A2A00FF3445 /* SCExtraServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCExtraServiceCell.swift; sourceTree = "<group>"; };
 		BAEC381627DC762400496D81 /* AddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
@@ -364,6 +370,8 @@
 				BA8180BD27E18B1200C1CA14 /* UserOrder.swift */,
 				BAF8453527E25A65002ADA10 /* Review.swift */,
 				2580FDF327E5608B005D6A87 /* SearchLocationData.swift */,
+				BA9320C927E820D400AE1E46 /* User.swift */,
+				BA9320CB27E825D400AE1E46 /* Credentials.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -540,6 +548,7 @@
 			isa = PBXGroup;
 			children = (
 				BAEC381627DC762400496D81 /* AddressViewController.swift */,
+				BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */,
 			);
 			path = "Other View Controllers";
 			sourceTree = "<group>";
@@ -811,6 +820,7 @@
 				BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */,
 				BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */,
 				BA65DB5C27DA6E030007A915 /* UIView+Ext.swift in Sources */,
+				BA9320CC27E825D400AE1E46 /* Credentials.swift in Sources */,
 				BA0CCA2A27DD52410030DC0B /* History.swift in Sources */,
 				0B70E52427E292A00094F284 /* Helpers.swift in Sources */,
 				BAF8453427E239EB002ADA10 /* SCEmptyAddressCell.swift in Sources */,
@@ -833,6 +843,7 @@
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
 				BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */,
 				BAEC381727DC762400496D81 /* AddressViewController.swift in Sources */,
+				BAD0D87F27E84F1A004198F8 /* EditProfileViewController.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
@@ -864,6 +875,7 @@
 				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
+				BA9320CA27E820D400AE1E46 /* User.swift in Sources */,
 				BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
@@ -1057,6 +1069,7 @@
 				DEVELOPMENT_TEAM = B7BMA2TAJK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Saffy Cleaning/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please allow access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1086,6 +1099,7 @@
 				DEVELOPMENT_TEAM = B7BMA2TAJK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Saffy Cleaning/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please allow access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

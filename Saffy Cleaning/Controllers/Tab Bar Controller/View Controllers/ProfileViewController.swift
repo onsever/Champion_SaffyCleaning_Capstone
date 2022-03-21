@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     
@@ -22,11 +23,17 @@ class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SCReviewCell.self, forCellReuseIdentifier: SCReviewCell.identifier)
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         
         return tableView
     }()
     
     private var reviewArray = [Review]()
+    public var user: User? {
+        didSet {
+            print("User data is set.")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +47,37 @@ class ProfileViewController: UIViewController {
         // GET THE USER DATA FROM FIREBASE TO DISPLAY
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        FirebaseDBService.service.retrieveUser { [weak self] user in
+            
+            guard let self = self else { return }
+            
+            if let user = user {
+                self.user = user
+                
+                DispatchQueue.main.async {
+                    self.usernameLabel.text = user.fullName
+                    
+                    if let profileImage = user.profileImageUrl {
+                        self.profileImageView.sd_setImage(with: profileImage, completed: nil)
+                    }
+                    else {
+                        self.profileImageView.image = UIImage(systemName: "person.circle")!
+                    }
+                }
+            }
+        }
+    }
     
     @objc private func changeButtonTapped(_ button: UIBarButtonItem) {
         
     }
     
     @objc private func editButtonTapped(_ button: UIBarButtonItem) {
-        
+        let vc = EditProfileViewController(user: self.user!)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func signOutButtonTapped(_ button: UIBarButtonItem) {
@@ -132,8 +163,18 @@ extension ProfileViewController {
     
     private func configureImageViewAndLabel() {
         view.addSubview(profileImageView)
-        profileImageView.image = UIImage(named: "carpet")!
-        usernameLabel.text = "Onurcan Sever"
+        
+        /*
+        if let profileImage = user?.profileImageUrl {
+            if let data = try? Data(contentsOf: profileImage) {
+                profileImageView.image = UIImage(data: data)?.withRenderingMode(.alwaysOriginal)
+            }
+        }
+        else {
+            profileImageView.image = UIImage(named: "carpet")!
+        }
+        */
+        usernameLabel.text = user?.fullName
         view.addSubview(usernameLabel)
         
         NSLayoutConstraint.activate([

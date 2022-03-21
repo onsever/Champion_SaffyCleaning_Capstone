@@ -13,6 +13,7 @@ struct Constants {
     static let userAddress = "userAddress"
     static let userOrders = "userOrders"
     static let userProfiles = "userProfiles"
+    static let users = "users"
 }
 
 

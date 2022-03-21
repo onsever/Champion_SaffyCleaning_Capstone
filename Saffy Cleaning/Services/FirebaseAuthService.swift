@@ -5,8 +5,8 @@
 //  Created by Mark Chan on 10/3/2022.
 //
 
-import FirebaseAuth
 import GoogleSignIn
+import Firebase
 
 class FirebaseAuthService {
     
@@ -37,6 +37,56 @@ class FirebaseAuthService {
         Auth.auth().signIn(with: credential, completion: {(firebaseUser, error) in
             completionBlock(error == nil)
         })
+    }
+    
+    public func registerUser(with user: Credentials, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        
+        let username = user.username
+        let fullName = user.fullName
+        let email = user.email
+        let password = user.password
+        let contactNumber = user.contactNumber
+        
+        guard let imageData = user.profileImageUrl.jpegData(compressionQuality: 0.8) else { return }
+        
+        let fileName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference().child("profileImages").child(fileName)
+        
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            storageRef.downloadURL { url, error in
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let profileImageUrl = url?.absoluteString else { return }
+                
+                Auth.auth().createUser(withEmail: email, password: password) { result, error in
+                    
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    
+                    guard let uid = result?.user.uid else { return }
+                    
+                    let dictionary = ["username": username, "fullName": fullName, "email": email, "contactNumber": contactNumber, "profileImageUrl": profileImageUrl]
+                    
+                    Database.database().reference().child("users").child(uid).updateChildValues(dictionary, withCompletionBlock: completion)
+                    
+                }
+                
+            }
+            
+        }
+        
     }
     
 }

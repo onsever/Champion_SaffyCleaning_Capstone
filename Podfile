@@ -27,4 +27,6 @@ pod 'Firebase/Storage'
 pod 'Firebase/Database'
 pod 'GoogleSignIn'
 pod 'PayPalCheckout'
+pod 'SDWebImage'
+
 end

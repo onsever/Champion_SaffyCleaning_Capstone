@@ -61,25 +61,18 @@ class SignUpViewController: UIViewController {
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
         
-        if let email = emailTextField.text, let password = passwordTextField.text {
-            FirebaseAuthService.service.createUser(email: email, password: password) {
-                [weak self] (success) in
-                guard let `self` = self else {return}
-                var message: String = ""
-                if (success) {
-                    message = "User was successfully created"
-                    
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
-                    
-                }else {
-                    message = "There was an error"
-                }
-                self.presentAlert(title: "Sign Up", message: message) { action in
-                    print("Positive action is tapped on.")
-                } negativeAction: { action in
-                    print("Negative action is tapped on.")
-                }
-            }
+        guard let username = usernameTextField.text else { return }
+        guard let fullName = fullNameTextField.text else { return }
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let contactNumber = contactNumberTextField.text else { return }
+        
+        let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!)
+        
+        FirebaseAuthService.service.registerUser(with: user) { error, reference in
+            print("Registeration is successfull!")
+            
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
         }
 
 

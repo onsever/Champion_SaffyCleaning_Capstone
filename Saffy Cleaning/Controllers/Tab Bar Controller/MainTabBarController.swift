@@ -8,11 +8,34 @@
 import UIKit
 
 class MainTabBarController: UITabBarController {
+    
+    private var user: User? {
+        didSet {
+            
+            guard let chatVC = (self.viewControllers?[4] as? UINavigationController)?.viewControllers.first as? ProfileViewController else { return }
+            
+            //chatVC.user = user
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configure()
+        fetchUserData()
+    }
+    
+    private func fetchUserData() {
+        
+        FirebaseDBService.service.retrieveUser { user in
+            
+            if let user = user {
+                self.user = user
+            }
+            
+        }
+        
     }
     
 }

@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     
     private lazy var logoTitleLabel = SCTitleLabel(fontSize: 32, textColor: .brandDark)
     private lazy var logoSubTitleLabel = SCSubTitleLabel(text: "Keep your place clean\nSafe and effective", isRequired: false, textColor: .brandDark)
-    private lazy var usernameTextField = SCTextField(placeholder: "Login Name")
+    private lazy var usernameTextField = SCTextField(placeholder: "Email")
     private lazy var passwordTextField = SCTextField(placeholder: "Password")
     private var textFieldStackView: SCStackView!
     private lazy var forgetPasswordLabel = SCCompletionLabel(title: "Forget Password", titleColor: .brandDark, fontSize: 13)

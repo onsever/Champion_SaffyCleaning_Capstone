@@ -8,15 +8,15 @@
 
 import FirebaseDatabase
 import FirebaseAuth
-
+import FirebaseStorage
+import UIKit
 
 
 final class FirebaseDBService {
     static let service = FirebaseDBService()
-    
     private let db = Database.database().reference()
-    
     private let user = Auth.auth().currentUser!
+    private let storage = Storage.storage().reference()
 }
 
 // MARK: Order Mgmt
@@ -28,6 +28,55 @@ extension FirebaseDBService {
     }
     
     public func retrieveOrder(completion: @escaping([UserOrder]?)-> Void) {
+    }
+    
+    public func retrieveUser(completion: @escaping(User?) -> Void) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        db.child("users").child(uid).observeSingleEvent(of: .value) { snapshot in
+            
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            
+            let user = User(uid: uid, dictionary: dictionary)
+            
+            completion(user)
+            
+        }
+        
+    }
+    
+    public func saveImage(image: UIImage, completion: @escaping(URL?) -> Void) {
+        
+        let fileName = NSUUID().uuidString
+        let databaseRef = db.child("users").child(user.uid)
+        let storageRef = storage.child("profileImages").child(fileName)
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+        
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error images: \(error.localizedDescription)")
+                return
+            }
+            
+            storageRef.downloadURL { url, error in
+                
+                if let error = error {
+                    print("Error downloading url: \(error.localizedDescription)")
+                }
+                
+                guard let imageUrl = url?.absoluteString else { return }
+                
+                let newData = ["profileImageUrl": imageUrl]
+                
+                databaseRef.updateChildValues(newData)
+                
+                completion(url)
+                
+            }
+        }
+        
     }
     
 }

@@ -517,6 +517,9 @@ PODS:
   - nanopb/encode (2.30908.0)
   - PayPalCheckout (0.88.0)
   - PromisesObjC (2.0.0)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
 
 DEPENDENCIES:
   - FBSDKCoreKit
@@ -529,6 +532,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleSignIn
   - PayPalCheckout
+  - SDWebImage
 
 SPEC REPOS:
   trunk:
@@ -561,6 +565,7 @@ SPEC REPOS:
     - nanopb
     - PayPalCheckout
     - PromisesObjC
+    - SDWebImage
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -592,7 +597,8 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PayPalCheckout: c56ce98fbf6db1f5157013f7577c62abdddd41c0
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
 
-PODFILE CHECKSUM: b50038f4f1d641beeb622f301202dc18ec35dd0d
+PODFILE CHECKSUM: eec7f72e2f4fc9704026796959489ddd1f7a08cc
 
 COCOAPODS: 1.11.2
