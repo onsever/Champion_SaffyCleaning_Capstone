@@ -56,6 +56,7 @@ class ProfileViewController: UIViewController {
             
             if let user = user {
                 self.user = user
+                print(user.profileImageUrl!)
                 
                 DispatchQueue.main.async {
                     self.usernameLabel.text = user.fullName

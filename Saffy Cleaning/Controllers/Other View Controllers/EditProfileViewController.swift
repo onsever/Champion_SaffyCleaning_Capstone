@@ -18,6 +18,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     private let emailView = SCInfoView(placeholder: "Email", text: "Email")
     private let saveButton = SCMainButton(title: "Save", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 15, fontSize: nil)
     public var user: User?
+    private var userImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,22 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         
         ref.child(uid).updateChildValues(values)
         
-        self.navigationController?.popViewController(animated: true)
+        guard let userImage = userImage else {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        FirebaseDBService.service.saveImage(image: userImage) { imageUrl in
+                        
+            guard let imageUrl = imageUrl else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.profileImageView.sd_setImage(with: imageUrl, completed: nil)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
         
     }
     
@@ -77,16 +93,8 @@ extension EditProfileViewController: UIImagePickerControllerDelegate {
         
         guard let image = info[.editedImage] as? UIImage else { return }
         
-        FirebaseDBService.service.saveImage(image: image) { imageUrl in
-            
-            guard let imageUrl = imageUrl else {
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.profileImageView.sd_setImage(with: imageUrl, completed: nil)
-            }
-        }
+        self.userImage = image
+        self.profileImageView.image = image
         
         picker.dismiss(animated: true, completion: nil)
     }

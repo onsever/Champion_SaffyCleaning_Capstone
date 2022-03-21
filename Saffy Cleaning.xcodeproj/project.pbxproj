@@ -98,6 +98,7 @@
 		BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFC9B2B27DC3FB1000DDBCF /* Address.swift */; };
 		BCD544187844C6CFEE9428A1 /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */; };
 		D36BBDFA37AE5F73824E7C43 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		D4FED87A27E5BF430060544C /* FBStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FED87927E5BF420060544C /* FBStorageService.swift */; };
 		DA8400E897B2B87935FCF5A8 /* Pods_Saffy_Cleaning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C925F0101EA82673F24E9F51 /* Pods_Saffy_Cleaning.framework */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +220,7 @@
 		BAFC9B2B27DC3FB1000DDBCF /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		C1AA584226A3294613B0C8F2 /* Pods-Saffy Cleaning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Saffy Cleaning.debug.xcconfig"; path = "Target Support Files/Pods-Saffy Cleaning/Pods-Saffy Cleaning.debug.xcconfig"; sourceTree = "<group>"; };
 		C925F0101EA82673F24E9F51 /* Pods_Saffy_Cleaning.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FED87927E5BF420060544C /* FBStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBStorageService.swift; sourceTree = "<group>"; };
 		D9377356C865EAE3772880CF /* Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_Cleaning_Saffy_CleaningUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -257,6 +259,7 @@
 				0B53775127DB0D4A0085C110 /* FirebaseAuthService.swift */,
 				0B70E52027E282E50094F284 /* FirebaseDBService.swift */,
 				2580FDF127E55F65005D6A87 /* LocationSearchService.swift */,
+				D4FED87927E5BF420060544C /* FBStorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */,
 				BA9539D327D998E2005A899A /* SCStackView.swift in Sources */,
 				BA9539C027D9916A005A899A /* SCInfoView.swift in Sources */,
+				D4FED87A27E5BF430060544C /* FBStorageService.swift in Sources */,
 				BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */,
 				BAEC381727DC762400496D81 /* AddressViewController.swift in Sources */,
 				BAD0D87F27E84F1A004198F8 /* EditProfileViewController.swift in Sources */,
