@@ -11,24 +11,41 @@ import FirebaseAuth
 
 
 
-class FirebaseDBService {
+final class FirebaseDBService {
     static let service = FirebaseDBService()
     
     private let db = Database.database().reference()
     
     private let user = Auth.auth().currentUser!
-    
-    func observe(endpoint: String, event: DataEventType = .value, completion: @escaping (DataSnapshot) -> Void) {
-        let ref = db.child(endpoint)
-        ref.observe(event, with: completion)
+}
+
+// MARK: Order Mgmt
+
+extension FirebaseDBService {
+    public func createNewOrder(value:NSDictionary) {
+        let ref = db.child(Constants.userOrders)
+        ref.child(user.uid).childByAutoId().setValue(value)
     }
     
-    func syncUserType(value: String) {
+    public func retrieveOrder(completion: @escaping([UserOrder]?)-> Void) {
+    }
+    
+}
+
+// MARK: User Mgmt
+
+extension FirebaseDBService {
+    public func syncUserType(value: String) {
         let ref = db.child(Constants.userTypes)
         ref.child(user.uid).setValue(["id": user.uid, "email": user.email, "type": value])
     }
+}
+
+// MARK: Address Mgmt
+
+extension FirebaseDBService {
     
-    func saveAddress(value:NSDictionary) {
+    public func saveAddress(value:NSDictionary) {
         let ref = db.child(Constants.userAddress)
         ref.child(user.uid).childByAutoId().setValue(value, withCompletionBlock: {err, _ in
             guard err == nil else{
@@ -39,15 +56,7 @@ class FirebaseDBService {
         })
     }
     
-    func createNewOrder(value:NSDictionary) {
-        let ref = db.child(Constants.userOrders)
-        ref.child(user.uid).childByAutoId().setValue(value)
-    }
-    
-    func retrieveOrder(completion: @escaping([UserOrder]?)-> Void) {
-    }
-    
-    func retrieveAddress(completion: @escaping([Address]?) -> Void) {
+    public func retrieveAddress(completion: @escaping([Address]?) -> Void) {
         var addresses = [Address]()
         addresses = []
         let ref = db.child(Constants.userAddress)
