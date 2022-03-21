@@ -47,7 +47,7 @@ class HomeViewController: UIViewController {
             sheet.detents = [.medium()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
-            sheet.delegate = self
+            //sheet.delegate = self
             addressVC.delegate = self
         }
         
@@ -73,6 +73,7 @@ extension HomeViewController: SCAddressVCDelegate {
     
 }
 
+/*
 extension HomeViewController: UISheetPresentationControllerDelegate {
     
     // Note: Inherited from UIAdaptivePresentationControllerDelegate
@@ -97,6 +98,7 @@ extension HomeViewController: UISheetPresentationControllerDelegate {
     }
     
 }
+ */
 
 extension HomeViewController {
     
