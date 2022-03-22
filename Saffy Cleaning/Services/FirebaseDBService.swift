@@ -27,7 +27,12 @@ extension FirebaseDBService {
         ref.child(user.uid).childByAutoId().setValue(value)
     }
     
-    public func retrieveOrder(completion: @escaping([UserOrder]?)-> Void) {
+    public func retrieveOrder() {
+        let ref = db.child(Constants.userOrders).child(user.uid).queryOrdered(byChild: "status").queryEqual(toValue: "pending")
+        print("getting order data")
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            print (snapshot)
+        })
     }
     
     public func retrieveUser(completion: @escaping(User?) -> Void) {
@@ -94,15 +99,17 @@ extension FirebaseDBService {
 
 extension FirebaseDBService {
     
-    public func saveAddress(value:NSDictionary) {
+    public func saveAddress(value:NSDictionary) -> DatabaseReference {
         let ref = db.child(Constants.userAddress)
-        ref.child(user.uid).childByAutoId().setValue(value, withCompletionBlock: {err, _ in
+        let child = ref.child(user.uid).childByAutoId()
+        child.setValue(value, withCompletionBlock: {err, _ in
             guard err == nil else{
                 print(err.debugDescription)
                 return
             }
             print("successfully saved address")
         })
+        return child
     }
     
     public func retrieveAddress(completion: @escaping([Address]?) -> Void) {
@@ -128,6 +135,7 @@ extension FirebaseDBService {
                         let longitude = item["longitude"] ?? 0
                         let images = item["images"] ?? []
                         let createdAt = item["createdAt"] ?? 0
+                        print("createdAt\(createdAt)")
                         let newAddress = Address(
                             name: name as! String,
                             room: room as! String,

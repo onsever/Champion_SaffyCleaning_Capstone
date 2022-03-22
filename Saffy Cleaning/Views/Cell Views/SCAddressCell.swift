@@ -225,20 +225,9 @@ extension SCAddressCell: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
-        
-        let storage = Storage.storage().reference()
-        let ref = storage.child(Constants.addressImages)
-        ref.child("\(imageArray[indexPath.row]).png").getData(maxSize: 20*1024*1025, completion: { data, error in
-            guard error == nil else{
-                print("Failed to get data")
-                return
-            }
-            let image = UIImage(data: data!)
-            DispatchQueue.main.async {
-                cell.setData(image: image)
-            }
-        })
-        
+
+        cell.setImageFromUrl(urlString: imageArray[indexPath.row])
+                    
         return cell
         
     }
