@@ -17,7 +17,7 @@ class SCPolicyView: UIView {
     
     public let checkBox = SCCheckBox(frame: .zero)
     public weak var delegate: SCPolicyViewDelegate?
-    private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Accept the Privacy Policy and Terms & Conditions.")
+    private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 18, text: "Accept the Privacy Policy and Terms & Conditions.")
 
     override init(frame: CGRect) {
         super.init(frame: frame)

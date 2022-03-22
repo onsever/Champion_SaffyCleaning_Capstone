@@ -46,6 +46,7 @@ class FirebaseAuthService {
         let email = user.email
         let password = user.password
         let contactNumber = user.contactNumber
+        let userType = user.userType
         
         guard let imageData = user.profileImageUrl.jpegData(compressionQuality: 0.8) else { return }
         
@@ -77,7 +78,7 @@ class FirebaseAuthService {
                     
                     guard let uid = result?.user.uid else { return }
                     
-                    let dictionary = ["username": username, "fullName": fullName, "email": email, "contactNumber": contactNumber, "profileImageUrl": profileImageUrl]
+                    let dictionary = ["username": username, "fullName": fullName, "email": email, "contactNumber": contactNumber, "profileImageUrl": profileImageUrl, "userType": userType]
                     
                     Database.database().reference().child("users").child(uid).updateChildValues(dictionary, withCompletionBlock: completion)
                     

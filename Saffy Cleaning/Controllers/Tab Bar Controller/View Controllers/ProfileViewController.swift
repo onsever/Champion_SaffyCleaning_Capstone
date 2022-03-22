@@ -74,6 +74,11 @@ class ProfileViewController: UIViewController {
     
     @objc private func changeButtonTapped(_ button: UIBarButtonItem) {
         
+        if let user = user {
+            let switchUserVC = SCSwitchUserPopUp(user: user)
+            self.present(switchUserVC, animated: true, completion: nil)
+        }
+        
     }
     
     @objc private func editButtonTapped(_ button: UIBarButtonItem) {

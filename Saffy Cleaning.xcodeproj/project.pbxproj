@@ -38,6 +38,9 @@
 		BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */; };
 		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
 		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
+		BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */; };
+		BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */; };
+		BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */; };
 		BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */; };
 		BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BB27E18ACB00C1CA14 /* Order.swift */; };
 		BA8180BE27E18B1200C1CA14 /* UserOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BD27E18B1200C1CA14 /* UserOrder.swift */; };
@@ -79,6 +82,7 @@
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
 		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
+		BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
 		BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */; };
@@ -156,6 +160,9 @@
 		BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNearbyOrderCell.swift; sourceTree = "<group>"; };
+		BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTakeJobPopUp.swift; sourceTree = "<group>"; };
+		BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSwitchUserPopUp.swift; sourceTree = "<group>"; };
 		BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTipsView.swift; sourceTree = "<group>"; };
 		BA8180BB27E18ACB00C1CA14 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BA8180BD27E18B1200C1CA14 /* UserOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrder.swift; sourceTree = "<group>"; };
@@ -201,6 +208,7 @@
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyOrderViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOrderCell.swift; sourceTree = "<group>"; };
@@ -482,6 +490,8 @@
 				BA9539C427D991A7005A899A /* SCSelectionPopUp.swift */,
 				BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */,
 				BAF8453127E233F4002ADA10 /* SCConfirmationPopUp.swift */,
+				BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */,
+				BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */,
 			);
 			path = ReusableVCs;
 			sourceTree = "<group>";
@@ -500,6 +510,7 @@
 				BAF8453327E239EB002ADA10 /* SCEmptyAddressCell.swift */,
 				BA408B0E27E40C690087FFA1 /* SCChatCell.swift */,
 				BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */,
+				BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -552,6 +563,7 @@
 			children = (
 				BAEC381627DC762400496D81 /* AddressViewController.swift */,
 				BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */,
+				BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */,
 			);
 			path = "Other View Controllers";
 			sourceTree = "<group>";
@@ -835,6 +847,7 @@
 				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
+				BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */,
 				BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */,
 				BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */,
 				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
@@ -884,12 +897,15 @@
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
+				BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */,
+				BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */,
 				BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */,
 				BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
 				BAC1743027DDAD0400C429BE /* SCTotalCostView.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
+				BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */,
 				BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */,
 				2580FDF427E5608B005D6A87 /* SearchLocationData.swift in Sources */,
 				BA9539AC27D99110005A899A /* SCTitleLabel.swift in Sources */,

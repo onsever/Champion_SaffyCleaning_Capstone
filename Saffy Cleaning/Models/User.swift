@@ -15,6 +15,7 @@ struct User {
     let contactNumber: String
     var profileImageUrl: URL?
     let uid: String
+    let userType: String
     
     public init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
@@ -22,6 +23,7 @@ struct User {
         self.fullName = dictionary["fullName"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
         self.contactNumber = dictionary["contactNumber"] as? String ?? ""
+        self.userType = dictionary["userType"] as? String ?? ""
         
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
