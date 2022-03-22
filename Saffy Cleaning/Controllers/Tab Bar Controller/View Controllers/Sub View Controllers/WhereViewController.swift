@@ -67,7 +67,6 @@ class WhereViewController: UIViewController {
 extension WhereViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
-        print(address.street)
         selectedAddress = address
         
         let allAnnotations = self.mapView.annotations

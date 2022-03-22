@@ -127,6 +127,7 @@ extension FirebaseDBService {
                         let latitude = item["latitude"] ?? 0
                         let longitude = item["longitude"] ?? 0
                         let images = item["images"] ?? []
+                        let createdAt = item["createdAt"] ?? 0
                         let newAddress = Address(
                             name: name as! String,
                             room: room as! String,
@@ -141,12 +142,14 @@ extension FirebaseDBService {
                             sizes: sizes as! String,
                             longitude: longitude as! Double,
                             latitude: latitude as! Double,
-                            images: images as! [String]
+                            images: images as! [String],
+                            createdAt: String(format: "%.6f", createdAt as! Double)
                         )
                         addresses.append(newAddress)
                     }
                 }
-                completion(addresses)
+                let newAddress = addresses.sorted(by: {$0.createdAt.compare($1.createdAt) == .orderedDescending})
+                completion(newAddress)
             }else {
                 completion([])
             }

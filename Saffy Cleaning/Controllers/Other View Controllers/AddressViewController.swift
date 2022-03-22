@@ -134,7 +134,7 @@ class AddressViewController: UIViewController {
             guard let self = self else { return }
             if let location = location {
 
-                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: images)
+                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: images, createdAt: String(format: "%.6f", Date() as CVarArg))
 
                 let NSDict = try! DictionaryEncoder.encode(newAddress)
 
