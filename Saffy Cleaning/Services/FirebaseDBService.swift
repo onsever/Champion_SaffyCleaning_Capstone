@@ -47,22 +47,28 @@ extension FirebaseDBService {
         })
     }
     
-    public func retrieveUser(completion: @escaping(User?) -> Void) {
-        
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        db.child("users").child(uid).observeSingleEvent(of: .value) { snapshot in
-            
-            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
-            
-            let user = User(uid: uid, dictionary: dictionary)
-            
-            completion(user)
-            
-        }
-        
+    
+    
+    
+    private func convertDictToOrder(dict: Dictionary<String, Any>, address: Address) -> UserOrder {
+        let date = dict["date"] as? String ?? ""
+        let duration = dict["duration"] as? Int ?? 0
+        let message = dict["message"] as? String ?? ""
+        let pet = dict["pet"] as? String ?? ""
+        let selectedItems = dict["selectedItems"] as? [String] ?? []
+//        let status = dict["status"] as? String ?? ""
+        let time = dict["time"] as? String ?? ""
+        let tips = dict["tips"] as? Double ?? 0.0
+        let totalCost = dict["totalCost"] as? Double ?? 0.0
+        let userId = dict["userId"] as? String ?? ""
+//        let workerId = dict["workerId"] as? String ?? ""
+        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId)
     }
     
+}
+
+// MARK: Image Mgmt
+extension FirebaseDBService {
     public func saveImage(image: UIImage, completion: @escaping(URL?) -> Void) {
         
         let fileName = NSUUID().uuidString
@@ -95,22 +101,6 @@ extension FirebaseDBService {
         }
         
     }
-    
-    private func convertDictToOrder(dict: Dictionary<String, Any>, address: Address) -> UserOrder {
-        let date = dict["date"] as? String ?? ""
-        let duration = dict["duration"] as? Int ?? 0
-        let message = dict["message"] as? String ?? ""
-        let pet = dict["pet"] as? String ?? ""
-        let selectedItems = dict["selectedItems"] as? [String] ?? []
-//        let status = dict["status"] as? String ?? ""
-        let time = dict["time"] as? String ?? ""
-        let tips = dict["tips"] as? Double ?? 0.0
-        let totalCost = dict["totalCost"] as? Double ?? 0.0
-        let userId = dict["userId"] as? String ?? ""
-//        let workerId = dict["workerId"] as? String ?? ""
-        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId)
-    }
-    
 }
 
 // MARK: User Mgmt
@@ -119,6 +109,15 @@ extension FirebaseDBService {
     public func syncUserType(value: String) {
         let ref = db.child(Constants.userTypes)
         ref.child(user.uid).setValue(["id": user.uid, "email": user.email, "type": value])
+    }
+    
+    public func retrieveUser(completion: @escaping(User?) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        db.child("users").child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            let user = User(uid: uid, dictionary: dictionary)
+            completion(user)
+        }
     }
 }
 
