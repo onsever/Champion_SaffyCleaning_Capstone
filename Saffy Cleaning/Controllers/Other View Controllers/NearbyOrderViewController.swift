@@ -14,7 +14,7 @@ protocol NearbyOrderViewControllerDelegate: AnyObject {
 
 class NearbyOrderViewController: UIViewController {
     
-    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 250)
+    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 100)
         
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)

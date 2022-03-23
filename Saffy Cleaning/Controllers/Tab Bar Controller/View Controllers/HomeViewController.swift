@@ -116,8 +116,9 @@ extension HomeViewController: MKMapViewDelegate {
             if let sheet = nearbyOrderVC.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.prefersGrabberVisible = true
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             }
+            mapView.deselectAnnotation(view.annotation, animated: false)
             self.present(nearbyOrderVC, animated: true, completion: nil)
         }
     }
@@ -126,7 +127,6 @@ extension HomeViewController: MKMapViewDelegate {
 extension HomeViewController: NearbyOrderViewControllerDelegate {
     
     func didDismissNearbyOrder() {
-        // TODO: send workerId and
         self.dismiss(animated: true, completion: nil)
     }
     
