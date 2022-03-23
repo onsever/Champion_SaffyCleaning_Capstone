@@ -59,7 +59,8 @@ class NoticeViewController: UIViewController {
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
             totalCost: 104,
-            userId: "")
+            userId: "",
+            id: UUID().uuidString)
         
         var userOrder2 = UserOrder(
             date: "30-03-2022",
@@ -86,7 +87,8 @@ class NoticeViewController: UIViewController {
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
             totalCost: 104,
-            userId: "")
+            userId: "",
+            id: UUID().uuidString)
         
         userOrder2.status = "matched"
         
@@ -115,7 +117,8 @@ class NoticeViewController: UIViewController {
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
             totalCost: 104,
-            userId: "")
+            userId: "",
+            id: UUID().uuidString)
         
         userOrder3.status = "completed"
         

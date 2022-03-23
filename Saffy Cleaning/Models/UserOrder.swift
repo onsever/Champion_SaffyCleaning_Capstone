@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct UserOrder: Codable {
-    public var id :String =  UUID().uuidString
+class UserOrder: Codable {
+    public var id :String
     public var date: String
     public var time: String
     public var duration: Int
@@ -31,7 +31,8 @@ struct UserOrder: Codable {
          selectedItems: [String],
          tips: Double?,
          totalCost: Double,
-         userId: String
+         userId: String,
+         id: String
     ) {
         self.date = date
         self.time = time
@@ -43,5 +44,6 @@ struct UserOrder: Codable {
         self.tips = tips
         self.totalCost = totalCost
         self.userId = userId
+        self.id = id
     }
 }

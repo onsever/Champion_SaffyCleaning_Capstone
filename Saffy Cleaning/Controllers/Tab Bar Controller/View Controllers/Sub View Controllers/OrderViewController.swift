@@ -494,7 +494,17 @@ extension OrderViewController {
                     return
                 }
                 
-                var userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost, userId: Auth.auth().currentUser?.uid ?? "")
+                let userOrder = UserOrder(date: selectedDate,
+                                          time: selectedTime,
+                                          duration: selectedDuration,
+                                          address: selectedAddress,
+                                          pet: selectedPetMessage,
+                                          message: selectedMessage,
+                                          selectedItems: self.selectedItemsArray.map {$0.name},
+                                          tips: 0,
+                                          totalCost: self.resultTotalCost,
+                                          userId: Auth.auth().currentUser?.uid ?? "",
+                                          id: UUID().uuidString)
                 
                 if let selectedTips = self.selectedTips {
                     userOrder.tips = selectedTips

@@ -90,6 +90,10 @@ class HomeViewController: UIViewController {
     }
     
     private func addAnnotation(orders: [UserOrder]) {
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
         for order in orders {
             let addressLocation = MKPointAnnotation()
             addressLocation.title = "Testing"

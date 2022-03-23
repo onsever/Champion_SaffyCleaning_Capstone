@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 protocol NearbyOrderViewControllerDelegate: AnyObject {
     func didDismissNearbyOrder()
@@ -180,6 +181,7 @@ class NearbyOrderViewController: UIViewController {
 extension NearbyOrderViewController: SCTakeJobPopUpDelegate {
     
     func didTapConfirmationTakeJob(_ button: UIButton) {
+        FirebaseDBService.service.applyOrder(id: userOrder.id, userId: userOrder.userId, workerId: Auth.auth().currentUser?.uid ?? "")
         print("Confirmation button tapped!")
         delegate?.didDismissNearbyOrder()
     }

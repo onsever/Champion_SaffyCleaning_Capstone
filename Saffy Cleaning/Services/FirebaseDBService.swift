@@ -19,12 +19,42 @@ final class FirebaseDBService {
     private let storage = Storage.storage().reference()
 }
 
+// MARK: Notification Mgmt
+extension FirebaseDBService {
+    public func retrieveUserNotification(completion: @escaping ([UserOrder]) -> Void) {
+        let ref = db.child(Constants.userOrders)
+        var orders = [UserOrder]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            for snapshot in snapshots.value as! Dictionary<String, Any>  {
+                let allOrders = snapshot.value as! Dictionary<String, Any>
+                for order in allOrders {
+                    let orderDict = order.value as! Dictionary<String, Any>
+                    if orderDict["status"] as! String == UserOrderType.opening.rawValue
+                        || orderDict["status"] as! String == UserOrderType.applied.rawValue
+                        || orderDict["status"] as! String == UserOrderType.pending.rawValue {
+                        let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                        let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                        orders.append(orderObj)
+                    }
+                }
+            }
+        })
+        completion(orders)
+    }
+}
+
 // MARK: Order Mgmt
 
 extension FirebaseDBService {
     public func createNewOrder(value:NSDictionary) {
         let ref = db.child(Constants.userOrders)
         ref.child(user.uid).childByAutoId().setValue(value)
+    }
+    
+    public func applyOrder(id: String, userId:String, workerId:String) {
+        let ref = db.child(Constants.userOrders)
+        ref.child(userId).child(id)
+            .updateChildValues(["workerId": workerId, "status": UserOrderType.applied.rawValue])
     }
     
     public func retrievePendingOrders(completion: @escaping ([UserOrder]) -> Void) {
@@ -60,9 +90,10 @@ extension FirebaseDBService {
         let time = dict["time"] as? String ?? ""
         let tips = dict["tips"] as? Double ?? 0.0
         let totalCost = dict["totalCost"] as? Double ?? 0.0
+        let id = dict["id"] as? String ?? ""
         let userId = dict["userId"] as? String ?? ""
 //        let workerId = dict["workerId"] as? String ?? ""
-        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId)
+        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId, id: id)
     }
     
 }
