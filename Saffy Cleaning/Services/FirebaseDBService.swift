@@ -27,11 +27,23 @@ extension FirebaseDBService {
         ref.child(user.uid).childByAutoId().setValue(value)
     }
     
-    public func retrieveOrder() {
-        let ref = db.child(Constants.userOrders).child(user.uid).queryOrdered(byChild: "status").queryEqual(toValue: "pending")
-        print("getting order data")
-        ref.observeSingleEvent(of: .value, with: { snapshot in
-            print (snapshot)
+    public func retrievePendingOrders(completion: @escaping ([UserOrder]) -> Void) {
+//        let ref = db.child(Constants.userOrders).child(user.uid).queryOrdered(byChild: "status").queryEqual(toValue: "pending")
+        let ref = db.child(Constants.userOrders)
+        var openingOrder = [UserOrder]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            for snapshot in snapshots.value as! Dictionary<String, Any>  {
+                let allOrders = snapshot.value as! Dictionary<String, Any>
+                for order in allOrders {
+                    let orderDict = order.value as! Dictionary<String, Any>
+                    if orderDict["status"] as! String == "pending" {
+                        let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                        let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                        openingOrder.append(orderObj)
+                    }
+                }
+            }
+            completion(openingOrder)
         })
     }
     
@@ -84,6 +96,20 @@ extension FirebaseDBService {
         
     }
     
+    private func convertDictToOrder(dict: Dictionary<String, Any>, address: Address) -> UserOrder {
+        let date = dict["date"] as? String ?? ""
+        let duration = dict["duration"] as? Int ?? 0
+        let message = dict["message"] as? String ?? ""
+        let pet = dict["pet"] as? String ?? ""
+        let selectedItems = dict["selectedItems"] as? [String] ?? []
+//        let status = dict["status"] as? String ?? ""
+        let time = dict["time"] as? String ?? ""
+        let tips = dict["tips"] as? Double ?? 0.0
+        let totalCost = dict["totalCost"] as? Double ?? 0.0
+//        let workerId = dict["workerId"] as? String ?? ""
+        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost)
+    }
+    
 }
 
 // MARK: User Mgmt
@@ -120,39 +146,7 @@ extension FirebaseDBService {
             if let dict = snapshot.value as? Dictionary<String, Any> {
                 for key in dict.keys {
                     if let item = dict[key] as? Dictionary<String, Any> {
-                        let street = item["street"] ?? ""
-                        let postalCode = item["postalCode"] ?? ""
-                        let district = item["district"] ?? ""
-                        let building = item["building"] ?? ""
-                        let type = item["type"] ?? ""
-                        let contactPerson = item["contactPerson"] ?? ""
-                        let contactNumber = item["contactNumber"] ?? ""
-                        let name = item["name"] ?? ""
-                        let sizes = item["sizes"] ?? 0
-                        let flat = item["flat"] ?? ""
-                        let room = item["room"] ?? ""
-                        let latitude = item["latitude"] ?? 0
-                        let longitude = item["longitude"] ?? 0
-                        let images = item["images"] ?? []
-                        let createdAt = item["createdAt"] ?? 0
-                        print("createdAt\(createdAt)")
-                        let newAddress = Address(
-                            name: name as! String,
-                            room: room as! String,
-                            flat: flat as! String,
-                            street: street as! String,
-                            postalCode: postalCode as! String,
-                            building: building as! String,
-                            district: district as! String,
-                            contactPerson: contactPerson as! String,
-                            contactNumber: contactNumber as! String,
-                            type: type as! String,
-                            sizes: sizes as! String,
-                            longitude: longitude as! Double,
-                            latitude: latitude as! Double,
-                            images: images as! [String],
-                            createdAt: String(format: "%.6f", createdAt as! Double)
-                        )
+                        let newAddress = self.convertDictToAddress(item: item)
                         addresses.append(newAddress)
                     }
                 }
@@ -162,5 +156,41 @@ extension FirebaseDBService {
                 completion([])
             }
         })
+    }
+    
+    private func convertDictToAddress(item: Dictionary<String, Any>) -> Address {
+        let street = item["street"] ?? ""
+        let postalCode = item["postalCode"] ?? ""
+        let district = item["district"] ?? ""
+        let building = item["building"] ?? ""
+        let type = item["type"] ?? ""
+        let contactPerson = item["contactPerson"] ?? ""
+        let contactNumber = item["contactNumber"] ?? ""
+        let name = item["name"] ?? ""
+        let sizes = item["sizes"] ?? 0
+        let flat = item["flat"] ?? ""
+        let room = item["room"] ?? ""
+        let latitude = item["latitude"] ?? 0.0
+        let longitude = item["longitude"] ?? 0.0
+        let images = item["images"] ?? []
+        let createdAt = item["createdAt"] ?? 0.0
+        print("createdAt\(createdAt)")
+        return Address(
+            name: name as! String,
+            room: room as! String,
+            flat: flat as! String,
+            street: street as! String,
+            postalCode: postalCode as! String,
+            building: building as! String,
+            district: district as! String,
+            contactPerson: contactPerson as! String,
+            contactNumber: contactNumber as! String,
+            type: type as! String,
+            sizes: sizes as! String,
+            longitude: longitude as! Double,
+            latitude: latitude as! Double,
+            images: images as! [String],
+            createdAt: String(format: "%.6f", createdAt as! Double)
+        )
     }
 }
