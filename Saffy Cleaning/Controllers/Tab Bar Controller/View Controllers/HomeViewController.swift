@@ -23,6 +23,8 @@ class HomeViewController: UIViewController {
     private let addressButton = SCCircleButton(image: UIImage(systemName: "list.dash")!, cornerRadius: 20)
     
     public var user: User?
+    private var orders : [UserOrder]?
+    private var selectedOrder : UserOrder?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,13 +49,17 @@ class HomeViewController: UIViewController {
                     
                 }
                 else {
-                    DispatchQueue.main.async {
-                        self.configureMapView()
-                        self.addAnnotation()
-                        self.mapView.delegate = self
-                    }
+                    FirebaseDBService.service.retrievePendingOrders(completion: {[weak self] result in
+                        DispatchQueue.main.async {
+                            self?.configureMapView()
+                            self?.orders = result
+                            self?.addAnnotation(orders: result)
+                            self?.mapView.delegate = self
+                        }
+                        
+                    })
+                    
                 }
-                
             }
         }
     }
@@ -83,11 +89,13 @@ class HomeViewController: UIViewController {
         self.present(addressVC, animated: true, completion: nil)
     }
     
-    private func addAnnotation() {
-        let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
-        addressLocation.coordinate = CLLocationCoordinate2D(latitude: 43.48108050634096, longitude: -80.74135461822152)
-        mapView.addAnnotation(addressLocation)
+    private func addAnnotation(orders: [UserOrder]) {
+        for order in orders {
+            let addressLocation = MKPointAnnotation()
+            addressLocation.title = "Testing"
+            addressLocation.coordinate = CLLocationCoordinate2D(latitude: order.address.latitude, longitude: order.address.longitude)
+            mapView.addAnnotation(addressLocation)
+        }
     }
     
 }
@@ -95,50 +103,26 @@ class HomeViewController: UIViewController {
 extension HomeViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-        let userOrder = UserOrder(
-            date: "30-03-2022",
-            time: "14:04 PM",
-            duration: 4,
-            address:
-                Address(
-                    name: "",
-                    room: "Room A",
-                    flat: "Flat B",
-                    street: "Sherbourne Street",
-                    postalCode: "M4X31A",
-                    building: "Empire Building",
-                    district: "",
-                    contactPerson: "Hector Vu",
-                    contactNumber: "561-334-11-22",
-                    type: "Apartment", sizes: "1255",
-                    longitude: -80.74135461822152,
-                    latitude: 43.48108050634096,
-                    images: ["carpet"],
-                    createdAt: "22-03-2022"),
-            pet: "No",
-            message: "Please beware of",
-            selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
-            tips: nil,
-            totalCost: 104)
-        
-        let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder)
-        nearbyOrderVC.delegate = self
-        if let sheet = nearbyOrderVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+        let long = view.annotation?.coordinate.longitude ?? 0
+        let lat = view.annotation?.coordinate.latitude ?? 0
+        if orders != nil {
+            let userOrder = orders?.first(where: {$0.address.latitude == lat && $0.address.longitude == long})
+            let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!)
+            nearbyOrderVC.delegate = self
+            if let sheet = nearbyOrderVC.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            }
+            self.present(nearbyOrderVC, animated: true, completion: nil)
         }
-        
-        self.present(nearbyOrderVC, animated: true, completion: nil)
-        
     }
-    
 }
 
 extension HomeViewController: NearbyOrderViewControllerDelegate {
     
     func didDismissNearbyOrder() {
+        // TODO: send workerId and
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -148,8 +132,6 @@ extension HomeViewController: NearbyOrderViewControllerDelegate {
 extension HomeViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
-        print(address.sizes)
-        
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
         
@@ -161,33 +143,6 @@ extension HomeViewController: SCAddressVCDelegate {
     
     
 }
-
-/*
-extension HomeViewController: UISheetPresentationControllerDelegate {
-    
-    // Note: Inherited from UIAdaptivePresentationControllerDelegate
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("Dismissed")
-        
-        guard let vc = presentationController.presentedViewController as? SCAddressVC else { return }
-        
-        guard let address = vc.getCurrentAddress() else { return }
-        guard let allAddresses = vc.getAllAddresses() else { return }
-        
-        let allAnnotations = self.mapView.annotations
-        self.mapView.removeAnnotations(allAnnotations)
-        
-        let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
-        addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
-        mapView.addAnnotation(addressLocation)
-        
-        print(address.contactPerson)
-        print(allAddresses)
-    }
-    
-}
- */
 
 extension HomeViewController {
     

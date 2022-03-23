@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserOrder: Codable {
+struct UserOrder: Codable {
     public var id :String =  UUID().uuidString
     public var date: String
     public var time: String
@@ -20,6 +20,7 @@ class UserOrder: Codable {
     public var totalCost: Double
     public var status: String = UserOrderType.pending.rawValue
     public var workerId: String = ""
+    public var userId: String
     
     init(date: String,
          time: String,
@@ -29,7 +30,8 @@ class UserOrder: Codable {
          message: String,
          selectedItems: [String],
          tips: Double?,
-         totalCost: Double
+         totalCost: Double,
+         userId: String
     ) {
         self.date = date
         self.time = time
@@ -40,5 +42,6 @@ class UserOrder: Codable {
         self.selectedItems = selectedItems
         self.tips = tips
         self.totalCost = totalCost
+        self.userId = userId
     }
 }

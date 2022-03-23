@@ -106,8 +106,9 @@ extension FirebaseDBService {
         let time = dict["time"] as? String ?? ""
         let tips = dict["tips"] as? Double ?? 0.0
         let totalCost = dict["totalCost"] as? Double ?? 0.0
+        let userId = dict["userId"] as? String ?? ""
 //        let workerId = dict["workerId"] as? String ?? ""
-        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost)
+        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId)
     }
     
 }

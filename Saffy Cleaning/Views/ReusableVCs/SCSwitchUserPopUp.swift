@@ -8,8 +8,12 @@
 import UIKit
 import Firebase
 
+protocol SCSwitchUserPopUpDelegate: AnyObject {
+    func dismissPopUp()
+}
+
 class SCSwitchUserPopUp: UIViewController {
-    
+
     private let containerView = UIView()
     private let titleLabel = SCTitleLabel(fontSize: 16, textColor: .brandDark)
     private let yesButton = SCMainButton(title: "YES", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
@@ -17,6 +21,8 @@ class SCSwitchUserPopUp: UIViewController {
     private var horizontalStackView: SCStackView!
     private var user: User?
     
+    public weak var delegate: SCSwitchUserPopUpDelegate?
+
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +34,7 @@ class SCSwitchUserPopUp: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureContainerView()
         configureStackView()
         setData()
@@ -54,6 +60,7 @@ class SCSwitchUserPopUp: UIViewController {
         databaseRef.child(user.uid).updateChildValues(values)
         
         DispatchQueue.main.async {
+            self.delegate?.dismissPopUp()
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -74,6 +81,7 @@ class SCSwitchUserPopUp: UIViewController {
     }
     
 }
+
 
 extension SCSwitchUserPopUp {
     

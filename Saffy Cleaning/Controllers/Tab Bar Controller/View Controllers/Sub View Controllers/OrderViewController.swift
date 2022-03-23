@@ -7,6 +7,7 @@
 
 import UIKit
 import PayPalCheckout
+import FirebaseAuth
 
 class OrderViewController: UIViewController {
     
@@ -493,7 +494,7 @@ extension OrderViewController {
                     return
                 }
                 
-                let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost)
+                var userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost, userId: Auth.auth().currentUser?.uid ?? "")
                 
                 if let selectedTips = self.selectedTips {
                     userOrder.tips = selectedTips

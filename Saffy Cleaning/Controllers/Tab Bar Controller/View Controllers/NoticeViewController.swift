@@ -58,9 +58,10 @@ class NoticeViewController: UIViewController {
             message: "Please beware of",
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
-            totalCost: 104)
+            totalCost: 104,
+            userId: "")
         
-        let userOrder2 = UserOrder(
+        var userOrder2 = UserOrder(
             date: "30-03-2022",
             time: "14:04 PM",
             duration: 4,
@@ -84,11 +85,12 @@ class NoticeViewController: UIViewController {
             message: "Please beware of",
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
-            totalCost: 104)
+            totalCost: 104,
+            userId: "")
         
         userOrder2.status = "matched"
         
-        let userOrder3 = UserOrder(
+        var userOrder3 = UserOrder(
             date: "30-03-2022",
             time: "14:04 PM",
             duration: 4,
@@ -112,7 +114,8 @@ class NoticeViewController: UIViewController {
             message: "Please beware of",
             selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
             tips: nil,
-            totalCost: 104)
+            totalCost: 104,
+            userId: "")
         
         userOrder3.status = "completed"
         
