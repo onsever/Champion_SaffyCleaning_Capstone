@@ -63,11 +63,14 @@ extension HomeViewController: SCAddressVCDelegate {
         
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
-        
+        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+
         let addressLocation = MKPointAnnotation()
         addressLocation.title = "Testing"
         addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         mapView.addAnnotation(addressLocation)
+        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+    mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
     

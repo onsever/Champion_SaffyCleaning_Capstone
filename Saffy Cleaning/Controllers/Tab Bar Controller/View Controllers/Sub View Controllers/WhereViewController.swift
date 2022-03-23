@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 protocol WhereViewDelegate: AnyObject {
     func addAddress(address: Address)
@@ -72,11 +73,14 @@ extension WhereViewController: SCAddressVCDelegate {
         
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
+       // let span:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         
         let addressLocation = MKPointAnnotation()
         addressLocation.title = "Testing"
         addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         mapView.addAnnotation(addressLocation)
+        mapView.layoutMargins = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 25)
+        mapView.showAnnotations(mapView.annotations, animated: true)
         
     }
     
