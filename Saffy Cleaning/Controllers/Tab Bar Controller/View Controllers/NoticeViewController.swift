@@ -25,16 +25,18 @@ class NoticeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         title = "Notice"
         configureTableView()
-        FirebaseDBService.service.retrieveUserOrders(){ orders in
-            self.notificationArray = orders
-            self.tableView.reloadData()
+        
+        FirebaseDBService.service.retrieveUserOrders(){ [weak self] orders in
+            DispatchQueue.main.async {
+                self?.notificationArray = orders
+                self?.tableView.reloadData()
+            }
         }
     }
-
 }
 
 extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
