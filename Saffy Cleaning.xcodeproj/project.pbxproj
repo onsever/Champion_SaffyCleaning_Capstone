@@ -41,6 +41,7 @@
 		BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */; };
 		BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */; };
 		BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */; };
+		BA78EA7227EAA02C00B45086 /* SCNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */; };
 		BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */; };
 		BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BB27E18ACB00C1CA14 /* Order.swift */; };
 		BA8180BE27E18B1200C1CA14 /* UserOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BD27E18B1200C1CA14 /* UserOrder.swift */; };
@@ -163,6 +164,7 @@
 		BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNearbyOrderCell.swift; sourceTree = "<group>"; };
 		BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTakeJobPopUp.swift; sourceTree = "<group>"; };
 		BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSwitchUserPopUp.swift; sourceTree = "<group>"; };
+		BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNotificationCell.swift; sourceTree = "<group>"; };
 		BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTipsView.swift; sourceTree = "<group>"; };
 		BA8180BB27E18ACB00C1CA14 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BA8180BD27E18B1200C1CA14 /* UserOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrder.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				BA408B0E27E40C690087FFA1 /* SCChatCell.swift */,
 				BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */,
 				BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */,
+				BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
 				0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */,
 				0B70E51F27E282630094F284 /* Constants.swift in Sources */,
+				BA78EA7227EAA02C00B45086 /* SCNotificationCell.swift in Sources */,
 				BA408B0F27E40C690087FFA1 /* SCChatCell.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
