@@ -501,7 +501,7 @@ extension OrderViewController {
                 }
 
                 let orderDict = try! DictionaryEncoder.encode(userOrder)
-                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary, id: userOrder.id)
                 
             }
         }

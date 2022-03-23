@@ -22,9 +22,9 @@ final class FirebaseDBService {
 // MARK: Order Mgmt
 
 extension FirebaseDBService {
-    public func createNewOrder(value:NSDictionary) {
+    public func createNewOrder(value:NSDictionary, id: String) {
         let ref = db.child(Constants.userOrders)
-        ref.child(user.uid).childByAutoId().setValue(value)
+        ref.child(user.uid).child(id).setValue(value)
     }
     
     public func retrievePendingOrders(completion: @escaping ([UserOrder]) -> Void) {
@@ -32,18 +32,23 @@ extension FirebaseDBService {
         let ref = db.child(Constants.userOrders)
         var openingOrder = [UserOrder]()
         ref.observeSingleEvent(of: .value, with: { snapshots in
-            for snapshot in snapshots.value as! Dictionary<String, Any>  {
-                let allOrders = snapshot.value as! Dictionary<String, Any>
-                for order in allOrders {
-                    let orderDict = order.value as! Dictionary<String, Any>
-                    if orderDict["status"] as! String == "pending" {
-                        let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
-                        let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
-                        openingOrder.append(orderObj)
+            if let snapshots = snapshots.value {
+                for snapshot in snapshots as! Dictionary<String, Any>  {
+                    let allOrders = snapshot.value as! Dictionary<String, Any>
+                    for order in allOrders {
+                        let orderDict = order.value as! Dictionary<String, Any>
+                        if orderDict["status"] as! String == "pending" {
+                            let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                            let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                            openingOrder.append(orderObj)
+                        }
                     }
                 }
+                completion(openingOrder)
+            }else{
+                completion([])
             }
-            completion(openingOrder)
+            
         })
     }
     
