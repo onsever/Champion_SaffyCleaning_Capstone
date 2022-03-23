@@ -86,6 +86,7 @@ extension FirebaseDBService {
         var orders = [UserOrder]()
         
         ref.observeSingleEvent(of: .value, with: { snapshot in
+            guard snapshot.exists() else { return }
             for order in snapshot.value as! Dictionary<String, Any>  {
                 let orderDict = order.value as! Dictionary<String, Any>
                 let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
@@ -94,7 +95,7 @@ extension FirebaseDBService {
             }
             completion(orders)
         })
-        
+        completion([])
     }
     
     
