@@ -126,7 +126,6 @@ class AddressViewController: UIViewController {
         let contactNumber = contactNumberView.getTextField().text!
         let houseType = houseTypeView.getTextField().text!
         let houseSize = houseSizeView.getTextField().text!
-        let images = FBStorageService.service.saveImages(images: imageArray, imageRef: Constants.addressImages)
 
         //postalCode, housesize probably consider as mandatory
         //otherwise error will occur implicitly
@@ -134,11 +133,15 @@ class AddressViewController: UIViewController {
             guard let self = self else { return }
             if let location = location {
 
-                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: images, createdAt: String(format: "%.6f", Date() as CVarArg))
+                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: [], createdAt: String(format: "%.6f", Date() as CVarArg))
 
                 let NSDict = try! DictionaryEncoder.encode(newAddress)
 
-                FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                let child = FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                
+                FBStorageService.service.saveImages(images: self.imageArray, imageRef: Constants.addressImages) { imgArr in
+                    child.updateChildValues(["images": imgArr])
+                }
                 
                 if self.isEditingMode == true {
                     self.dataSource?.didTapSave(newAddress)

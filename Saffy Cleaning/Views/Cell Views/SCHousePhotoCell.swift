@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SCHousePhotoCell: UICollectionViewCell {
     
@@ -52,6 +53,13 @@ class SCHousePhotoCell: UICollectionViewCell {
     
     public func setData(image: UIImage?) {
         self.imageView.image = image
+    }
+    
+    public func setImageFromUrl(urlString: String) {
+        let url = URL(string: urlString)
+        DispatchQueue.main.async {
+            self.imageView.sd_setImage(with: url)
+        }
     }
     
 }
