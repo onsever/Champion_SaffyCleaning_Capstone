@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol SCNotificationCellDelegate: AnyObject {
-    func userTappedOnView()
-}
+//protocol SCNotificationCellDelegate: AnyObject {
+//    func userTappedOnView()
+//}
 
 class SCNotificationCell: UITableViewCell {
     
@@ -21,7 +21,8 @@ class SCNotificationCell: UITableViewCell {
     private let messageLabel = SCMainLabel(fontSize: 13, textColor: .brandDark)
     private let viewLabel = SCCorneredCompletionLabel(cornerRadius: 8)
     private var horizontalStackView: SCStackView!
-    public weak var delegate: SCNotificationCellDelegate?
+//    public weak var delegate: SCNotificationCellDelegate?
+    public weak var order: UserOrder?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,7 +38,9 @@ class SCNotificationCell: UITableViewCell {
     }
     
     @objc private func viewDidTappedOn(_ gesture: UITapGestureRecognizer) {
-        delegate?.userTappedOnView()
+        FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
+            // get user obj from here
+        }
     }
     
     private func configureImageView() {
@@ -107,7 +110,7 @@ class SCNotificationCell: UITableViewCell {
     public func setData(userOrder: UserOrder) {
         
         self.dateLabel.text = userOrder.date
-        
+
         if userOrder.status == "pending" {
             self.titleLabel.text = "Order posted (\(userOrder.id))"
             self.messageLabel.text = "You have successfully create a new order for your apartment in \(userOrder.address.street) on \(userOrder.date)."
@@ -128,6 +131,11 @@ class SCNotificationCell: UITableViewCell {
             self.viewLabel.isUserInteractionEnabled = false
             self.viewLabel.attributedText = nil
             self.viewLabel.backgroundColor = .white
+        }
+        else if userOrder.status == UserOrderType.applied.rawValue {
+            self.titleLabel.text = "Order applied (\(userOrder.id))"
+            self.messageLabel.text = "Your order has been applied by a worker. Please click view to checkout the profile."
+            self.viewLabel.isUserInteractionEnabled = true
         }
         
         /*

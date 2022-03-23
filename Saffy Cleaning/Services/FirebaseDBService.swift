@@ -58,7 +58,6 @@ extension FirebaseDBService {
     }
     
     public func retrievePendingOrders(completion: @escaping ([UserOrder]) -> Void) {
-//        let ref = db.child(Constants.userOrders).child(user.uid).queryOrdered(byChild: "status").queryEqual(toValue: "pending")
         let ref = db.child(Constants.userOrders)
         var openingOrder = [UserOrder]()
         ref.observeSingleEvent(of: .value, with: { snapshots in
@@ -82,7 +81,21 @@ extension FirebaseDBService {
         })
     }
     
-    
+    public func retrieveUserOrders(completion: @escaping ([UserOrder]) -> Void) {
+        let ref = db.child(Constants.userOrders).child(user.uid)
+        var orders = [UserOrder]()
+        
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            for order in snapshot.value as! Dictionary<String, Any>  {
+                let orderDict = order.value as! Dictionary<String, Any>
+                let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                let order = self.convertDictToOrder(dict: orderDict, address: address)
+                orders.append(order)
+            }
+            completion(orders)
+        })
+        
+    }
     
     
     private func convertDictToOrder(dict: Dictionary<String, Any>, address: Address) -> UserOrder {
@@ -91,14 +104,17 @@ extension FirebaseDBService {
         let message = dict["message"] as? String ?? ""
         let pet = dict["pet"] as? String ?? ""
         let selectedItems = dict["selectedItems"] as? [String] ?? []
-//        let status = dict["status"] as? String ?? ""
+        let status = dict["status"] as? String ?? ""
         let time = dict["time"] as? String ?? ""
         let tips = dict["tips"] as? Double ?? 0.0
         let totalCost = dict["totalCost"] as? Double ?? 0.0
         let id = dict["id"] as? String ?? ""
         let userId = dict["userId"] as? String ?? ""
-//        let workerId = dict["workerId"] as? String ?? ""
-        return UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId, id: id)
+        let workerId = dict["workerId"] as? String ?? ""
+        let userOrder = UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId, id: id)
+        userOrder.status = status
+        userOrder.workerId = workerId
+        return userOrder
     }
     
 }
@@ -152,6 +168,14 @@ extension FirebaseDBService {
         db.child("users").child(uid).observeSingleEvent(of: .value) { snapshot in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
             let user = User(uid: uid, dictionary: dictionary)
+            completion(user)
+        }
+    }
+    
+    public func retrieveUserById(id: String, completion: @escaping(User?) -> Void) {
+        db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            let user = User(uid: id, dictionary: dictionary)
             completion(user)
         }
     }

@@ -29,105 +29,11 @@ class NoticeViewController: UIViewController {
         view.backgroundColor = .white
         title = "Notice"
         configureTableView()
-        testDummyData()
+        FirebaseDBService.service.retrieveUserOrders(){ orders in
+            self.notificationArray = orders
+            self.tableView.reloadData()
+        }
     }
-    
-    private func testDummyData() {
-        
-        let userOrder1 = UserOrder(
-            date: "30-03-2022",
-            time: "14:04 PM",
-            duration: 4,
-            address:
-                Address(
-                    name: "",
-                    room: "Room A",
-                    flat: "Flat B",
-                    street: "Sherbourne Street",
-                    postalCode: "M4X31A",
-                    building: "Empire Building",
-                    district: "",
-                    contactPerson: "Hector Vu",
-                    contactNumber: "561-334-11-22",
-                    type: "Apartment", sizes: "1255",
-                    longitude: -80.74135461822152,
-                    latitude: 43.48108050634096,
-                    images: ["carpet"],
-                    createdAt: "22-03-2022"),
-            pet: "No",
-            message: "Please beware of",
-            selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
-            tips: nil,
-            totalCost: 104,
-            userId: "",
-            id: UUID().uuidString)
-        
-        var userOrder2 = UserOrder(
-            date: "30-03-2022",
-            time: "14:04 PM",
-            duration: 4,
-            address:
-                Address(
-                    name: "",
-                    room: "Room A",
-                    flat: "Flat B",
-                    street: "Sherbourne Street",
-                    postalCode: "M4X31A",
-                    building: "Empire Building",
-                    district: "",
-                    contactPerson: "Hector Vu",
-                    contactNumber: "561-334-11-22",
-                    type: "Apartment", sizes: "1255",
-                    longitude: -80.74135461822152,
-                    latitude: 43.48108050634096,
-                    images: ["carpet"],
-                    createdAt: "22-03-2022"),
-            pet: "No",
-            message: "Please beware of",
-            selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
-            tips: nil,
-            totalCost: 104,
-            userId: "",
-            id: UUID().uuidString)
-        
-        userOrder2.status = "matched"
-        
-        var userOrder3 = UserOrder(
-            date: "30-03-2022",
-            time: "14:04 PM",
-            duration: 4,
-            address:
-                Address(
-                    name: "",
-                    room: "Room A",
-                    flat: "Flat B",
-                    street: "Sherbourne Street",
-                    postalCode: "M4X31A",
-                    building: "Empire Building",
-                    district: "",
-                    contactPerson: "Hector Vu",
-                    contactNumber: "561-334-11-22",
-                    type: "Apartment", sizes: "1255",
-                    longitude: -80.74135461822152,
-                    latitude: 43.48108050634096,
-                    images: ["carpet"],
-                    createdAt: "22-03-2022"),
-            pet: "No",
-            message: "Please beware of",
-            selectedItems: ["Carpet\nCleaning", "Garage Cleaning"],
-            tips: nil,
-            totalCost: 104,
-            userId: "",
-            id: UUID().uuidString)
-        
-        userOrder3.status = "completed"
-        
-        notificationArray.append(userOrder1)
-        notificationArray.append(userOrder2)
-        notificationArray.append(userOrder3)
-        
-    }
-    
 
 }
 
@@ -146,7 +52,9 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCNotificationCell.identifier, for: indexPath) as? SCNotificationCell else { return UITableViewCell() }
         
         cell.setData(userOrder: notificationArray[indexPath.row])
-        cell.delegate = self
+//        cell.delegate = self
+        cell.order = notificationArray[indexPath.row]
+        
         
         return cell
     }
@@ -163,14 +71,13 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension NoticeViewController: SCNotificationCellDelegate {
-    
-    func userTappedOnView() {
-        print("User will see workers profile.")
-    }
-    
-    
-}
+//extension NoticeViewController: SCNotificationCellDelegate {
+//
+//    func userTappedOnView() {
+//        print("User will see workers profile.")
+//    }
+//
+//}
 
 extension NoticeViewController {
     
