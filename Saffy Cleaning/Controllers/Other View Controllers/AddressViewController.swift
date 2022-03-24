@@ -337,6 +337,8 @@ extension AddressViewController {
             ($0 as! SCInfoView).getTextField().addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
         
+        contactNumberView.getTextField().keyboardType = .phonePad
+        
         houseSizeView.getTextField().keyboardType = .numberPad
         
         NSLayoutConstraint.activate([
