@@ -25,6 +25,16 @@ class SCTakeJobPopUp: UIViewController {
     }()
     private let descriptionLabel = SCSubTitleLabel(text: "", isRequired: false, textColor: .brandDark)
     private let confirmationButton = SCMainButton(title: "", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
+    
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.tintColor = .brandGem
+        
+        return button
+    }()
+    
     private let policyView = SCPolicyView()
     
     public weak var delegate: SCTakeJobPopUpDelegate?
@@ -56,6 +66,7 @@ class SCTakeJobPopUp: UIViewController {
         configureDescriptionLabel()
         configureConfirmationButton()
         configurePolicyView()
+        
     }
     
     @objc private func confirmationButtonTapped(_ button: UIButton) {
@@ -70,6 +81,10 @@ class SCTakeJobPopUp: UIViewController {
                 
             }, negativeAction: nil)
         }
+    }
+    
+    @objc private func cancelButtonTapped(_ button: UIButton) {
+        self.dismiss(animated: true)
     }
     
 }
@@ -114,12 +129,19 @@ extension SCTakeJobPopUp {
     
     private func configureImageView() {
         containerView.addSubview(imageView)
+        containerView.addSubview(cancelButton)
         
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
+                
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
             imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 80),
-            imageView.widthAnchor.constraint(equalToConstant: 80)
+            imageView.widthAnchor.constraint(equalToConstant: 80),
+            cancelButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            cancelButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            cancelButton.heightAnchor.constraint(equalToConstant: 25),
+            cancelButton.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -165,8 +187,8 @@ extension SCTakeJobPopUp {
         
         NSLayoutConstraint.activate([
             policyView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10),
-            policyView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
-            policyView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            policyView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            policyView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             policyView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
