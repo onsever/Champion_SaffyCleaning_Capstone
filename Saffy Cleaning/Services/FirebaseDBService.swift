@@ -77,7 +77,32 @@ extension FirebaseDBService {
             }else{
                 completion([])
             }
-            
+        })
+    }
+    
+    public func retrieveWorkOrders(completion: @escaping ([UserOrder]) -> Void) {
+        let ref = db.child(Constants.userOrders)
+        let workerId = Auth.auth().currentUser!.uid
+        var openingOrder = [UserOrder]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            if let snapshots = snapshots.value {
+                for snapshot in snapshots as! Dictionary<String, Any>  {
+                    let allOrders = snapshot.value as! Dictionary<String, Any>
+                    for order in allOrders {
+                        let orderDict = order.value as! Dictionary<String, Any>
+                        if orderDict["workerId"] as! String == workerId {
+                            let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                            let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                            openingOrder.append(orderObj)
+                        } else {
+                            completion([])
+                        }
+                    }
+                }
+                completion(openingOrder)
+            }else{
+                completion([])
+            }
         })
     }
     

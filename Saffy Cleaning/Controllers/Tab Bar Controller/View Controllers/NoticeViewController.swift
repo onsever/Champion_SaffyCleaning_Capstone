@@ -21,6 +21,17 @@ class NoticeViewController: UIViewController {
         return tableView
     }()
     
+    public var user: User?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        FirebaseDBService.service.retrieveUser { [weak self] user in
+            if let user = user {
+                self?.user = user
+            }
+        }
+    }
+    
     private var notificationArray = [UserOrder]()
 
     override func viewDidLoad() {
@@ -30,10 +41,19 @@ class NoticeViewController: UIViewController {
         title = "Notice"
         configureTableView()
         
-        FirebaseDBService.service.retrieveUserOrders(){ [weak self] orders in
+        if user != nil && user?.userType == UserType.user.rawValue {
+        FirebaseDBService.service.retrieveUserOrders { [weak self] orders in
             DispatchQueue.main.async {
                 self?.notificationArray = orders
                 self?.tableView.reloadData()
+                }
+            }
+        } else {
+            FirebaseDBService.service.retrieveWorkOrders {[weak self] orders in
+                DispatchQueue.main.async {
+                    self?.notificationArray = orders
+                    self?.tableView.reloadData()
+                }
             }
         }
     }
