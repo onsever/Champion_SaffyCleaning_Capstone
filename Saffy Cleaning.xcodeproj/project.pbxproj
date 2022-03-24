@@ -22,6 +22,7 @@
 		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
 		BA0CCA2A27DD52410030DC0B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2927DD52410030DC0B /* History.swift */; };
 		BA14E4AC27E555370099A801 /* SCEmptyPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */; };
+		BA17C95E27ED05D500DD737E /* WorkerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */; };
 		BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
@@ -145,6 +146,7 @@
 		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
 		BA0CCA2927DD52410030DC0B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCEmptyPhotoCell.swift; sourceTree = "<group>"; };
+		BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerProfileViewController.swift; sourceTree = "<group>"; };
 		BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				BAEC381627DC762400496D81 /* AddressViewController.swift */,
 				BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */,
 				BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */,
+				BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */,
 			);
 			path = "Other View Controllers";
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */,
 				BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */,
 				BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */,
+				BA17C95E27ED05D500DD737E /* WorkerProfileViewController.swift in Sources */,
 				BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
