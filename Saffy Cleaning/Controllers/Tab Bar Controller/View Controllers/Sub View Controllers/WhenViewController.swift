@@ -110,6 +110,8 @@ class WhenViewController: UIViewController {
     private func formatTime(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
         
         return formatter.string(from: date)
     }
