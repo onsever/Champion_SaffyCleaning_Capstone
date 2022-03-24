@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         else {
             window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
         }
-        
+        window?.overrideUserInterfaceStyle = .light
         window?.makeKeyAndVisible()
     }
     
