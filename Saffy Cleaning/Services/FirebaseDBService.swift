@@ -19,6 +19,35 @@ final class FirebaseDBService {
     private let storage = Storage.storage().reference()
 }
 
+// MARK: Review Mgmt {
+extension FirebaseDBService {
+    public func retrieveUserReviews(type: String, completion: @escaping([Review]) -> Void) {
+        let isUser = type == UserType.user.rawValue ? true : false
+        let ref = db.child(Constants.reviews).child(user.uid)
+        var reviews = [Review]()
+        ref.observeSingleEvent(of: .value) { snapshot in
+            guard snapshot.exists() else { return }
+            for item in snapshot.value as! Dictionary<String, Any> {
+                let itemDict = item.value as! Dictionary<String, Any>
+                let date = itemDict["date"] ?? ""
+                let user = itemDict["user"] ?? ""
+                let userImage = itemDict["userImage"] ?? ""
+                let info = itemDict["info"] ?? ""
+                let ratingCount = itemDict["ratingCount"] ?? 0
+                let userType = itemDict["userType"] ?? UserType.user.rawValue
+                let newReview = Review(user: user as! String, date: date as! String, info: info as! String, ratingCount: ratingCount as! Int, userType: userType as! String, userImage: userImage as! String)
+                if(isUser && userType as! String == UserType.user.rawValue) {
+                    reviews.append(newReview)
+                } else if (!isUser && userType as! String == UserType.worker.rawValue) {
+                    reviews.append(newReview)
+                }
+            }
+            completion(reviews)
+        }
+        completion([])
+    }
+}
+
 // MARK: Notification Mgmt
 extension FirebaseDBService {
     public func retrieveUserNotification(completion: @escaping ([UserOrder]) -> Void) {

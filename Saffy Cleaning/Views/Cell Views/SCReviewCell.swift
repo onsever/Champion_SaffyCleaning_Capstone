@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 enum Rating: String {
     case oneStar = "sc_rating_1"
@@ -91,23 +92,25 @@ class SCReviewCell: UITableViewCell {
         ])
     }
     
-    public func setData(userImage: UIImage?, ratingCount: Rating, userReview: String, currentDate: String) {
-        self.userImageView.image = userImage?.withRenderingMode(.alwaysOriginal)
+    public func setData(userImage: String, ratingCount: Int, userReview: String, currentDate: String) {
+        self.userImageView.sd_setImage(with: URL(string: userImage), completed: nil)
         self.reviewLabel.text = userReview
         self.dateLabel.text = currentDate
         reviewLabel.numberOfLines = 0
         
         switch ratingCount {
-        case .oneStar:
-            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)?.withRenderingMode(.alwaysOriginal)
-        case .twoStar:
-            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
-        case .threeStar:
-            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
-        case .fourStar:
-            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
-        case .fiveStar:
-            self.ratingImageView.image = UIImage(named: ratingCount.rawValue)
+        case 1:
+            self.ratingImageView.image = UIImage(named: Rating.oneStar.rawValue)?.withRenderingMode(.alwaysOriginal)
+        case 2:
+            self.ratingImageView.image = UIImage(named: Rating.twoStar.rawValue)
+        case 3:
+            self.ratingImageView.image = UIImage(named: Rating.threeStar.rawValue)
+        case 4:
+            self.ratingImageView.image = UIImage(named: Rating.fourStar.rawValue)
+        case 5:
+            self.ratingImageView.image = UIImage(named: Rating.fiveStar.rawValue)
+        default:
+            self.ratingImageView.image = UIImage(named: Rating.oneStar.rawValue)?.withRenderingMode(.alwaysOriginal)
         }
     }
     

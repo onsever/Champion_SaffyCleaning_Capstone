@@ -99,11 +99,16 @@ class ProfileViewController: UIViewController {
     }
     
     private func setData() {
-        reviewArray.append(Review(user: "Mark", userImage: UIImage(named: "carpet")!, date: "17-Nov-2021", info: "Effective and polite", ratingCount: .fiveStar))
-        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "He didn't cleaned home enough!", ratingCount: .oneStar))
-        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.", ratingCount: .oneStar))
+        FirebaseDBService.service.retrieveUser { user in
+            guard let user = user else { return }
+            FirebaseDBService.service.retrieveUserReviews(type: user.userType) { [weak self] reviews in
+                self?.reviewArray = reviews
+            }
+            //        reviewArray.append(Review(user: "Mark", userImage: UIImage(named: "carpet")!, date: "17-Nov-2021", info: "Effective and polite", ratingCount: .fiveStar))
+            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "He didn't cleaned home enough!", ratingCount: .oneStar))
+            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.", ratingCount: .oneStar))
+        }
     }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
