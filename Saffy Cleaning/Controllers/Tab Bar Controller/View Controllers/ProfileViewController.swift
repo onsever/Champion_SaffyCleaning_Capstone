@@ -117,7 +117,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCReviewCell.identifier, for: indexPath) as? SCReviewCell else { return UITableViewCell() }
         
-        cell.setData(userImage: reviewArray[indexPath.row].userImage, ratingCount: reviewArray[indexPath.row].ratingCount, userReview: reviewArray[indexPath.row].info, currentDate: reviewArray[indexPath.row].date)
+        cell.setData(userImage: reviewArray[indexPath.row].reviewerImageUrl, ratingCount: reviewArray[indexPath.row].ratingCount, userReview: reviewArray[indexPath.row].info, currentDate: reviewArray[indexPath.row].date)
         
         return cell
     }

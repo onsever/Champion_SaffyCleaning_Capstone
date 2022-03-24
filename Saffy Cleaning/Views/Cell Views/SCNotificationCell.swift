@@ -7,10 +7,6 @@
 
 import UIKit
 
-//protocol SCNotificationCellDelegate: AnyObject {
-//    func userTappedOnView()
-//}
-
 class SCNotificationCell: UITableViewCell {
     
     public static let identifier = "NotificationCell"
@@ -21,8 +17,8 @@ class SCNotificationCell: UITableViewCell {
     private let messageLabel = SCMainLabel(fontSize: 13, textColor: .brandDark)
     private let viewLabel = SCCorneredCompletionLabel(cornerRadius: 8)
     private var horizontalStackView: SCStackView!
-//    public weak var delegate: SCNotificationCellDelegate?
     public weak var order: UserOrder?
+    public var user: User?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,8 +34,27 @@ class SCNotificationCell: UITableViewCell {
     }
     
     @objc private func viewDidTappedOn(_ gesture: UITapGestureRecognizer) {
-        FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
-            // get user obj from here
+        if user?.userType == UserType.user.rawValue {
+            switch order!.status {
+            case UserOrderType.applied.rawValue:
+                FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
+                    // get user obj from here
+                    print(user?.userType, user?.uid, user?.fullName)
+                }
+            case UserOrderType.matched.rawValue:
+                FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
+            case UserOrderType.completed.rawValue:
+                print("order completed")
+                // show checkout button
+                // after checkout should be review
+            default:
+                print("notification label clicked")
+            }
+        }
+        else if user?.userType == UserType.worker.rawValue {
+            // review pop up?
+            // worker only can leave the review
+            print("i am worker")
         }
     }
     
@@ -92,10 +107,6 @@ class SCNotificationCell: UITableViewCell {
         
         viewLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
         
-        let attributedText = NSMutableAttributedString(string: "View", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
-        self.viewLabel.attributedText = attributedText
-        self.viewLabel.backgroundColor = .brandYellow
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewDidTappedOn(_:)))
         viewLabel.addGestureRecognizer(tap)
         
@@ -107,62 +118,110 @@ class SCNotificationCell: UITableViewCell {
         ])
     }
     
-    public func setData(userOrder: UserOrder) {
+    public func setData(userOrder: UserOrder, user: User) {
+        
+        var status = ""
+        var message = ""
         
         self.dateLabel.text = userOrder.date
-
-        if userOrder.status == "pending" {
-            self.titleLabel.text = "Order posted (\(userOrder.id))"
-            self.messageLabel.text = "You have successfully create a new order for your apartment in \(userOrder.address.street) on \(userOrder.date)."
-            self.viewLabel.textColor = .white
-            self.viewLabel.isUserInteractionEnabled = false
-            self.viewLabel.attributedText = nil
-            self.viewLabel.backgroundColor = .white
-        }
-        else if userOrder.status == "matched" {
-            self.titleLabel.text = "Order update (\(userOrder.id))"
-            self.messageLabel.text = "Someone wants to take your job. Let's review their profile to decide do you want their service or not."
+        self.user = user
+        
+        if user.userType == UserType.user.rawValue {
             self.viewLabel.isUserInteractionEnabled = true
+            switch userOrder.status {
+            // user placed the order
+            case UserOrderType.pending.rawValue:
+                message = "You have successfully create a new order for your apartment in \(userOrder.address.street) on \(userOrder.date)."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            // worker applied the order
+            case UserOrderType.applied.rawValue:
+                message = "Your order has been applied by a worker. Please click view to checkout the profile."
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "View", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.textColor = .black
+                self.viewLabel.backgroundColor = .brandYellow
+            // user cancelled the order
+            case UserOrderType.cancelled.rawValue:
+                message = "You cancelled the order."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            // user matched with worker
+            case UserOrderType.matched.rawValue:
+                message = "You matched the order with a worker. Please contact the worker through the chatroom for any query."
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Completed", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.textColor = .black
+                self.viewLabel.backgroundColor = .green
+            // user matched with worker
+            case UserOrderType.completed.rawValue:
+                message = "Order completed."
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Pay", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.textColor = .black
+                self.viewLabel.backgroundColor = .lightGray
+            default:
+                message = "Unexpected error."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            }
         }
-        else if userOrder.status == "completed" {
-            self.titleLabel.text = "Order completed (\(userOrder.id))"
-            self.messageLabel.text = "Your order successfully been completed. Thank you for working with us!"
-            self.viewLabel.textColor = .white
+        else if user.userType == UserType.worker.rawValue {
             self.viewLabel.isUserInteractionEnabled = false
-            self.viewLabel.attributedText = nil
-            self.viewLabel.backgroundColor = .white
-        }
-        else if userOrder.status == UserOrderType.applied.rawValue {
-            self.titleLabel.text = "Order applied (\(userOrder.id))"
-            self.messageLabel.text = "Your order has been applied by a worker. Please click view to checkout the profile."
-            self.viewLabel.isUserInteractionEnabled = true
+            
+            switch userOrder.status {
+            // worker applied the order
+            case UserOrderType.applied.rawValue:
+                message = "You have successfully took the order."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            // user matched with worker
+            case UserOrderType.matched.rawValue:
+                message = "The order has been accepted by the owner. Please contact the owner through the chatroom for any query."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            // user cancelled the order
+            case UserOrderType.cancelled.rawValue:
+                message = "The order has been cancelled by the user."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            // order completed
+            case UserOrderType.completed.rawValue:
+                message = "Order completed. You will receive the fee very soon. Please feel free to leave the comment about this order in review section"
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Review", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.textColor = .black
+                self.viewLabel.backgroundColor = .brandYellow
+                self.viewLabel.isUserInteractionEnabled = true
+            default:
+                message = "Unexpected error."
+                self.viewLabel.attributedText = nil
+                self.viewLabel.textColor = .white
+                self.viewLabel.backgroundColor = .white
+            }
         }
         
-        /*
-        switch status {
-        case .pending:
-            break
-        case .opening:
-            break
-        case .applied:
-            break
-        case .matched:
-            self.titleLabel.text = "Order update (\(userOrder.id))"
-            self.messageLabel.text = "Sella wants to take your job. Let's review her profile to decide do you want her service or not."
-            break
-        case .proceeding:
-            self.titleLabel.text = "Order posted (\(userOrder.id))"
-            self.messageLabel.text = "You have successfully create a new order for your apartment in \(userOrder.address.street) on \(userOrder.date)."
-            break
-        case .completed:
-            self.titleLabel.text = "Order completed (\(userOrder.id))"
-            self.messageLabel.text = "Your order successfully been completed. Thank you for working with us!"
-            break
-        case .cancelled:
-            break
-        }*/
+        // order status mapping
+        switch userOrder.status {
+        case UserOrderType.pending.rawValue:
+            status = "posted"
+        case UserOrderType.applied.rawValue:
+            status = UserOrderType.applied.rawValue
+        case UserOrderType.matched.rawValue:
+            status = UserOrderType.matched.rawValue
+        case UserOrderType.cancelled.rawValue:
+            status = UserOrderType.cancelled.rawValue
+        case UserOrderType.completed.rawValue:
+            status = UserOrderType.completed.rawValue
+        default:
+            status = ""
+        }
         
+        self.titleLabel.text = "Order \(status) (\(userOrder.id))"
+        self.messageLabel.text = message
         
     }
-
+    
 }

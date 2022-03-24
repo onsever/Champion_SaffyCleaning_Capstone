@@ -25,11 +25,7 @@ class NoticeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        FirebaseDBService.service.retrieveUser { [weak self] user in
-            if let user = user {
-                self?.user = user
-            }
-        }
+        fetchData()
     }
     
     private var notificationArray = [UserOrder]()
@@ -41,18 +37,27 @@ class NoticeViewController: UIViewController {
         title = "Notice"
         configureTableView()
         
-        if user != nil && user?.userType == UserType.user.rawValue {
-        FirebaseDBService.service.retrieveUserOrders { [weak self] orders in
-            DispatchQueue.main.async {
-                self?.notificationArray = orders
-                self?.tableView.reloadData()
-                }
-            }
-        } else {
-            FirebaseDBService.service.retrieveWorkOrders {[weak self] orders in
-                DispatchQueue.main.async {
-                    self?.notificationArray = orders
-                    self?.tableView.reloadData()
+    }
+
+    private func fetchData() {
+        FirebaseDBService.service.retrieveUser { [weak self] user in
+            if let user = user {
+                if user.userType == UserType.user.rawValue {
+                    FirebaseDBService.service.retrieveUserOrders { [weak self] orders in
+                        DispatchQueue.main.async {
+                            self?.notificationArray = orders
+                            self?.user = user
+                            self?.tableView.reloadData()
+                        }
+                    }
+                } else {
+                    FirebaseDBService.service.retrieveWorkOrders {[weak self] orders in
+                        DispatchQueue.main.async {
+                            self?.notificationArray = orders
+                            self?.user = user
+                            self?.tableView.reloadData()
+                        }
+                    }
                 }
             }
         }
@@ -73,10 +78,8 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCNotificationCell.identifier, for: indexPath) as? SCNotificationCell else { return UITableViewCell() }
         
-        cell.setData(userOrder: notificationArray[indexPath.row])
-//        cell.delegate = self
+        cell.setData(userOrder: notificationArray[indexPath.row], user: user!)
         cell.order = notificationArray[indexPath.row]
-        
         
         return cell
     }
@@ -92,14 +95,6 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-
-//extension NoticeViewController: SCNotificationCellDelegate {
-//
-//    func userTappedOnView() {
-//        print("User will see workers profile.")
-//    }
-//
-//}
 
 extension NoticeViewController {
     

@@ -8,19 +8,19 @@
 import UIKit
 
 struct Review {
-    var user: String
-    var userImage: String
+    var reviewerId: String
+    var reviewerImageUrl: String
     var date: String
     var info: String
     var ratingCount: Int
-    var userType: String
+    var revieweeUserType: String
     
-    init(user: String, date: String, info: String, ratingCount: Int, userType: String, userImage: String) {
-        self.user = user
+    init(reviewerId: String, date: String, info: String, ratingCount: Int, revieweeUserType: String, reviewerImageUrl: String) {
+        self.reviewerId = reviewerId
         self.date = date
         self.info = info
         self.ratingCount = ratingCount
-        self.userType = userType
-        self.userImage = userImage
+        self.revieweeUserType = revieweeUserType
+        self.reviewerImageUrl = reviewerImageUrl
     }
 }

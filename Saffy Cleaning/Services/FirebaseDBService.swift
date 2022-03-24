@@ -30,15 +30,15 @@ extension FirebaseDBService {
             for item in snapshot.value as! Dictionary<String, Any> {
                 let itemDict = item.value as! Dictionary<String, Any>
                 let date = itemDict["date"] ?? ""
-                let user = itemDict["user"] ?? ""
-                let userImage = itemDict["userImage"] ?? ""
+                let reviewerId = itemDict["reviewerId"] ?? ""
+                let reviewerImageUrl = itemDict["reviewerImageUrl"] ?? ""
                 let info = itemDict["info"] ?? ""
                 let ratingCount = itemDict["ratingCount"] ?? 0
-                let userType = itemDict["userType"] ?? UserType.user.rawValue
-                let newReview = Review(user: user as! String, date: date as! String, info: info as! String, ratingCount: ratingCount as! Int, userType: userType as! String, userImage: userImage as! String)
-                if(isUser && userType as! String == UserType.user.rawValue) {
+                let revieweeUserType = itemDict["revieweeUserType"] ?? UserType.user.rawValue
+                let newReview = Review(reviewerId: reviewerId as! String, date: date as! String, info: info as! String, ratingCount: ratingCount as! Int, revieweeUserType: revieweeUserType as! String, reviewerImageUrl: reviewerImageUrl as! String)
+                if(isUser && revieweeUserType as! String == UserType.user.rawValue) {
                     reviews.append(newReview)
-                } else if (!isUser && userType as! String == UserType.worker.rawValue) {
+                } else if (!isUser && revieweeUserType as! String == UserType.worker.rawValue) {
                     reviews.append(newReview)
                 }
             }
@@ -150,6 +150,12 @@ extension FirebaseDBService {
             completion(orders)
         })
         completion([])
+    }
+    
+    public func updateOrderStatus(orderId: String, value: [String: Any]) {
+        let ref = db.child(Constants.userOrders)
+        ref.child(user.uid).child(orderId)
+            .updateChildValues(value)
     }
     
     

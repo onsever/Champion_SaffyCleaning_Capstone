@@ -34,6 +34,10 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // probably the mapview somehow cached the button and annotation
+        // even remove lazy cant solve the problem, maybe life cycle need to be reset
+        self.configureMapView()
+        self.mapView.delegate = self
         
         FirebaseDBService.service.retrieveUser { [weak self] user in
             
@@ -43,7 +47,6 @@ class HomeViewController: UIViewController {
                 self.user = user
                 if user.userType == UserType.user.rawValue {
                     DispatchQueue.main.async {
-                        self.configureMapView()
                         self.configureButtons()
                     }
                     
@@ -51,10 +54,8 @@ class HomeViewController: UIViewController {
                 else {
                     FirebaseDBService.service.retrievePendingOrders(completion: {[weak self] result in
                         DispatchQueue.main.async {
-                            self?.configureMapView()
                             self?.orders = result
                             self?.addAnnotation(orders: result)
-                            self?.mapView.delegate = self
                         }
                         
                     })
