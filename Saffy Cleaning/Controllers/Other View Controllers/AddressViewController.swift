@@ -111,63 +111,23 @@ class AddressViewController: UIViewController {
     @objc private func didTapOk(_ button: UIBarButtonItem) {
         
     }
- 
-    private func isTextFieldEmpty(_ textField: UITextField) -> Bool {
-        
-        if textField.text == "" {
-            return true
-        }
-        
-        return false
-    }
     
     @objc private func userDidTapAdd(_ button: UIButton) {
         
         let room = roomView.getTextField().text!
         let flat = flatView.getTextField().text!
         
-        if isTextFieldEmpty(streetView.getTextField()) {
-            self.presentAlert(title: "Empty Street Address", message: "Please enter your street address to proceed.", positiveAction: { action in
-                
-            }, negativeAction: nil)
-            return
-        }
-        
-        let street = streetView.getTextField().text!
-        
-        if isTextFieldEmpty(postalCodeView.getTextField()) {
-            self.presentAlert(title: "Empty Postal Code", message: "Please provide your postal code to save your address.", positiveAction: { action in
-                
-            }, negativeAction: nil)
-            return
-        }
-        let postalCode = postalCodeView.getTextField().text!
+        guard let street = streetView.getTextField().validateTextField() else { return }
+        guard let postalCode = postalCodeView.getTextField().validateTextField() else { return }
         
         let building = buildingView.getTextField().text!
         let district = districtView.getTextField().text!
         
-        if isTextFieldEmpty(contactPersonView.getTextField()) && isTextFieldEmpty(contactNumberView.getTextField()) {
-            self.presentAlert(title: "Empty Name and Number", message: "Please provide your full name and phone number to proceed.", positiveAction: { action in
-                
-            }, negativeAction: nil)
-            return
-        }
-        
-        let contactPerson = contactPersonView.getTextField().text!
-        let contactNumber = contactNumberView.getTextField().text!
-        
-        if isTextFieldEmpty(houseTypeView.getTextField()) && isTextFieldEmpty(houseSizeView.getTextField()) {
-            self.presentAlert(title: "Empty House Information", message: "Please provide additional information about your house to proceed.", positiveAction: { action in
-                
-            }, negativeAction: nil)
-            return
-        }
-        
-        let houseType = houseTypeView.getTextField().text!
-        let houseSize = houseSizeView.getTextField().text!
+        guard let houseType = houseTypeView.getTextField().validateTextField() else { return }
+        guard let houseSize = houseSizeView.getTextField().validateTextField() else { return }
+        guard let contactPerson = contactPersonView.getTextField().validateTextField() else { return }
+        guard let contactNumber = contactNumberView.getTextField().validateTextField() else { return }
 
-        //postalCode, housesize probably consider as mandatory
-        //otherwise error will occur implicitly
         LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self] (location) in
             guard let self = self else { return }
             if let location = location {
@@ -200,6 +160,10 @@ class AddressViewController: UIViewController {
         selectionPopUp.modalPresentationStyle = .overCurrentContext
         self.present(selectionPopUp, animated: true, completion: nil)
         
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        textField.layer.borderColor = textField.text?.count != 0 ? UIColor.brandGem.cgColor : UIColor.brandError.cgColor
     }
     
     public func setData(_ address: Address?) {
@@ -370,6 +334,7 @@ extension AddressViewController {
         verticalStackView.arrangedSubviews.forEach {
             $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
             ($0 as! SCInfoView).getTextField().delegate = self
+            ($0 as! SCInfoView).getTextField().addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
         
         houseSizeView.getTextField().keyboardType = .numberPad
@@ -444,7 +409,7 @@ extension AddressViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
             break
         }
-        
+                
         return true
     }
     
