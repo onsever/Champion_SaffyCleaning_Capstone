@@ -47,12 +47,12 @@ class AddressViewController: UIViewController {
     
     private let roomView = SCInfoView(placeholder: "e.g. Room A", text: "Room")
     private let flatView = SCInfoView(placeholder: "e.g. Flat 2", text: "Flat")
-    private let streetView = SCInfoView(placeholder: "e.g. Some example", text: "Street")
+    private let streetView = SCInfoView(placeholder: "e.g. Bloor Street", text: "Street")
     private let postalCodeView = SCInfoView(placeholder: "e.g. M2S0K2", text: "Postal Code")
-    private let buildingView = SCInfoView(placeholder: "e.g. Some example", text: "Building")
+    private let buildingView = SCInfoView(placeholder: "e.g. Black Condos", text: "Building")
     private let districtView = SCInfoView(placeholder: "e.g. Some example", text: "District")
     private let houseTypeView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "House type")
-    private let houseSizeView = SCInfoView(placeholder: "e.g. Some example", text: "House size")
+    private let houseSizeView = SCInfoView(placeholder: "e.g. 2464", text: "House size")
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private lazy var addButton = SCMainButton(title: isEditingMode ? "Save" : "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
@@ -112,18 +112,57 @@ class AddressViewController: UIViewController {
         
     }
  
+    private func isTextFieldEmpty(_ textField: UITextField) -> Bool {
         
+        if textField.text == "" {
+            return true
+        }
+        
+        return false
+    }
     
     @objc private func userDidTapAdd(_ button: UIButton) {
         
         let room = roomView.getTextField().text!
         let flat = flatView.getTextField().text!
+        
+        if isTextFieldEmpty(streetView.getTextField()) {
+            self.presentAlert(title: "Empty Street Address", message: "Please enter your street address to proceed.", positiveAction: { action in
+                
+            }, negativeAction: nil)
+            return
+        }
+        
         let street = streetView.getTextField().text!
+        
+        if isTextFieldEmpty(postalCodeView.getTextField()) {
+            self.presentAlert(title: "Empty Postal Code", message: "Please provide your postal code to save your address.", positiveAction: { action in
+                
+            }, negativeAction: nil)
+            return
+        }
         let postalCode = postalCodeView.getTextField().text!
+        
         let building = buildingView.getTextField().text!
         let district = districtView.getTextField().text!
+        
+        if isTextFieldEmpty(contactPersonView.getTextField()) && isTextFieldEmpty(contactNumberView.getTextField()) {
+            self.presentAlert(title: "Empty Name and Number", message: "Please provide your full name and phone number to proceed.", positiveAction: { action in
+                
+            }, negativeAction: nil)
+            return
+        }
+        
         let contactPerson = contactPersonView.getTextField().text!
         let contactNumber = contactNumberView.getTextField().text!
+        
+        if isTextFieldEmpty(houseTypeView.getTextField()) && isTextFieldEmpty(houseSizeView.getTextField()) {
+            self.presentAlert(title: "Empty House Information", message: "Please provide additional information about your house to proceed.", positiveAction: { action in
+                
+            }, negativeAction: nil)
+            return
+        }
+        
         let houseType = houseTypeView.getTextField().text!
         let houseSize = houseSizeView.getTextField().text!
 
@@ -299,6 +338,10 @@ extension AddressViewController {
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = 10
         horizontalStackView.distribution = .fillEqually
+        
+        horizontalStackView.arrangedSubviews.forEach {
+            ($0 as! SCInfoView).getTextField().delegate = self
+        }
                 
         NSLayoutConstraint.activate([
             roomView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
@@ -324,9 +367,12 @@ extension AddressViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapHouseType(_:)))
         houseTypeView.addGestureRecognizer(tap)
         
-        for view in verticalStackView.arrangedSubviews {
-            view.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
+        verticalStackView.arrangedSubviews.forEach {
+            $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
+            ($0 as! SCInfoView).getTextField().delegate = self
         }
+        
+        houseSizeView.getTextField().keyboardType = .numberPad
         
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 0),
@@ -369,6 +415,37 @@ extension AddressViewController {
             addButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             addButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+}
+
+extension AddressViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        switch textField {
+        case roomView.getTextField():
+            flatView.getTextField().becomeFirstResponder()
+        case flatView.getTextField():
+            streetView.getTextField().becomeFirstResponder()
+        case streetView.getTextField():
+            postalCodeView.getTextField().becomeFirstResponder()
+        case postalCodeView.getTextField():
+            buildingView.getTextField().becomeFirstResponder()
+        case buildingView.getTextField():
+            districtView.getTextField().becomeFirstResponder()
+        case districtView.getTextField():
+            houseSizeView.getTextField().becomeFirstResponder()
+        case houseSizeView.getTextField():
+            contactPersonView.getTextField().becomeFirstResponder()
+        case contactPersonView.getTextField():
+            contactNumberView.getTextField().becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+            break
+        }
+        
+        return true
     }
     
 }

@@ -28,5 +28,6 @@ pod 'Firebase/Database'
 pod 'GoogleSignIn'
 pod 'PayPalCheckout'
 pod 'SDWebImage'
+pod 'IQKeyboardManagerSwift'
 
 end
