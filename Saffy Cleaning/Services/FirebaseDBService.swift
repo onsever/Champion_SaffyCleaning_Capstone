@@ -295,7 +295,6 @@ extension FirebaseDBService {
         let longitude = item["longitude"] ?? 0.0
         let images = item["images"] ?? []
         let createdAt = item["createdAt"] ?? 0.0
-        print("createdAt\(createdAt)")
         return Address(
             name: name as! String,
             room: room as! String,

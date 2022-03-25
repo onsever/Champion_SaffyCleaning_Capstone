@@ -9,6 +9,11 @@ import UIKit
 import Firebase
 import SDWebImage
 
+protocol ProfileViewProtocol {
+    func changeUserType()
+}
+
+
 class ProfileViewController: UIViewController {
     
     private let profileImageView = SCProfileImageView(cornerRadius: 60)
@@ -17,6 +22,11 @@ class ProfileViewController: UIViewController {
     private let hiringView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     private let averageScoreView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     private let yearView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
+    
+    var delegate: ProfileViewProtocol? = nil
+    
+
+    private var switchUserVC: SCSwitchUserPopUp? = nil
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -29,12 +39,16 @@ class ProfileViewController: UIViewController {
     }()
     
     private var reviewArray = [Review]()
+    
     public var user: User? {
         didSet {
             print("User data is set.")
+            switchUserVC = SCSwitchUserPopUp(user: user!)
+            switchUserVC?.delegate = self
         }
     }
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,8 +57,6 @@ class ProfileViewController: UIViewController {
         configureHorizontalStackView()
         configureTableView()
         setData()
-        
-        // GET THE USER DATA FROM FIREBASE TO DISPLAY
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,8 +68,7 @@ class ProfileViewController: UIViewController {
             
             if let user = user {
                 self.user = user
-                print(user.profileImageUrl!)
-                
+            
                 DispatchQueue.main.async {
                     self.usernameLabel.text = user.fullName
                     
@@ -74,9 +85,8 @@ class ProfileViewController: UIViewController {
     
     @objc private func changeButtonTapped(_ button: UIBarButtonItem) {
         
-        if let user = user {
-            let switchUserVC = SCSwitchUserPopUp(user: user)
-            self.present(switchUserVC, animated: true, completion: nil)
+        if user != nil {
+            self.present(switchUserVC!, animated: true, completion: nil)
         }
         
     }
@@ -152,6 +162,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
         
+}
+
+extension ProfileViewController :SCSwitchUserPopUpDelegate {
+    func dismissPopUp() {
+        self.delegate?.changeUserType()
+    }
 }
 
 extension ProfileViewController {

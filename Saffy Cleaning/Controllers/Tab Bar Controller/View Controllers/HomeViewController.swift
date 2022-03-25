@@ -25,11 +25,24 @@ class HomeViewController: UIViewController {
     public var user: User?
     private var orders : [UserOrder]?
     private var selectedOrder : UserOrder?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Home"
+
+    }
+    
+    private func renderIcon () {
+        let barItem = UIBarButtonItem(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket"), style: .plain, target: self, action: #selector(leftBar))
+        barItem.isEnabled = false
+        barItem.tintColor = .black
+        navigationItem.leftBarButtonItem = barItem
+    }
+    
+    @objc private func leftBar () {
+        print("pressing")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,11 +51,13 @@ class HomeViewController: UIViewController {
         // even remove lazy cant solve the problem, maybe life cycle need to be reset
         self.configureMapView()
         self.mapView.delegate = self
-        
+        self.renderView()
+
+    }
+    
+    private func renderView() {
         FirebaseDBService.service.retrieveUser { [weak self] user in
-            
             guard let self = self else { return }
-            
             if let user = user {
                 self.user = user
                 if user.userType == UserType.user.rawValue {
@@ -52,17 +67,19 @@ class HomeViewController: UIViewController {
                     
                 }
                 else {
-                    FirebaseDBService.service.retrievePendingOrders(completion: {[weak self] result in
+                    FirebaseDBService.service.retrievePendingOrders{ [weak self] result in
                         DispatchQueue.main.async {
+                            self?.removeButtons()
                             self?.orders = result
                             self?.addAnnotation(orders: result)
                         }
                         
-                    })
+                    }
                     
                 }
             }
         }
+        self.renderIcon()
     }
     
     
@@ -134,6 +151,12 @@ extension HomeViewController: NearbyOrderViewControllerDelegate {
     
 }
 
+extension HomeViewController: ProfileViewProtocol {
+    func changeUserType() {
+        self.renderView()
+    }
+}
+
 extension HomeViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
@@ -167,9 +190,11 @@ extension HomeViewController {
     }
     
     private func configureButtons() {
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
         mapView.addSubview(orderButton)
         mapView.addSubview(addressButton)
-        
         orderButton.addTarget(self, action: #selector(orderButtonDidTap(_:)), for: .touchUpInside)
         addressButton.addTarget(self, action: #selector(addressButtonDidTap(_:)), for: .touchUpInside)
         
@@ -183,6 +208,13 @@ extension HomeViewController {
             addressButton.widthAnchor.constraint(equalToConstant: 40),
             addressButton.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    private func removeButtons() {
+//        mapView.willRemoveSubview(orderButton)
+//        mapView.willRemoveSubview(addressButton)
+        orderButton.removeFromSuperview()
+        addressButton.removeFromSuperview()
     }
     
 }

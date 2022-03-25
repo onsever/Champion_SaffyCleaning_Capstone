@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 
-protocol SCSwitchUserPopUpDelegate: AnyObject {
+protocol SCSwitchUserPopUpDelegate {
     func dismissPopUp()
 }
 
@@ -21,7 +21,7 @@ class SCSwitchUserPopUp: UIViewController {
     private var horizontalStackView: SCStackView!
     private var user: User?
     
-    public weak var delegate: SCSwitchUserPopUpDelegate?
+    var delegate: SCSwitchUserPopUpDelegate? = nil
 
     init(user: User) {
         self.user = user
@@ -58,9 +58,9 @@ class SCSwitchUserPopUp: UIViewController {
         }
         
         databaseRef.child(user.uid).updateChildValues(values)
-        
+        self.delegate?.dismissPopUp()
         DispatchQueue.main.async {
-            self.delegate?.dismissPopUp()
+
             self.dismiss(animated: true, completion: nil)
         }
     }
