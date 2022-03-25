@@ -53,6 +53,12 @@ class HomeViewController: UIViewController {
 
     }
     
+    private func showCurrentLocation () {
+        handleMapZoom(lat: 43.7261496, lng: -79.473145, isAddress: false)
+    }
+    
+
+    
     private func renderView() {
         FirebaseDBService.service.retrieveUser { [weak self] user in
             guard let self = self else { return }
@@ -77,7 +83,18 @@ class HomeViewController: UIViewController {
                 }
             }
         }
+        self.showCurrentLocation()
         self.renderIcon()
+    }
+    private func handleMapZoom(lat: Double, lng: Double, isAddress: Bool) {
+        // set coordinates (lat lon)
+        let coords = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+        // set span (radius of points)
+        let span = MKCoordinateSpan(latitudeDelta: isAddress ? 0.01 : 0.8, longitudeDelta: isAddress ? 0.08 : 0.8)
+        // set region
+        let region = MKCoordinateRegion(center: coords, span: span)
+        // set the view
+        mapView.setRegion(region, animated: true)
     }
     
     
@@ -112,7 +129,11 @@ class HomeViewController: UIViewController {
         
         for order in orders {
             let addressLocation = MKPointAnnotation()
-            addressLocation.title = "Testing"
+            guard let user = user else { return }
+            if user.userType == UserType.worker.rawValue {
+                addressLocation.title = "Cost: $\(order.totalCost)"
+            }
+//            addressLocation.title = "Testing"
             addressLocation.coordinate = CLLocationCoordinate2D(latitude: order.address.latitude, longitude: order.address.longitude)
             mapView.addAnnotation(addressLocation)
         }
@@ -130,10 +151,12 @@ extension HomeViewController: MKMapViewDelegate {
             let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!)
             nearbyOrderVC.delegate = self
             if let sheet = nearbyOrderVC.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
+                sheet.detents = [.medium()]
                 sheet.prefersGrabberVisible = true
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             }
+            guard let userOrder = userOrder else { return }
+            self.handleMapZoom(lat: userOrder.address.latitude, lng: userOrder.address.longitude, isAddress: true)
             mapView.deselectAnnotation(view.annotation, animated: false)
             self.present(nearbyOrderVC, animated: true, completion: nil)
         }
@@ -161,18 +184,19 @@ extension HomeViewController: SCAddressVCDelegate {
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
         
-        self.mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+//        self.mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
         
         let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
+//        addressLocation.title = "Testing"
         addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         mapView.addAnnotation(addressLocation)
-        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+//        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
         mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
     
 }
+
 
 extension HomeViewController {
     

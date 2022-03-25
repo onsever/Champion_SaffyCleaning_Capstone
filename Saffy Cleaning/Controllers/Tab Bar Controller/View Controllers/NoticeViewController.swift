@@ -108,9 +108,9 @@ extension NoticeViewController:SCNotificationCellDelgate {
     }
     
     func checkout(totalCost: String) {
-        let checkoutVC = CheckoutViewController()
-        checkoutVC.totalCost = totalCost
-        self.present(checkoutVC, animated: true, completion: nil)
+//        let checkoutVC = CheckoutViewController()
+//        checkoutVC.totalCost = totalCost
+//        self.present(checkoutVC, animated: true, completion: nil)
     }
 }
 
