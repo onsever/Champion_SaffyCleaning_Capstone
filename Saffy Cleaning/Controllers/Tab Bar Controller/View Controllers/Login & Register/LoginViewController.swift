@@ -10,10 +10,12 @@ import FirebaseAuth
 import GoogleSignIn
 import FBSDKLoginKit
 import FBSDKCoreKit
-
+import JGProgressHUD
 
 
 class LoginViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -61,19 +63,20 @@ class LoginViewController: UIViewController {
     // MARK: - Selectors
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
+        spinner.show(in: view)
         guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
         FirebaseAuthService.service.signIn(email: username, pass: password) {[weak self] (success) in
             var message: String = ""
             if (success) {
                 message = "User was successfully logged in."
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                }
             } else {
                 message = "Password is not currect"
-            }
-            self?.presentAlert(title: "Login", message: message) { action in
-                print("Positive action is tapped on.")
-            } negativeAction: { action in
-                print("Negative action is tapped on.")
+                self?.presentAlert(title: "Login", message: message, positiveAction: { action in
+                }, negativeAction: nil)
             }
         }
 

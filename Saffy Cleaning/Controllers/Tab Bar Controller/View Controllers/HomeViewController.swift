@@ -35,9 +35,24 @@ class HomeViewController: UIViewController {
     }
     
     private func renderIcon () {
-        let barItem = UIBarButtonItem(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket"), style: .plain, target: self, action: #selector(leftBar))
-        barItem.isEnabled = false
-        barItem.tintColor = .black
+        let bView = UIView()
+        
+        bView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        
+        
+        
+        let imageView = UIImageView(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = user?.userType == UserType.user.rawValue ? .brandGem : .brandYellow
+        imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        
+        bView.addSubview(imageView)
+        
+        imageView.contentMode = .scaleAspectFill
+        
+        
+        
+        let barItem = UIBarButtonItem(customView: bView)
+        
         navigationItem.leftBarButtonItem = barItem
     }
     
@@ -67,6 +82,7 @@ class HomeViewController: UIViewController {
                 if user.userType == UserType.user.rawValue {
                     DispatchQueue.main.async {
                         self.configureButtons()
+                        self.renderIcon()
                     }
                     
                 }
@@ -76,6 +92,7 @@ class HomeViewController: UIViewController {
                             self?.removeButtons()
                             self?.orders = result
                             self?.addAnnotation(orders: result)
+                            self?.renderIcon()
                         }
                         
                     }
@@ -84,7 +101,7 @@ class HomeViewController: UIViewController {
             }
         }
         self.showCurrentLocation()
-        self.renderIcon()
+        
     }
     private func handleMapZoom(lat: Double, lng: Double, isAddress: Bool) {
         // set coordinates (lat lon)
