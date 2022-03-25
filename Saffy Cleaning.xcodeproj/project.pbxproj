@@ -79,6 +79,8 @@
 		BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */; };
 		BA9539D327D998E2005A899A /* SCStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539D227D998E2005A899A /* SCStackView.swift */; };
 		BAA27DAF27ED1BB400B7C472 /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DAE27ED1BB400B7C472 /* UITextField+Ext.swift */; };
+		BAA27DB127ED41A300B7C472 /* SCPrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */; };
+		BAA27DB327ED42BE00B7C472 /* SCRatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */; };
 		BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */; };
 		BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */; };
 		BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35A27D9AF170018A030 /* ChatViewController.swift */; };
@@ -208,6 +210,8 @@
 		BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCHousePhotoCell.swift; sourceTree = "<group>"; };
 		BA9539D227D998E2005A899A /* SCStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCStackView.swift; sourceTree = "<group>"; };
 		BAA27DAE27ED1BB400B7C472 /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
+		BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCPrivacyVC.swift; sourceTree = "<group>"; };
+		BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRatingVC.swift; sourceTree = "<group>"; };
 		BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BAB5F35A27D9AF170018A030 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -499,6 +503,8 @@
 				BAF8453127E233F4002ADA10 /* SCConfirmationPopUp.swift */,
 				BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */,
 				BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */,
+				BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */,
+				BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */,
 			);
 			path = ReusableVCs;
 			sourceTree = "<group>";
@@ -853,8 +859,10 @@
 				BAFC9B2627DC3BD7000DDBCF /* SCOrderInfoView.swift in Sources */,
 				BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */,
 				BA9539CA27D991CD005A899A /* SCReviewCell.swift in Sources */,
+				BAA27DB127ED41A300B7C472 /* SCPrivacyVC.swift in Sources */,
 				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
+				BAA27DB327ED42BE00B7C472 /* SCRatingVC.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
 				BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */,
 				BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */,
