@@ -22,6 +22,7 @@
 		BA0CCA2827DD42000030DC0B /* SCRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */; };
 		BA0CCA2A27DD52410030DC0B /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CCA2927DD52410030DC0B /* History.swift */; };
 		BA14E4AC27E555370099A801 /* SCEmptyPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */; };
+		BA17C95E27ED05D500DD737E /* WorkerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */; };
 		BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */; };
 		BA3512CD27DAED6A00C67330 /* SCAddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */; };
 		BA3512CF27DAFB7B00C67330 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */; };
@@ -38,6 +39,10 @@
 		BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */; };
 		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
 		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
+		BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */; };
+		BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */; };
+		BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */; };
+		BA78EA7227EAA02C00B45086 /* SCNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */; };
 		BA7DDF6C27E1011400807BB1 /* SCTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */; };
 		BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BB27E18ACB00C1CA14 /* Order.swift */; };
 		BA8180BE27E18B1200C1CA14 /* UserOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8180BD27E18B1200C1CA14 /* UserOrder.swift */; };
@@ -73,12 +78,16 @@
 		BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539CD27D991D5005A899A /* SCAddressCell.swift */; };
 		BA9539D027D991D9005A899A /* SCHousePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */; };
 		BA9539D327D998E2005A899A /* SCStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9539D227D998E2005A899A /* SCStackView.swift */; };
+		BAA27DAF27ED1BB400B7C472 /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DAE27ED1BB400B7C472 /* UITextField+Ext.swift */; };
+		BAA27DB127ED41A300B7C472 /* SCPrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */; };
+		BAA27DB327ED42BE00B7C472 /* SCRatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */; };
 		BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */; };
 		BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */; };
 		BAB5F35B27D9AF170018A030 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35A27D9AF170018A030 /* ChatViewController.swift */; };
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
 		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
+		BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
 		BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */; };
@@ -140,6 +149,7 @@
 		BA0CCA2727DD42000030DC0B /* SCRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRadioButtonView.swift; sourceTree = "<group>"; };
 		BA0CCA2927DD52410030DC0B /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCEmptyPhotoCell.swift; sourceTree = "<group>"; };
+		BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerProfileViewController.swift; sourceTree = "<group>"; };
 		BA2C8EA427DFF3C400DD2E5C /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCAddressVC.swift; sourceTree = "<group>"; };
 		BA3512CE27DAFB7B00C67330 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +166,10 @@
 		BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNearbyOrderCell.swift; sourceTree = "<group>"; };
+		BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTakeJobPopUp.swift; sourceTree = "<group>"; };
+		BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSwitchUserPopUp.swift; sourceTree = "<group>"; };
+		BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNotificationCell.swift; sourceTree = "<group>"; };
 		BA7DDF6B27E1011400807BB1 /* SCTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTipsView.swift; sourceTree = "<group>"; };
 		BA8180BB27E18ACB00C1CA14 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		BA8180BD27E18B1200C1CA14 /* UserOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrder.swift; sourceTree = "<group>"; };
@@ -195,12 +209,16 @@
 		BA9539CD27D991D5005A899A /* SCAddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCAddressCell.swift; sourceTree = "<group>"; };
 		BA9539CF27D991D9005A899A /* SCHousePhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCHousePhotoCell.swift; sourceTree = "<group>"; };
 		BA9539D227D998E2005A899A /* SCStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCStackView.swift; sourceTree = "<group>"; };
+		BAA27DAE27ED1BB400B7C472 /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
+		BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCPrivacyVC.swift; sourceTree = "<group>"; };
+		BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCRatingVC.swift; sourceTree = "<group>"; };
 		BAB5F34F27D9ACE60018A030 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		BAB5F35827D9AD7E0018A030 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BAB5F35A27D9AF170018A030 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyOrderViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BAC1742D27DDA65C00C429BE /* SCOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCOrderCell.swift; sourceTree = "<group>"; };
@@ -414,6 +432,7 @@
 				BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */,
 				BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */,
 				BA65DB6527DA6E6D0007A915 /* String+Ext.swift */,
+				BAA27DAE27ED1BB400B7C472 /* UITextField+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -482,6 +501,10 @@
 				BA9539C427D991A7005A899A /* SCSelectionPopUp.swift */,
 				BA3512CC27DAED6A00C67330 /* SCAddressVC.swift */,
 				BAF8453127E233F4002ADA10 /* SCConfirmationPopUp.swift */,
+				BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */,
+				BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */,
+				BAA27DB027ED41A300B7C472 /* SCPrivacyVC.swift */,
+				BAA27DB227ED42BE00B7C472 /* SCRatingVC.swift */,
 			);
 			path = ReusableVCs;
 			sourceTree = "<group>";
@@ -500,6 +523,8 @@
 				BAF8453327E239EB002ADA10 /* SCEmptyAddressCell.swift */,
 				BA408B0E27E40C690087FFA1 /* SCChatCell.swift */,
 				BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */,
+				BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */,
+				BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -552,6 +577,8 @@
 			children = (
 				BAEC381627DC762400496D81 /* AddressViewController.swift */,
 				BAD0D87E27E84F1A004198F8 /* EditProfileViewController.swift */,
+				BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */,
+				BA17C95D27ED05D500DD737E /* WorkerProfileViewController.swift */,
 			);
 			path = "Other View Controllers";
 			sourceTree = "<group>";
@@ -832,9 +859,12 @@
 				BAFC9B2627DC3BD7000DDBCF /* SCOrderInfoView.swift in Sources */,
 				BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */,
 				BA9539CA27D991CD005A899A /* SCReviewCell.swift in Sources */,
+				BAA27DB127ED41A300B7C472 /* SCPrivacyVC.swift in Sources */,
 				BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */,
 				BA9539A827D99106005A899A /* SCCompletionLabel.swift in Sources */,
+				BAA27DB327ED42BE00B7C472 /* SCRatingVC.swift in Sources */,
 				BA9539AF27D99124005A899A /* SCTextField.swift in Sources */,
+				BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */,
 				BAFC9B2427DC3BD0000DDBCF /* SCWhereView.swift in Sources */,
 				BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */,
 				BA65DB5E27DA6E1A0007A915 /* UIColor+Ext.swift in Sources */,
@@ -863,6 +893,7 @@
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
 				0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */,
 				0B70E51F27E282630094F284 /* Constants.swift in Sources */,
+				BA78EA7227EAA02C00B45086 /* SCNotificationCell.swift in Sources */,
 				BA408B0F27E40C690087FFA1 /* SCChatCell.swift in Sources */,
 				BA9539BB27D99156005A899A /* SCProfileImageView.swift in Sources */,
 				BA95397427D99031005A899A /* Saffy_Cleaning.xcdatamodeld in Sources */,
@@ -879,17 +910,22 @@
 				BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */,
 				BAFC9B2C27DC3FB1000DDBCF /* Address.swift in Sources */,
 				BAB5F35927D9AD7E0018A030 /* HomeViewController.swift in Sources */,
+				BAA27DAF27ED1BB400B7C472 /* UITextField+Ext.swift in Sources */,
 				BA9320CA27E820D400AE1E46 /* User.swift in Sources */,
 				BA2C8EA527DFF3C400DD2E5C /* UIHelper.swift in Sources */,
 				BA9539C827D991C8005A899A /* SCHistoryCardCell.swift in Sources */,
 				BAB5F35027D9ACE60018A030 /* MainTabBarController.swift in Sources */,
 				BA9539CE27D991D5005A899A /* SCAddressCell.swift in Sources */,
+				BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */,
+				BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */,
 				BA8180BC27E18ACB00C1CA14 /* Order.swift in Sources */,
+				BA17C95E27ED05D500DD737E /* WorkerProfileViewController.swift in Sources */,
 				BA0CCA2427DD3C330030DC0B /* SCVerticalOrderInfoView.swift in Sources */,
 				BA9539CC27D991D1005A899A /* SCInfoCell.swift in Sources */,
 				BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */,
 				BAC1743027DDAD0400C429BE /* SCTotalCostView.swift in Sources */,
 				BA95396A27D99031005A899A /* AppDelegate.swift in Sources */,
+				BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */,
 				BA95396C27D99031005A899A /* SceneDelegate.swift in Sources */,
 				2580FDF427E5608B005D6A87 /* SearchLocationData.swift in Sources */,
 				BA9539AC27D99110005A899A /* SCTitleLabel.swift in Sources */,

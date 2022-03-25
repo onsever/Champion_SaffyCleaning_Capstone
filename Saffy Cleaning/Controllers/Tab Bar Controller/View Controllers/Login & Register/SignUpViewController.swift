@@ -67,7 +67,7 @@ class SignUpViewController: UIViewController {
         guard let password = passwordTextField.text else { return }
         guard let contactNumber = contactNumberTextField.text else { return }
         
-        let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!)
+        let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!, userType: UserType.user.rawValue)
         
         FirebaseAuthService.service.registerUser(with: user) { error, reference in
             print("Registeration is successfull!")

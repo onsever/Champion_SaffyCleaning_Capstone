@@ -7,18 +7,20 @@
 
 import UIKit
 
-class Review {
-    var user: String
-    var userImage: UIImage
+struct Review {
+    var reviewerId: String
+    var reviewerImageUrl: String
     var date: String
     var info: String
-    var ratingCount: Rating
+    var ratingCount: Int
+    var revieweeUserType: String
     
-    init(user: String, userImage: UIImage, date: String, info: String, ratingCount: Rating) {
-        self.user = user
-        self.userImage = userImage
+    init(reviewerId: String, date: String, info: String, ratingCount: Int, revieweeUserType: String, reviewerImageUrl: String) {
+        self.reviewerId = reviewerId
         self.date = date
         self.info = info
         self.ratingCount = ratingCount
+        self.revieweeUserType = revieweeUserType
+        self.reviewerImageUrl = reviewerImageUrl
     }
 }

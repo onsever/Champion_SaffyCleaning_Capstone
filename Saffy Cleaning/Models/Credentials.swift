@@ -14,4 +14,5 @@ struct Credentials {
     let contactNumber: String
     let password: String
     let profileImageUrl: UIImage
+    let userType: String
 }

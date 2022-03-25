@@ -7,6 +7,7 @@
 
 import UIKit
 import PayPalCheckout
+import FirebaseAuth
 
 class OrderViewController: UIViewController {
     
@@ -489,18 +490,29 @@ extension OrderViewController {
                 self.present(self.confirmationPopUp, animated: true, completion: nil)
                 
                 // consider add validation in every field
-                guard let selectedDate = self.selectedDate, let selectedTime = self.selectedTime, let selectedDuration = self.selectedDuration, let selectedAddress = self.selectedAddress, let selectedPetMessage = self.selectedPetMessage, let selectedMessage = self.selectedMessage else {
+                guard let selectedDate = self.selectedDate, let selectedTime = self.selectedTime, let selectedDuration = self.selectedDuration, let selectedAddress = self.selectedAddress
+                else {
                     return
                 }
                 
-                let userOrder = UserOrder(date: selectedDate, time: selectedTime, duration: selectedDuration, address: selectedAddress, pet: selectedPetMessage, message: selectedMessage, selectedItems: self.selectedItemsArray.map {$0.name}, tips: 0, totalCost: self.resultTotalCost)
+                let userOrder = UserOrder(date: selectedDate,
+                                          time: selectedTime,
+                                          duration: selectedDuration,
+                                          address: selectedAddress,
+                                          pet: self.selectedPetMessage ?? "",
+                                          message: self.selectedMessage ?? "",
+                                          selectedItems: self.selectedItemsArray.map {$0.name},
+                                          tips: 0,
+                                          totalCost: self.resultTotalCost,
+                                          userId: Auth.auth().currentUser?.uid ?? "",
+                                          id: UUID().uuidString)
                 
                 if let selectedTips = self.selectedTips {
                     userOrder.tips = selectedTips
                 }
 
                 let orderDict = try! DictionaryEncoder.encode(userOrder)
-                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary)
+                FirebaseDBService.service.createNewOrder(value: orderDict as NSDictionary, id: userOrder.id)
                 
             }
         }

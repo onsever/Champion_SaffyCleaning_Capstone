@@ -13,49 +13,43 @@ class FBStorageService {
     
     let storage = Storage.storage().reference()
     
-    func saveImages(images: [UIImage], imageRef: String) -> [String] {
+    func saveImages(images: [UIImage], imageRef: String, completion: @escaping ([String]) -> Void) {
         var imagePath = [String]()
         let ref = storage.child(imageRef)
         let metadata = StorageMetadata()
-        metadata.contentType = "image/png"
-        guard images != [] else { return [] }
+        metadata.contentType = "image/jpeg"
+        guard images != [] else { return }
+        
         for image in images {
             let uuid = UUID().uuidString
-            guard let imageData = image.pngData() else {
-                print("Failed to conver image to .png")
-                return []
+            let imageRef = ref.child("\(uuid).jpeg")
+
+            guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+                print("Failed to convert image to .jpeg")
+                return
             }
-            ref.child("\(uuid).png").putData(imageData, metadata: metadata , completion: {_, err in
+            
+            imageRef.putData(imageData, metadata: metadata , completion: { _, err in
                 guard err == nil else {
                     print("Failed to upload data")
+                    print(err?.localizedDescription)
                     return
                 }
+                imageRef.downloadURL(completion: { url, err in
+                    guard err == nil else {
+                        print("Failed to get download url")
+                        print(err?.localizedDescription)
+                        return
+                    }
+                    let url = url!.absoluteString
+                    print(url)
+                    imagePath.append(url)
+                    if imagePath.count == images.count {
+                        completion(imagePath)
+                    }
+                })
             })
-            imagePath.append(uuid)
         }
-        return imagePath
     }
-    
-//    func retrieveImages(filesNames: [String], imageRef: String) -> [UIImage] {
-//        var images = [UIImage]()
-//        let ref = storage.child(imageRef)
-//
-//        // handle empty image list
-//        guard filesNames != [] else {
-//            print("no images")
-//            return []
-//        }
-//
-//        for filesName in filesNames {
-//            ref.child("\(filesName).png").getData(maxSize: 20*1024*1025, completion: { data, error in
-//                guard error == nil else{
-//                    print("Failed to get data")
-//                    return
-//                }
-//                let image = UIImage(data: data!)
-//                images.append(image!)
-//            })
-//        }
-//    }
 
 }

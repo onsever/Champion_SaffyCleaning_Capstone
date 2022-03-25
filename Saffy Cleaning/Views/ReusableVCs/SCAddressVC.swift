@@ -87,7 +87,7 @@ class SCAddressVC: UIViewController {
         FirebaseDBService.service.retrieveAddress() {[weak self](address) in
             if let address = address {
                 DispatchQueue.main.async {
-                    self?.addressArray = address
+                    self?.addressArray = address.sorted(by: { $0.createdAt < $1.createdAt})
                     self?.checkArrayCount()
                     self?.addressCollectionView.reloadData()
                 }

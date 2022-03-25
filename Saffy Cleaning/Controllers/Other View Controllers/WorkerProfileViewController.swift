@@ -1,20 +1,21 @@
 //
-//  ProfileViewController.swift
+//  WorkerProfileViewController.swift
 //  Saffy Cleaning
 //
-//  Created by Onurcan Sever on 2022-03-09.
+//  Created by Onurcan Sever on 2022-03-24.
 //
 
 import UIKit
 import Firebase
 import SDWebImage
 
-protocol ProfileViewProtocol {
-    func changeUserType()
+protocol WorkerProfileViewControllerDelegate: AnyObject {
+    func didTapAcceptButton(_ orderId: String)
+    func didTapRejectedButton(_ orderId: String)
 }
 
-
-class ProfileViewController: UIViewController {
+class WorkerProfileViewController: UIViewController {
+    
     
     private let profileImageView = SCProfileImageView(cornerRadius: 60)
     private let usernameLabel = SCMainLabel(fontSize: 18, textColor: .brandDark)
@@ -22,11 +23,6 @@ class ProfileViewController: UIViewController {
     private let hiringView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     private let averageScoreView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     private let yearView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
-    
-    var delegate: ProfileViewProtocol? = nil
-    
-
-    private var switchUserVC: SCSwitchUserPopUp? = nil
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -38,17 +34,19 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    private var reviewArray = [Review]()
+    private var buttonStackView: SCStackView!
+    private let acceptButton = SCMainButton(title: "ACCEPT", backgroundColor: .brandGem, titleColor: .white, cornerRadius: 10, fontSize: nil)
+    private let rejectedButton = SCMainButton(title: "REJECTED", backgroundColor: .white, titleColor: .brandError, borderColor: .brandError, cornerRadius: 10, fontSize: nil)
+    public weak var delegate: WorkerProfileViewControllerDelegate?
+    public var orderID: String?
     
+    private var reviewArray = [Review]()
     public var user: User? {
         didSet {
             print("User data is set.")
-            switchUserVC = SCSwitchUserPopUp(user: user!)
-            switchUserVC?.delegate = self
         }
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,56 +54,22 @@ class ProfileViewController: UIViewController {
         configureImageViewAndLabel()
         configureHorizontalStackView()
         configureTableView()
+        configureButtonStackView()
         setData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        FirebaseDBService.service.retrieveUser { [weak self] user in
-            
-            guard let self = self else { return }
-            
-            if let user = user {
-                self.user = user
-            
-                DispatchQueue.main.async {
-                    self.usernameLabel.text = user.fullName
-                    
-                    if let profileImage = user.profileImageUrl {
-                        self.profileImageView.sd_setImage(with: profileImage, completed: nil)
-                    }
-                    else {
-                        self.profileImageView.image = UIImage(systemName: "person.circle")!
-                    }
-                }
-            }
-        }
+    @objc private func acceptButtonTapped(_ button: UIButton) {
+        button.animateWithSpring()
+        delegate?.didTapAcceptButton(orderID!)
+        print("Accepted")
+        self.dismiss(animated: true)
     }
     
-    @objc private func changeButtonTapped(_ button: UIBarButtonItem) {
-        
-        if user != nil {
-            self.present(switchUserVC!, animated: true, completion: nil)
-        }
-        
-    }
-    
-    @objc private func editButtonTapped(_ button: UIBarButtonItem) {
-        let vc = EditProfileViewController(user: self.user!)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc private func signOutButtonTapped(_ button: UIBarButtonItem) {
-        
-        do {
-            try Auth.auth().signOut()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(UINavigationController(rootViewController: LoginViewController()))
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-        
+    @objc private func rejectedButtonTapped(_ button: UIButton) {
+        button.animateWithSpring()
+        delegate?.didTapRejectedButton(orderID!)
+        print("Rejected")
+        self.dismiss(animated: true)
     }
     
     private func setData() {
@@ -114,14 +78,12 @@ class ProfileViewController: UIViewController {
             FirebaseDBService.service.retrieveUserReviews(type: user.userType) { [weak self] reviews in
                 self?.reviewArray = reviews
             }
-            //        reviewArray.append(Review(user: "Mark", userImage: UIImage(named: "carpet")!, date: "17-Nov-2021", info: "Effective and polite", ratingCount: .fiveStar))
-            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "He didn't cleaned home enough!", ratingCount: .oneStar))
-            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.", ratingCount: .oneStar))
         }
     }
+
 }
 
-extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+extension WorkerProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -161,46 +123,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.frame = header.bounds
         
     }
-        
+    
 }
 
-extension ProfileViewController :SCSwitchUserPopUpDelegate {
-    func dismissPopUp() {
-        self.delegate?.changeUserType()
-    }
-}
-
-extension ProfileViewController {
+extension WorkerProfileViewController {
     
     private func configureViewController() {
-        
+
         view.backgroundColor = .white
         title = "Profile"
-        
-        let refreshButton = UIBarButtonItem(image: UIImage(systemName: "gobackward"), style: .plain, target: self, action: #selector(changeButtonTapped(_:)))
-        
-        let editButton = UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .done, target: self, action: #selector(editButtonTapped(_:)))
-        
-        let signOutButton = UIBarButtonItem(image: UIImage(systemName: "power.circle"), style: .done, target: self, action: #selector(signOutButtonTapped(_:)))
-        
-        navigationItem.rightBarButtonItems = [editButton, refreshButton]
-        navigationItem.leftBarButtonItem = signOutButton
-        
     }
     
     private func configureImageViewAndLabel() {
         view.addSubview(profileImageView)
-        
-        /*
-        if let profileImage = user?.profileImageUrl {
-            if let data = try? Data(contentsOf: profileImage) {
-                profileImageView.image = UIImage(data: data)?.withRenderingMode(.alwaysOriginal)
-            }
-        }
-        else {
-            profileImageView.image = UIImage(named: "carpet")!
-        }
-        */
         usernameLabel.text = user?.fullName
         view.addSubview(usernameLabel)
         
@@ -226,7 +161,7 @@ extension ProfileViewController {
         horizontalStackView.addBottomBorder(with: .brandGem, andWidth: 1)
         
         hiringView.infoLabel.text = "2"
-        hiringView.infoValue.text = "Hiring"
+        hiringView.infoValue.text = "Services"
         
         averageScoreView.infoLabel.text = "4"
         averageScoreView.infoValue.text = "Average"
@@ -261,6 +196,23 @@ extension ProfileViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func configureButtonStackView() {
+        buttonStackView = SCStackView(arrangedSubviews: [rejectedButton, acceptButton])
+        view.addSubview(buttonStackView)
+        buttonStackView.distribution = .fillEqually
+        buttonStackView.spacing = 10
+        buttonStackView.axis = .horizontal
+        
+        acceptButton.addTarget(self, action: #selector(acceptButtonTapped(_:)), for: .touchUpInside)
+        rejectedButton.addTarget(self, action: #selector(rejectedButtonTapped(_:)), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            buttonStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            buttonStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
     }
     

@@ -12,7 +12,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import GoogleSignIn
 import PayPalCheckout
-
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 environment: .sandbox
             )
         Checkout.set(config: config)
+        IQKeyboardManager.shared.enable = true
         return true
     }
     

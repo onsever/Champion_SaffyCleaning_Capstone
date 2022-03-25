@@ -23,14 +23,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if Auth.auth().currentUser != nil {
             FirebaseDBService.service.syncUserType(value: UserType.user.rawValue)
-            window?.rootViewController = MainTabBarController()
+            window?.rootViewController = getMainTabBarController()
         }
         else {
             window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
         }
-        
+        window?.overrideUserInterfaceStyle = .light
         window?.makeKeyAndVisible()
     }
+    
+    func getMainTabBarController() -> UITabBarController { return MainTabBarController()}
     
     func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
         guard let window = self.window else { return }

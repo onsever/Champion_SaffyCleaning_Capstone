@@ -23,7 +23,7 @@ class AddressViewController: UIViewController {
     
     private lazy var ref = Database.database().reference()
     
-    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
+    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 300)
         
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -47,12 +47,12 @@ class AddressViewController: UIViewController {
     
     private let roomView = SCInfoView(placeholder: "e.g. Room A", text: "Room")
     private let flatView = SCInfoView(placeholder: "e.g. Flat 2", text: "Flat")
-    private let streetView = SCInfoView(placeholder: "e.g. Some example", text: "Street")
+    private let streetView = SCInfoView(placeholder: "e.g. Bloor Street", text: "Street")
     private let postalCodeView = SCInfoView(placeholder: "e.g. M2S0K2", text: "Postal Code")
-    private let buildingView = SCInfoView(placeholder: "e.g. Some example", text: "Building")
+    private let buildingView = SCInfoView(placeholder: "e.g. Black Condos", text: "Building")
     private let districtView = SCInfoView(placeholder: "e.g. Some example", text: "District")
     private let houseTypeView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "House type")
-    private let houseSizeView = SCInfoView(placeholder: "e.g. Some example", text: "House size")
+    private let houseSizeView = SCInfoView(placeholder: "e.g. 2464", text: "House size")
     private let contactPersonView = SCInfoView(placeholder: "Who should worker contact", text: "Contact person")
     private let contactNumberView = SCInfoView(placeholder: "For cleaner suggestioning...", text: "Contact number")
     private lazy var addButton = SCMainButton(title: isEditingMode ? "Save" : "Add", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
@@ -111,34 +111,36 @@ class AddressViewController: UIViewController {
     @objc private func didTapOk(_ button: UIBarButtonItem) {
         
     }
- 
-        
     
     @objc private func userDidTapAdd(_ button: UIButton) {
         
         let room = roomView.getTextField().text!
         let flat = flatView.getTextField().text!
-        let street = streetView.getTextField().text!
-        let postalCode = postalCodeView.getTextField().text!
+        
+        guard let street = streetView.getTextField().validateTextField() else { return }
+        guard let postalCode = postalCodeView.getTextField().validateTextField() else { return }
+        
         let building = buildingView.getTextField().text!
         let district = districtView.getTextField().text!
-        let contactPerson = contactPersonView.getTextField().text!
-        let contactNumber = contactNumberView.getTextField().text!
-        let houseType = houseTypeView.getTextField().text!
-        let houseSize = houseSizeView.getTextField().text!
-        let images = FBStorageService.service.saveImages(images: imageArray, imageRef: Constants.addressImages)
+        
+        guard let houseType = houseTypeView.getTextField().validateTextField() else { return }
+        guard let houseSize = houseSizeView.getTextField().validateTextField() else { return }
+        guard let contactPerson = contactPersonView.getTextField().validateTextField() else { return }
+        guard let contactNumber = contactNumberView.getTextField().validateTextField() else { return }
 
-        //postalCode, housesize probably consider as mandatory
-        //otherwise error will occur implicitly
         LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self] (location) in
             guard let self = self else { return }
             if let location = location {
 
-                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: images)
+                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: [], createdAt: String(format: "%.6f", Date() as CVarArg))
 
                 let NSDict = try! DictionaryEncoder.encode(newAddress)
 
-                FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                let child = FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                
+                FBStorageService.service.saveImages(images: self.imageArray, imageRef: Constants.addressImages) { imgArr in
+                    child.updateChildValues(["images": imgArr])
+                }
                 
                 if self.isEditingMode == true {
                     self.dataSource?.didTapSave(newAddress)
@@ -158,6 +160,10 @@ class AddressViewController: UIViewController {
         selectionPopUp.modalPresentationStyle = .overCurrentContext
         self.present(selectionPopUp, animated: true, completion: nil)
         
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        textField.layer.borderColor = textField.text?.count != 0 ? UIColor.brandGem.cgColor : UIColor.brandError.cgColor
     }
     
     public func setData(_ address: Address?) {
@@ -296,6 +302,10 @@ extension AddressViewController {
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = 10
         horizontalStackView.distribution = .fillEqually
+        
+        horizontalStackView.arrangedSubviews.forEach {
+            ($0 as! SCInfoView).getTextField().delegate = self
+        }
                 
         NSLayoutConstraint.activate([
             roomView.heightAnchor.constraint(equalTo: horizontalStackView.heightAnchor),
@@ -321,9 +331,15 @@ extension AddressViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapHouseType(_:)))
         houseTypeView.addGestureRecognizer(tap)
         
-        for view in verticalStackView.arrangedSubviews {
-            view.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
+        verticalStackView.arrangedSubviews.forEach {
+            $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
+            ($0 as! SCInfoView).getTextField().delegate = self
+            ($0 as! SCInfoView).getTextField().addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
+        
+        contactNumberView.getTextField().keyboardType = .phonePad
+        
+        houseSizeView.getTextField().keyboardType = .numberPad
         
         NSLayoutConstraint.activate([
             verticalStackView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 0),
@@ -366,6 +382,37 @@ extension AddressViewController {
             addButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             addButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+}
+
+extension AddressViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        switch textField {
+        case roomView.getTextField():
+            flatView.getTextField().becomeFirstResponder()
+        case flatView.getTextField():
+            streetView.getTextField().becomeFirstResponder()
+        case streetView.getTextField():
+            postalCodeView.getTextField().becomeFirstResponder()
+        case postalCodeView.getTextField():
+            buildingView.getTextField().becomeFirstResponder()
+        case buildingView.getTextField():
+            districtView.getTextField().becomeFirstResponder()
+        case districtView.getTextField():
+            houseSizeView.getTextField().becomeFirstResponder()
+        case houseSizeView.getTextField():
+            contactPersonView.getTextField().becomeFirstResponder()
+        case contactPersonView.getTextField():
+            contactNumberView.getTextField().becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+            break
+        }
+                
+        return true
     }
     
 }

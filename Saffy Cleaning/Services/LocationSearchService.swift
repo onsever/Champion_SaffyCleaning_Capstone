@@ -18,21 +18,17 @@ class LocationSearchService{
         searchRequest.naturalLanguageQuery = text
         let activeSearch = MKLocalSearch(request: searchRequest)
         activeSearch.start {(response,Error) in
-        if response == nil {
-            print("Error")
-        }
+            if response == nil {
+                print("Error")
+            }
             else{
-            //getting data
+                //getting data
                 let latitude = response!.boundingRegion.center.latitude
                 let longitude = response!.boundingRegion.center.longitude
                 let result = SearchLocationData(longitude: longitude, latitude: latitude)
                 completion(result)
             }
         }
-    
-        }   
-
-    
-    
+    }
 }
 

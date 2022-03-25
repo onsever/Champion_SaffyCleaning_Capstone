@@ -68,7 +68,6 @@ class WhereViewController: UIViewController {
 extension WhereViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
-        print(address.street)
         selectedAddress = address
         
         let allAnnotations = self.mapView.annotations
@@ -81,7 +80,6 @@ extension WhereViewController: SCAddressVCDelegate {
         mapView.addAnnotation(addressLocation)
         mapView.layoutMargins = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 25)
         mapView.showAnnotations(mapView.annotations, animated: true)
-        
     }
     
     

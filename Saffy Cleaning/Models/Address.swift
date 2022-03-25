@@ -22,8 +22,9 @@ class Address: Codable {
     var longitude: Double
     var latitude: Double
     var images: [String]
+    var createdAt: Date = Date()
     
-    init(name: String, room: String, flat: String, street: String, postalCode: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double, images: [String]) {
+    init(name: String, room: String, flat: String, street: String, postalCode: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double, images: [String], createdAt: String) {
         self.name = name
         self.room = room
         self.flat = flat
@@ -38,5 +39,11 @@ class Address: Codable {
         self.longitude = longitude
         self.latitude = latitude
         self.images = images
+        
+        let dateFormatter = DateFormatter()
+        
+        if let dataString = dateFormatter.date(from: createdAt) {
+            self.createdAt = dataString
+        }
     }
 }

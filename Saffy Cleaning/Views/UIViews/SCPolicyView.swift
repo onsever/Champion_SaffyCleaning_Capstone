@@ -17,7 +17,7 @@ class SCPolicyView: UIView {
     
     public let checkBox = SCCheckBox(frame: .zero)
     public weak var delegate: SCPolicyViewDelegate?
-    private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 14, text: "Accept the Privacy Policy and Terms & Conditions.")
+    private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 18, text: "Accept the Privacy Policy and Terms & Conditions.")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,13 +36,13 @@ class SCPolicyView: UIView {
         
         NSLayoutConstraint.activate([
             checkBox.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            checkBox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            checkBox.widthAnchor.constraint(equalToConstant: 15),
-            checkBox.heightAnchor.constraint(equalToConstant: 15),
+            checkBox.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+            checkBox.widthAnchor.constraint(equalToConstant: 18),
+            checkBox.heightAnchor.constraint(equalToConstant: 18),
             
             infoLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             infoLabel.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 10),
-            infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             infoLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         

@@ -1,15 +1,15 @@
 //
-//  SCOrderCell.swift
-//  Prototype
+//  SCNearbyOrderCell.swift
+//  Saffy Cleaning
 //
-//  Created by Onurcan Sever on 2022-03-12.
+//  Created by Onurcan Sever on 2022-03-22.
 //
 
 import UIKit
 
-class SCOrderCell: UITableViewCell {
-    
-    public static let identifier = "OrderCell"
+class SCNearbyOrderCell: UITableViewCell {
+
+    public static let identifier = "NearbyOrderCell"
     private let titleLabel = SCMainLabel(fontSize: 16, textColor: .brandDark)
     private let titleValue = SCMainLabel(fontSize: 16, textColor: .brandDark)
 
@@ -27,6 +27,8 @@ class SCOrderCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(titleValue)
         
+        titleLabel.font = .urbanistBold(size: 16)
+        
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
@@ -38,13 +40,9 @@ class SCOrderCell: UITableViewCell {
         ])
     }
     
-    public func setData(title: String, value: Double) {
+    public func setData(title: String, value: String) {
         self.titleLabel.text = title
-        self.titleValue.text = String(format: "USD %.2f", value)
+        self.titleValue.text = value
     }
-    
-    public func setLabel(title: String) {
-        self.titleLabel.text = title
-    }
-    
+
 }

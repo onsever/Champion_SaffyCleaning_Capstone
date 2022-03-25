@@ -21,21 +21,89 @@ class HomeViewController: UIViewController {
     
     private let orderButton = SCCircleButton(image: UIImage(systemName: "plus")!, cornerRadius: 20)
     private let addressButton = SCCircleButton(image: UIImage(systemName: "list.dash")!, cornerRadius: 20)
+    
+    public var user: User?
+    private var orders : [UserOrder]?
+    private var selectedOrder : UserOrder?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Home"
-        configureMapView()
-        configureButtons()
+
     }
+    
+    private func renderIcon () {
+        let barItem = UIBarButtonItem(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket"), style: .plain, target: self, action: #selector(leftBar))
+        barItem.isEnabled = false
+        barItem.tintColor = .black
+        navigationItem.leftBarButtonItem = barItem
+    }
+    
+    @objc private func leftBar () {
+        print("pressing")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureMapView()
+        self.mapView.delegate = self
+        self.renderView()
+
+    }
+    
+    private func showCurrentLocation () {
+        handleMapZoom(lat: 43.7261496, lng: -79.473145, isAddress: false)
+    }
+    
+
+    
+    private func renderView() {
+        FirebaseDBService.service.retrieveUser { [weak self] user in
+            guard let self = self else { return }
+            if let user = user {
+                self.user = user
+                if user.userType == UserType.user.rawValue {
+                    DispatchQueue.main.async {
+                        self.configureButtons()
+                    }
+                    
+                }
+                else {
+                    FirebaseDBService.service.retrievePendingOrders{ [weak self] result in
+                        DispatchQueue.main.async {
+                            self?.removeButtons()
+                            self?.orders = result
+                            self?.addAnnotation(orders: result)
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
+        self.showCurrentLocation()
+        self.renderIcon()
+    }
+    private func handleMapZoom(lat: Double, lng: Double, isAddress: Bool) {
+        // set coordinates (lat lon)
+        let coords = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+        // set span (radius of points)
+        let span = MKCoordinateSpan(latitudeDelta: isAddress ? 0.01 : 0.8, longitudeDelta: isAddress ? 0.08 : 0.8)
+        // set region
+        let region = MKCoordinateRegion(center: coords, span: span)
+        // set the view
+        mapView.setRegion(region, animated: true)
+    }
+    
     
     @objc private func orderButtonDidTap(_ button: UIButton) {
         print("Order button tapped.")
         
         let orderVC = OrderViewController()
         
-        navigationController?.pushViewController(orderVC, animated: true)
+        self.navigationController?.pushViewController(orderVC, animated: true)
     }
     
     @objc private func addressButtonDidTap(_ button: UIButton) {
@@ -44,7 +112,7 @@ class HomeViewController: UIViewController {
         let addressVC = SCAddressVC(height: 380)
         
         if let sheet = addressVC.sheetPresentationController {
-            sheet.detents = [.medium()]
+            sheet.detents = [.large(), .medium()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
             //sheet.delegate = self
@@ -54,54 +122,81 @@ class HomeViewController: UIViewController {
         self.present(addressVC, animated: true, completion: nil)
     }
     
+    private func addAnnotation(orders: [UserOrder]) {
+        
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
+        for order in orders {
+            let addressLocation = MKPointAnnotation()
+            guard let user = user else { return }
+            if user.userType == UserType.worker.rawValue {
+                addressLocation.title = "Cost: $\(order.totalCost)"
+            }
+//            addressLocation.title = "Testing"
+            addressLocation.coordinate = CLLocationCoordinate2D(latitude: order.address.latitude, longitude: order.address.longitude)
+            mapView.addAnnotation(addressLocation)
+        }
+    }
+    
+}
+
+extension HomeViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let long = view.annotation?.coordinate.longitude ?? 0
+        let lat = view.annotation?.coordinate.latitude ?? 0
+        if orders != nil {
+            let userOrder = orders?.first(where: {$0.address.latitude == lat && $0.address.longitude == long})
+            let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!)
+            nearbyOrderVC.delegate = self
+            if let sheet = nearbyOrderVC.sheetPresentationController {
+                sheet.detents = [.medium()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+            }
+            guard let userOrder = userOrder else { return }
+            self.handleMapZoom(lat: userOrder.address.latitude, lng: userOrder.address.longitude, isAddress: true)
+            mapView.deselectAnnotation(view.annotation, animated: false)
+            self.present(nearbyOrderVC, animated: true, completion: nil)
+        }
+    }
+}
+
+extension HomeViewController: NearbyOrderViewControllerDelegate {
+    
+    func didDismissNearbyOrder() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension HomeViewController: ProfileViewProtocol {
+    func changeUserType() {
+        self.renderView()
+    }
 }
 
 extension HomeViewController: SCAddressVCDelegate {
     
     func didSelectItem(_ address: Address) {
-        print(address.sizes)
-        
         let allAnnotations = self.mapView.annotations
         self.mapView.removeAnnotations(allAnnotations)
-        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
-
+        
+//        self.mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+        
         let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
+//        addressLocation.title = "Testing"
         addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         mapView.addAnnotation(addressLocation)
-        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
-    mapView.showAnnotations(mapView.annotations, animated: true)
+//        mapView.layoutMargins = UIEdgeInsets(top: 15, left: 25, bottom: 45, right: 25)
+        mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
     
 }
 
-/*
-extension HomeViewController: UISheetPresentationControllerDelegate {
-    
-    // Note: Inherited from UIAdaptivePresentationControllerDelegate
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("Dismissed")
-        
-        guard let vc = presentationController.presentedViewController as? SCAddressVC else { return }
-        
-        guard let address = vc.getCurrentAddress() else { return }
-        guard let allAddresses = vc.getAllAddresses() else { return }
-        
-        let allAnnotations = self.mapView.annotations
-        self.mapView.removeAnnotations(allAnnotations)
-        
-        let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
-        addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
-        mapView.addAnnotation(addressLocation)
-        
-        print(address.contactPerson)
-        print(allAddresses)
-    }
-    
-}
- */
 
 extension HomeViewController {
     
@@ -117,9 +212,11 @@ extension HomeViewController {
     }
     
     private func configureButtons() {
+        let allAnnotations = self.mapView.annotations
+        self.mapView.removeAnnotations(allAnnotations)
+        
         mapView.addSubview(orderButton)
         mapView.addSubview(addressButton)
-        
         orderButton.addTarget(self, action: #selector(orderButtonDidTap(_:)), for: .touchUpInside)
         addressButton.addTarget(self, action: #selector(addressButtonDidTap(_:)), for: .touchUpInside)
         
@@ -133,6 +230,13 @@ extension HomeViewController {
             addressButton.widthAnchor.constraint(equalToConstant: 40),
             addressButton.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    private func removeButtons() {
+//        mapView.willRemoveSubview(orderButton)
+//        mapView.willRemoveSubview(addressButton)
+        orderButton.removeFromSuperview()
+        addressButton.removeFromSuperview()
     }
     
 }

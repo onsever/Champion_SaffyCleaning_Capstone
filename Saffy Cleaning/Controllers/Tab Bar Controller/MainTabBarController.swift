@@ -9,6 +9,7 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
+    
     private var user: User? {
         didSet {
             
@@ -55,6 +56,8 @@ extension MainTabBarController {
         let noticeVC = NoticeViewController()
         let profileVC = ProfileViewController()
         
+        profileVC.delegate = homeVC
+    
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         chatVC.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "text.bubble"), tag: 1)
         historyVC.tabBarItem = UITabBarItem(title: "History", image: UIImage(systemName: "gobackward"), tag: 2)
