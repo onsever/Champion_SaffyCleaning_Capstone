@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class SignUpViewController: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -60,7 +63,7 @@ class SignUpViewController: UIViewController {
     // MARK: - Selectors
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        
+        spinner.show(in: view)
         guard let username = usernameTextField.text else { return }
         guard let fullName = fullNameTextField.text else { return }
         guard let email = emailTextField.text else { return }
@@ -69,13 +72,14 @@ class SignUpViewController: UIViewController {
         
         let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!, userType: UserType.user.rawValue)
         
-        FirebaseAuthService.service.registerUser(with: user) { error, reference in
+        FirebaseAuthService.service.registerUser(with: user) { [weak self] error, reference in
             print("Registeration is successfull!")
+            DispatchQueue.main.async {
+                self?.spinner.dismiss()
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+            }
             
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
         }
-
-
     }
     
     @objc private func haveAnAccountDidTapped(_ gesture: UITapGestureRecognizer) {
