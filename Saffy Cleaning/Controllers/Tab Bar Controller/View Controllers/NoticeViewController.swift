@@ -96,6 +96,17 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+extension NoticeViewController:SCNotificationCellDelgate {
+    func syncUserId(id: String) {
+        FirebaseDBService.service.retrieveUserById(id: id) { [weak self] user in
+            // get user obj from here
+            let viewWorkerProfileVc = WorkerProfileViewController()
+            viewWorkerProfileVc.user = user
+            self?.present(viewWorkerProfileVc, animated: true, completion: nil)
+        }
+    }
+}
+
 extension NoticeViewController {
     
     private func configureTableView() {

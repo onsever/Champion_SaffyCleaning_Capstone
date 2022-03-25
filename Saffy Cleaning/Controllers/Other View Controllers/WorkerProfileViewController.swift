@@ -16,6 +16,7 @@ protocol WorkerProfileViewControllerDelegate: AnyObject {
 
 class WorkerProfileViewController: UIViewController {
     
+    
     private let profileImageView = SCProfileImageView(cornerRadius: 60)
     private let usernameLabel = SCMainLabel(fontSize: 18, textColor: .brandDark)
     private var horizontalStackView: SCStackView!

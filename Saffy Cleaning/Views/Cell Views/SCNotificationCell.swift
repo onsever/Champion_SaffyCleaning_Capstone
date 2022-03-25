@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SCNotificationCellDelgate {
+    func syncUserId(id:String)
+}
+
 class SCNotificationCell: UITableViewCell {
     
     public static let identifier = "NotificationCell"
@@ -19,6 +23,8 @@ class SCNotificationCell: UITableViewCell {
     private var horizontalStackView: SCStackView!
     public weak var order: UserOrder?
     public var user: User?
+    
+    var delegate: SCNotificationCellDelgate? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,10 +43,11 @@ class SCNotificationCell: UITableViewCell {
         if user?.userType == UserType.user.rawValue {
             switch order!.status {
             case UserOrderType.applied.rawValue:
-                FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
-                    // get user obj from here
-                    print(user?.userType, user?.uid, user?.fullName)
-                }
+                self.delegate?.syncUserId(id: order!.workerId)
+//                FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
+//                    // get user obj from here
+//                    print(user?.userType, user?.uid, user?.fullName)
+//                }
             case UserOrderType.matched.rawValue:
                 FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
             case UserOrderType.completed.rawValue:
