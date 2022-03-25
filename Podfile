@@ -29,5 +29,6 @@ pod 'GoogleSignIn'
 pod 'PayPalCheckout'
 pod 'SDWebImage'
 pod 'IQKeyboardManagerSwift'
+pod 'Cosmos', '~> 23.0'
 
 end

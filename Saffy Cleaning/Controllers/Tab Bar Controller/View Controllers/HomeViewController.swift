@@ -69,9 +69,9 @@ class HomeViewController: UIViewController {
     @objc private func orderButtonDidTap(_ button: UIButton) {
         print("Order button tapped.")
         
-        let orderVC = OrderViewController()
+        let orderVC = SCRatingVC(user: user!)
         
-        self.navigationController?.pushViewController(orderVC, animated: true)
+        self.present(orderVC, animated: true)
     }
     
     @objc private func addressButtonDidTap(_ button: UIButton) {
