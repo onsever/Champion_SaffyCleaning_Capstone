@@ -87,8 +87,8 @@ class NearbyOrderViewController: UIViewController {
     private var rewardsTableHeightConstraint: NSLayoutConstraint!
     
     private var infoDictionary = [String: String]()
-    private var rewardsDictionary = [String: Order]()
-    private var imageArray = [UIImage]()
+    private var exServiceDict = [String: String]()
+    private var imageArray = [String]()
     private var userOrder: UserOrder
     
     public weak var delegate: NearbyOrderViewControllerDelegate?
@@ -112,13 +112,8 @@ class NearbyOrderViewController: UIViewController {
         view.layer.borderWidth = 3
         view.layer.cornerRadius = 15
         view.clipsToBounds = true
-        
-        imageArray.append(UIImage(named: "carpet")!)
-        imageArray.append(UIImage(named: "carpet")!)
-        imageArray.append(UIImage(named: "carpet")!)
-        imageArray.append(UIImage(named: "carpet")!)
-        
         view.backgroundColor = .white
+        
         configureNearbyOrderLabel()
         configureCollectionView()
         configureInfoTableView()
@@ -143,6 +138,8 @@ class NearbyOrderViewController: UIViewController {
     
     private func setUserOrder() {
         
+        imageArray = userOrder.address.images
+        
         infoDictionary["Date"] = userOrder.date
         infoDictionary["Time"] = userOrder.time
         infoDictionary["Duration "] = "\(userOrder.duration) hours"
@@ -151,14 +148,11 @@ class NearbyOrderViewController: UIViewController {
         infoDictionary["Sizes"] = "\(userOrder.address.sizes) square feet"
         infoDictionary["Pets"] = userOrder.pet
         infoDictionary["Extra services"] = "\(userOrder.selectedItems.count) services"
+        infoDictionary["Total cost"] = "CAD \(userOrder.totalCost)"
         messageToCleanerView.infoValue.text = userOrder.message
         
-        rewardsDictionary["basic_cleaning"] = Order(name: "Basic cleaning", cost: 30)
-        rewardsDictionary["travelling_expenses"] = Order(name: "Travelling expenses", cost: 3)
-        rewardsDictionary["sizes"] = Order(name: "Sizes add up", cost: 10)
-        
         for index in 0..<userOrder.selectedItems.count {
-            rewardsDictionary["extra_\(index + 1)"] = Order(name: "Extra services \(index + 1)", cost: 10)
+            exServiceDict["extra_\(index + 1)"] = userOrder.selectedItems[index]
         }
         
     }
@@ -282,7 +276,7 @@ extension NearbyOrderViewController: UICollectionViewDelegate, UICollectionViewD
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
         
-        cell.setData(image: imageArray[indexPath.row])
+        cell.setImageFromUrl(urlString: imageArray[indexPath.row])
         
         return cell
     }
@@ -315,7 +309,7 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
         if tableView == rewardsTableView {
-            return rewardsDictionary.count
+            return exServiceDict.count
         }
         
         return 0
@@ -338,10 +332,10 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SCOrderCell.identifier, for: indexPath) as? SCOrderCell else { return UITableViewCell() }
             
-            let key = Array(rewardsDictionary).sorted(by: {$0.key < $1.key})[indexPath.row].key
-            let value = rewardsDictionary[key]
-            
-            cell.setData(title: value!.name, value: value!.cost)
+            let key = Array(exServiceDict).sorted(by: {$0.key < $1.key})[indexPath.row].key
+            let value = exServiceDict[key]!
+                        
+            cell.setLabel(title: value)
             
             return cell
             
@@ -353,7 +347,7 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if tableView == rewardsTableView {
-            return "Job Details"
+            return "Extra Service List:"
         }
         
         return nil

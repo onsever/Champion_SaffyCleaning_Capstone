@@ -47,8 +47,6 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // probably the mapview somehow cached the button and annotation
-        // even remove lazy cant solve the problem, maybe life cycle need to be reset
         self.configureMapView()
         self.mapView.delegate = self
         self.renderView()

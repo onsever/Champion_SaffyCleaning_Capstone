@@ -32,11 +32,9 @@ class NoticeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         title = "Notice"
         configureTableView()
-        
     }
 
     private func fetchData() {
@@ -81,6 +79,7 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.setData(userOrder: notificationArray[indexPath.row], user: user!)
         cell.order = notificationArray[indexPath.row]
         cell.delegate = self
+        
         return cell
     }
     
@@ -97,13 +96,21 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension NoticeViewController:SCNotificationCellDelgate {
-    func syncUserId(id: String) {
+    
+    func syncUserId(id: String, orderId: String) {
         FirebaseDBService.service.retrieveUserById(id: id) { [weak self] user in
-            // get user obj from here
             let viewWorkerProfileVc = WorkerProfileViewController()
             viewWorkerProfileVc.user = user
+            viewWorkerProfileVc.delegate = self
+            viewWorkerProfileVc.orderID = orderId
             self?.present(viewWorkerProfileVc, animated: true, completion: nil)
         }
+    }
+    
+    func checkout(totalCost: String) {
+        let checkoutVC = CheckoutViewController()
+        checkoutVC.totalCost = totalCost
+        self.present(checkoutVC, animated: true, completion: nil)
     }
 }
 
@@ -121,5 +128,17 @@ extension NoticeViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+}
+
+extension NoticeViewController:WorkerProfileViewControllerDelegate {
+    func didTapAcceptButton(_ orderId: String) {
+        FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.matched.rawValue])
+    }
+    
+    func didTapRejectedButton(_ orderId: String) {
+        FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.cancelled.rawValue], isCancellOrder: true)
+    }
+    
     
 }

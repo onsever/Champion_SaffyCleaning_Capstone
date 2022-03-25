@@ -43,4 +43,8 @@ class SCOrderCell: UITableViewCell {
         self.titleValue.text = String(format: "USD %.2f", value)
     }
     
+    public func setLabel(title: String) {
+        self.titleLabel.text = title
+    }
+    
 }

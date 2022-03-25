@@ -490,7 +490,8 @@ extension OrderViewController {
                 self.present(self.confirmationPopUp, animated: true, completion: nil)
                 
                 // consider add validation in every field
-                guard let selectedDate = self.selectedDate, let selectedTime = self.selectedTime, let selectedDuration = self.selectedDuration, let selectedAddress = self.selectedAddress, let selectedPetMessage = self.selectedPetMessage, let selectedMessage = self.selectedMessage else {
+                guard let selectedDate = self.selectedDate, let selectedTime = self.selectedTime, let selectedDuration = self.selectedDuration, let selectedAddress = self.selectedAddress
+                else {
                     return
                 }
                 
@@ -498,8 +499,8 @@ extension OrderViewController {
                                           time: selectedTime,
                                           duration: selectedDuration,
                                           address: selectedAddress,
-                                          pet: selectedPetMessage,
-                                          message: selectedMessage,
+                                          pet: self.selectedPetMessage ?? "",
+                                          message: self.selectedMessage ?? "",
                                           selectedItems: self.selectedItemsArray.map {$0.name},
                                           tips: 0,
                                           totalCost: self.resultTotalCost,

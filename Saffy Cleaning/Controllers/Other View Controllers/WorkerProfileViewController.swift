@@ -10,8 +10,8 @@ import Firebase
 import SDWebImage
 
 protocol WorkerProfileViewControllerDelegate: AnyObject {
-    func didTapAcceptButton(_ button: UIButton)
-    func didTapRejectedButton(_ button: UIButton)
+    func didTapAcceptButton(_ orderId: String)
+    func didTapRejectedButton(_ orderId: String)
 }
 
 class WorkerProfileViewController: UIViewController {
@@ -38,6 +38,7 @@ class WorkerProfileViewController: UIViewController {
     private let acceptButton = SCMainButton(title: "ACCEPT", backgroundColor: .brandGem, titleColor: .white, cornerRadius: 10, fontSize: nil)
     private let rejectedButton = SCMainButton(title: "REJECTED", backgroundColor: .white, titleColor: .brandError, borderColor: .brandError, cornerRadius: 10, fontSize: nil)
     public weak var delegate: WorkerProfileViewControllerDelegate?
+    public var orderID: String?
     
     private var reviewArray = [Review]()
     public var user: User? {
@@ -59,14 +60,16 @@ class WorkerProfileViewController: UIViewController {
     
     @objc private func acceptButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
-        delegate?.didTapAcceptButton(button)
+        delegate?.didTapAcceptButton(orderID!)
         print("Accepted")
+        self.dismiss(animated: true)
     }
     
     @objc private func rejectedButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
-        delegate?.didTapRejectedButton(button)
+        delegate?.didTapRejectedButton(orderID!)
         print("Rejected")
+        self.dismiss(animated: true)
     }
     
     private func setData() {

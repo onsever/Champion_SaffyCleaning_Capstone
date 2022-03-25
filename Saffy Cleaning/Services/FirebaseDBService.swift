@@ -152,10 +152,23 @@ extension FirebaseDBService {
         completion([])
     }
     
-    public func updateOrderStatus(orderId: String, value: [String: Any]) {
-        let ref = db.child(Constants.userOrders)
-        ref.child(user.uid).child(orderId)
+    public func updateOrderStatus(orderId: String, value: [String: Any], isCancellOrder: Bool = false) {
+        let ref = db.child(Constants.userOrders).child(user.uid)
+        ref.child(orderId)
             .updateChildValues(value)
+        if isCancellOrder {
+            ref.child(orderId).getData(completion: {err, data in
+                guard err == nil else { return }
+                let orderDict = data.value as! Dictionary<String, Any>
+                let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                let order = self.convertDictToOrder(dict: orderDict, address: address)
+                order.id = UUID().uuidString
+                order.status = UserOrderType.pending.rawValue
+                order.workerId = ""
+                let newOrderDict = try! DictionaryEncoder.encode(order)
+                ref.child(order.id).setValue(newOrderDict)
+            })
+        }
     }
     
     

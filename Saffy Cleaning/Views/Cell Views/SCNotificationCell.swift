@@ -8,7 +8,8 @@
 import UIKit
 
 protocol SCNotificationCellDelgate {
-    func syncUserId(id:String)
+    func syncUserId(id:String, orderId: String)
+    func checkout(totalCost: String)
 }
 
 class SCNotificationCell: UITableViewCell {
@@ -43,17 +44,11 @@ class SCNotificationCell: UITableViewCell {
         if user?.userType == UserType.user.rawValue {
             switch order!.status {
             case UserOrderType.applied.rawValue:
-                self.delegate?.syncUserId(id: order!.workerId)
-//                FirebaseDBService.service.retrieveUserById(id: order!.workerId) { user in
-//                    // get user obj from here
-//                    print(user?.userType, user?.uid, user?.fullName)
-//                }
+                self.delegate?.syncUserId(id: order!.workerId, orderId: order!.id)
             case UserOrderType.matched.rawValue:
                 FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
             case UserOrderType.completed.rawValue:
-                print("order completed")
-                // show checkout button
-                // after checkout should be review
+                self.delegate?.checkout(totalCost: "\(order!.totalCost)")
             default:
                 print("notification label clicked")
             }
