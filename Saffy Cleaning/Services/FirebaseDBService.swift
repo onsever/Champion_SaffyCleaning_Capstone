@@ -46,6 +46,11 @@ extension FirebaseDBService {
         }
         completion([])
     }
+    
+    public func createReview(review: Review, revieweeId: String) {
+        let reviewDict = try! DictionaryEncoder.encode(review) as NSDictionary
+        db.child(Constants.reviews).child(revieweeId).childByAutoId().setValue(reviewDict)
+    }
 }
 
 // MARK: Notification Mgmt

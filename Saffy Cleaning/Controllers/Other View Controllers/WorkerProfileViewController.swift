@@ -75,6 +75,7 @@ class WorkerProfileViewController: UIViewController {
     private func setData() {
         FirebaseDBService.service.retrieveUser { user in
             guard let user = user else { return }
+            self.profileImageView.sd_setImage(with: user.profileImageUrl)
             FirebaseDBService.service.retrieveUserReviews(type: user.userType) { [weak self] reviews in
                 self?.reviewArray = reviews
             }
