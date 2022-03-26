@@ -60,26 +60,29 @@ class SignUpViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
-    // MARK: - Selectors
-    @objc private func signUpButtonDidTapped(_ button: UIButton) {
-        button.animateWithSpring()
+    private func sendUserToFirebase(username: String, fullName: String, email: String, contactNumber: String, password: String) {
         spinner.show(in: view)
-        guard let username = usernameTextField.text else { return }
-        guard let fullName = fullNameTextField.text else { return }
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        guard let contactNumber = contactNumberTextField.text else { return }
-        
         let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!, userType: UserType.user.rawValue)
-        
         FirebaseAuthService.service.registerUser(with: user) { [weak self] error, reference in
             print("Registeration is successfull!")
             DispatchQueue.main.async {
                 self?.spinner.dismiss()
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
             }
-            
         }
+    }
+    
+    // MARK: - Selectors
+    @objc private func signUpButtonDidTapped(_ button: UIButton) {
+        button.animateWithSpring()
+        guard let username = usernameTextField.text else { return }
+        guard let fullName = fullNameTextField.text else { return }
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let contactNumber = contactNumberTextField.text else { return }
+        sendUserToFirebase(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password)
+        
+        
     }
     
     @objc private func haveAnAccountDidTapped(_ gesture: UITapGestureRecognizer) {
