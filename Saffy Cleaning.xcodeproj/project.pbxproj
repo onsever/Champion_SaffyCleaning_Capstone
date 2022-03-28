@@ -12,7 +12,8 @@
 		0B70E51F27E282630094F284 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E51E27E282630094F284 /* Constants.swift */; };
 		0B70E52127E282E50094F284 /* FirebaseDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52027E282E50094F284 /* FirebaseDBService.swift */; };
 		0B70E52427E292A00094F284 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52327E292A00094F284 /* Helpers.swift */; };
-		0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70E52527E2A3650094F284 /* DataMapper.swift */; };
+		0BEE575227F2799600A62983 /* TermsAndConditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0BEE575027F2799600A62983 /* TermsAndConditions.pdf */; };
+		0BEE575327F2799600A62983 /* Privacy_Policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 0BEE575127F2799600A62983 /* Privacy_Policy.pdf */; };
 		0F76F659EB22794DED270E8D /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410EFF279D6AA0052EDB46F6 /* Pods_Saffy_CleaningTests.framework */; };
 		2580FDF227E55F66005D6A87 /* LocationSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2580FDF127E55F65005D6A87 /* LocationSearchService.swift */; };
 		2580FDF427E5608B005D6A87 /* SearchLocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2580FDF327E5608B005D6A87 /* SearchLocationData.swift */; };
@@ -87,8 +88,6 @@
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
 		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
-		BAB728E527F20032001DEE44 /* Privacy_Policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */; };
-		BAB728E627F20032001DEE44 /* TermsAndConditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */; };
 		BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
@@ -139,7 +138,8 @@
 		0B70E51E27E282630094F284 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0B70E52027E282E50094F284 /* FirebaseDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDBService.swift; sourceTree = "<group>"; };
 		0B70E52327E292A00094F284 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		0B70E52527E2A3650094F284 /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
+		0BEE575027F2799600A62983 /* TermsAndConditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = TermsAndConditions.pdf; sourceTree = "<group>"; };
+		0BEE575127F2799600A62983 /* Privacy_Policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Privacy_Policy.pdf; sourceTree = "<group>"; };
 		2580FDF127E55F65005D6A87 /* LocationSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchService.swift; sourceTree = "<group>"; };
 		2580FDF327E5608B005D6A87 /* SearchLocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationData.swift; sourceTree = "<group>"; };
 		410EFF279D6AA0052EDB46F6 /* Pods_Saffy_CleaningTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Saffy_CleaningTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,8 +220,6 @@
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Privacy_Policy.pdf; path = ../../../../Downloads/Privacy_Policy.pdf; sourceTree = "<group>"; };
-		BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = TermsAndConditions.pdf; path = ../../../../Downloads/TermsAndConditions.pdf; sourceTree = "<group>"; };
 		BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyOrderViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 				BA95399C27D99053005A899A /* Models */,
 				0B70E51E27E282630094F284 /* Constants.swift */,
 				0B70E52327E292A00094F284 /* Helpers.swift */,
-				0B70E52527E2A3650094F284 /* DataMapper.swift */,
 			);
 			path = "Saffy Cleaning";
 			sourceTree = "<group>";
@@ -536,8 +533,8 @@
 		BA9539D127D991E7005A899A /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */,
-				BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */,
+				0BEE575127F2799600A62983 /* Privacy_Policy.pdf */,
+				0BEE575027F2799600A62983 /* TermsAndConditions.pdf */,
 				BA95397527D99032005A899A /* Assets.xcassets */,
 				BA95396B27D99031005A899A /* SceneDelegate.swift */,
 				BA95396927D99031005A899A /* AppDelegate.swift */,
@@ -723,11 +720,11 @@
 				BA65DB5727DA69A50007A915 /* Urbanist-Medium.ttf in Resources */,
 				BA65DB5427DA69A50007A915 /* Urbanist-Bold.ttf in Resources */,
 				BA95397927D99032005A899A /* LaunchScreen.storyboard in Resources */,
+				0BEE575327F2799600A62983 /* Privacy_Policy.pdf in Resources */,
 				BA95397627D99032005A899A /* Assets.xcassets in Resources */,
 				BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */,
-				BAB728E627F20032001DEE44 /* TermsAndConditions.pdf in Resources */,
+				0BEE575227F2799600A62983 /* TermsAndConditions.pdf in Resources */,
 				0B53774F27DB04350085C110 /* GoogleService-Info.plist in Resources */,
-				BAB728E527F20032001DEE44 /* Privacy_Policy.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,7 +896,6 @@
 				BAC1742E27DDA65C00C429BE /* SCOrderCell.swift in Sources */,
 				BAD694FD27DD79D000FF3445 /* ExtraService.swift in Sources */,
 				BA9539B627D99143005A899A /* SCRadioButton.swift in Sources */,
-				0B70E52627E2A3650094F284 /* DataMapper.swift in Sources */,
 				0B70E51F27E282630094F284 /* Constants.swift in Sources */,
 				BA78EA7227EAA02C00B45086 /* SCNotificationCell.swift in Sources */,
 				BA408B0F27E40C690087FFA1 /* SCChatCell.swift in Sources */,
