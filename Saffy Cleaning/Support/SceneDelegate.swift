@@ -22,7 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         
         if Auth.auth().currentUser != nil {
-            FirebaseDBService.service.syncUserType(value: UserType.user.rawValue)
             window?.rootViewController = getMainTabBarController()
         }
         else {

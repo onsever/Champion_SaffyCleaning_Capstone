@@ -15,7 +15,7 @@ import UIKit
 final class FirebaseDBService {
     static let service = FirebaseDBService()
     private let db = Database.database().reference()
-    private let user = Auth.auth().currentUser!
+    private let user = Auth.auth().currentUser
     private let storage = Storage.storage().reference()
 }
 
@@ -23,7 +23,7 @@ final class FirebaseDBService {
 extension FirebaseDBService {
     public func retrieveUserReviews(type: String, completion: @escaping([Review]) -> Void) {
         let isUser = type == UserType.user.rawValue ? true : false
-        let ref = db.child(Constants.reviews).child(user.uid)
+        let ref = db.child(Constants.reviews).child(user!.uid)
         var reviews = [Review]()
         ref.observeSingleEvent(of: .value) { snapshot in
             guard snapshot.exists() else { return }
@@ -82,7 +82,7 @@ extension FirebaseDBService {
 extension FirebaseDBService {
     public func createNewOrder(value:NSDictionary, id: String) {
         let ref = db.child(Constants.userOrders)
-        ref.child(user.uid).child(id).setValue(value)
+        ref.child(user!.uid).child(id).setValue(value)
     }
     
     public func applyOrder(id: String, userId:String, workerId:String) {
@@ -141,7 +141,7 @@ extension FirebaseDBService {
     }
     
     public func retrieveUserOrders(completion: @escaping ([UserOrder]) -> Void) {
-        let ref = db.child(Constants.userOrders).child(user.uid)
+        let ref = db.child(Constants.userOrders).child(user!.uid)
         var orders = [UserOrder]()
         
         ref.observeSingleEvent(of: .value, with: { snapshot in
@@ -158,7 +158,7 @@ extension FirebaseDBService {
     }
     
     public func updateOrderStatus(orderId: String, value: [String: Any], isCancellOrder: Bool = false) {
-        let ref = db.child(Constants.userOrders).child(user.uid)
+        let ref = db.child(Constants.userOrders).child(user!.uid)
         ref.child(orderId)
             .updateChildValues(value)
         if isCancellOrder {
@@ -203,7 +203,7 @@ extension FirebaseDBService {
     public func saveImage(image: UIImage, completion: @escaping(URL?) -> Void) {
         
         let fileName = NSUUID().uuidString
-        let databaseRef = db.child("users").child(user.uid)
+        let databaseRef = db.child("users").child(user!.uid)
         let storageRef = storage.child("profileImages").child(fileName)
         
         guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
@@ -239,7 +239,7 @@ extension FirebaseDBService {
 extension FirebaseDBService {
     public func syncUserType(value: String) {
         let ref = db.child(Constants.userTypes)
-        ref.child(user.uid).setValue(["id": user.uid, "email": user.email, "type": value])
+        ref.child(user!.uid).setValue(["id": user!.uid, "email": user!.email, "type": value])
     }
     
     public func retrieveUser(completion: @escaping(User?) -> Void) {
@@ -250,13 +250,32 @@ extension FirebaseDBService {
             completion(user)
         }
     }
-    
+    public func retrieveUserByEmail(email: String, completion: @escaping(User?) -> Void) {
+        var users = [User]()
+        db.child("users").observeSingleEvent(of: .value, with: {snapshot in
+            if let dict = snapshot.value as? Dictionary<String, Any> {
+                for key in dict.keys {
+                    if let item = dict[key] as? [String : AnyObject] {
+                        let user = User(uid: key, dictionary: item)
+                        users.append(user)
+                    }
+                }
+                let targetUser = users.first(where: {$0.email == email})
+                if(targetUser != nil) {
+                    completion(targetUser)
+                } else {
+                    completion(nil)
+                }
+            }
+        })
+    }
     public func retrieveUserById(id: String, completion: @escaping(User?) -> Void) {
         db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
             let user = User(uid: id, dictionary: dictionary)
             completion(user)
         }
+        completion(nil)
     }
 }
 
@@ -266,7 +285,7 @@ extension FirebaseDBService {
     
     public func saveAddress(value:NSDictionary) -> DatabaseReference {
         let ref = db.child(Constants.userAddress)
-        let child = ref.child(user.uid).childByAutoId()
+        let child = ref.child(user!.uid).childByAutoId()
         child.setValue(value, withCompletionBlock: {err, _ in
             guard err == nil else{
                 print(err.debugDescription)
@@ -281,7 +300,7 @@ extension FirebaseDBService {
         var addresses = [Address]()
         addresses = []
         let ref = db.child(Constants.userAddress)
-        ref.child(user.uid).observeSingleEvent(of: .value, with: { snapshot in
+        ref.child(user!.uid).observeSingleEvent(of: .value, with: { snapshot in
             if let dict = snapshot.value as? Dictionary<String, Any> {
                 for key in dict.keys {
                     if let item = dict[key] as? Dictionary<String, Any> {

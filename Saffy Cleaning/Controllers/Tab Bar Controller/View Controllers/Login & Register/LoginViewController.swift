@@ -66,17 +66,18 @@ class LoginViewController: UIViewController {
         spinner.show(in: view)
         guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
         FirebaseAuthService.service.signIn(email: username, pass: password) {[weak self] (success) in
-            var message: String = ""
             if (success) {
-                message = "User was successfully logged in."
                 DispatchQueue.main.async {
                     self?.spinner.dismiss()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                 }
             } else {
-                message = "Password is not currect"
-                self?.presentAlert(title: "Login", message: message, positiveAction: { action in
-                }, negativeAction: nil)
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss()
+                    self?.presentAlert(title: "Login", message: "Password is not currect", positiveAction: { action in
+                    }, negativeAction: nil)
+                }
+
             }
         }
 
@@ -92,28 +93,21 @@ class LoginViewController: UIViewController {
     
     @objc private func continueWithGoogleDidTapped(_ gesture: UITapGestureRecognizer) {
         googleSignInView.animateWithSpring()
+        spinner.show(in: view)
         GIDSignIn.sharedInstance.signIn(with: FirebaseAuthService.googleSignConfig, presenting: self) { user, error in
             guard error == nil else { return }
-            guard let user = user else { return }
-            let authentication = user.authentication
+            guard let authentication = user?.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken ?? "", accessToken: authentication.accessToken)
             FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
                 [weak self] (success) in
-                var message: String = ""
                 if (success) {
-                    message = "Login Success"
-                    
+                    self?.spinner.dismiss()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                     
                 } else {
-                    message = "Login Failed"
+                    self?.presentAlert(title: "Login with Google", message: "Login Failed", positiveAction: { action in }, negativeAction: nil)
                 }
-                self?.presentAlert(title: "Login with Google", message: message) {
-                    action in
-                    print("Positive action is tapped on.")
-                } negativeAction: { action in
-                    print("Negative action is tapped on.")
-                }
+                
             })
             
             
@@ -122,6 +116,7 @@ class LoginViewController: UIViewController {
     
     @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
         facebookSignInView.animateWithSpring()
+        spinner.show(in: view)
         LoginManager.init().logIn(permissions: [Permission.publicProfile, Permission.email], viewController: self) { (loginResult) in
           switch loginResult {
           case .success(_, _, _):
@@ -129,18 +124,13 @@ class LoginViewController: UIViewController {
               let credential = FacebookAuthProvider.credential(withAccessToken: facebookToken)
               FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
                   [weak self] (success) in
-                  var message: String = ""
                   if (success) {
-                      (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
-                      
+                      DispatchQueue.main.async {
+                          self?.spinner.dismiss()
+                          (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
+                      }
                   } else {
-                      message = "Login Failed"
-                  }
-                  self?.presentAlert(title: "Login with FB", message: message) {
-                      action in
-                      print("Positive action is tapped on.")
-                  } negativeAction: { action in
-                      print("Negative action is tapped on.")
+                      self?.presentAlert(title: "Login with FB", message: "Login Failed", positiveAction: { action in }, negativeAction: nil)
                   }
               })
           case .cancelled:

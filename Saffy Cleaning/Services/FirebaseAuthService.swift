@@ -14,15 +14,6 @@ class FirebaseAuthService {
     
     static let googleSignConfig = GIDConfiguration.init(clientID: "251466242051-i1a1a4e8e5j3ojhr2bme4u1tn54jjsu4.apps.googleusercontent.com")
     
-    func createUser(email: String, password: String, completionBlock: @escaping (_ success: Bool) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) {(authResult, error) in
-            if let user = authResult?.user {
-                completionBlock(true)
-            } else {
-                completionBlock(false)
-            }
-        }
-    }
     func signIn(email: String, pass: String, completionBlock: @escaping (_ success: Bool) -> Void) {
         Auth.auth().signIn(withEmail: email, password: pass) { (result, error) in
             if let error = error, let _ = AuthErrorCode(rawValue: error._code) {
@@ -32,11 +23,52 @@ class FirebaseAuthService {
             }
         }
     }
-    func loginWithThirdParties(credential: AuthCredential, completionBlock: @escaping (_ success: Bool) -> Void) {
-        Auth.auth().signIn(with: credential, completion: {(firebaseUser, error) in
-            completionBlock(error == nil)
-        })
+    
+    func loginWithThirdParties(credential: AuthCredential, completionBlock: @escaping (_ sucess: Bool) -> Void) {
+        Auth.auth().signIn(with: credential) {(result, error) in
+            if let user = result?.user {
+                FirebaseDBService.service.retrieveUserById(id: user.uid, completion: { result in
+                    if (result == nil){
+                        let username = user.email ?? ""
+                        let email = user.email ?? ""
+                        let fullName = user.displayName ?? ""
+                        let userType = UserType.user.rawValue
+                        let image = UIImage(systemName: "person.circle")!
+                        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+                        let fileName = NSUUID().uuidString
+                        let storageRef = Storage.storage().reference().child("profileImages").child(fileName)
+
+                        storageRef.putData(imageData, metadata: nil) { metadata, error in
+
+                            if let error = error {
+                                print(error.localizedDescription)
+                                return
+                            }
+
+                            storageRef.downloadURL { url, error in
+
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                    return
+                                }
+                                guard let profileImageUrl = url?.absoluteString else { return }
+                                let dictionary = ["username": username, "fullName": fullName, "email": email, "contactNumber": "", "profileImageUrl": profileImageUrl, "userType": userType]
+
+                                Database.database().reference().child("users").child(user.uid).updateChildValues(dictionary)
+                                completionBlock(true)
+                            }
+
+                        }
+                    }
+                })
+            } else {
+                print("no user")
+            }
+        }
+        
     }
+
+    
     
     public func registerUser(with user: Credentials, completion: @escaping(Error?, DatabaseReference) -> Void) {
         
