@@ -9,7 +9,7 @@ import UIKit
 
 protocol SCNotificationCellDelgate {
     func syncUserId(id:String, orderId: String)
-    func checkout(totalCost: String)
+    func completeOrder(review: Review, revieweeId: String)
 }
 
 class SCNotificationCell: UITableViewCell {
@@ -41,6 +41,11 @@ class SCNotificationCell: UITableViewCell {
     }
     
     @objc private func viewDidTappedOn(_ gesture: UITapGestureRecognizer) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        formatter.timeZone = TimeZone.current
+        let timestamp = formatter.string(from: Date())
+        
         if user?.userType == UserType.user.rawValue {
             switch order!.status {
             case UserOrderType.applied.rawValue:
@@ -48,15 +53,15 @@ class SCNotificationCell: UITableViewCell {
             case UserOrderType.matched.rawValue:
                 FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
             case UserOrderType.completed.rawValue:
-                self.delegate?.checkout(totalCost: "\(order!.totalCost)")
+                let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.worker.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
+                self.delegate?.completeOrder(review: review, revieweeId: order!.workerId)
             default:
                 print("notification label clicked")
             }
         }
         else if user?.userType == UserType.worker.rawValue {
-            // review pop up?
-            // worker only can leave the review
-            print("i am worker")
+            let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.user.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
+            self.delegate?.completeOrder(review: review, revieweeId: order!.userId)
         }
     }
     
@@ -142,7 +147,7 @@ class SCNotificationCell: UITableViewCell {
                 message = "Your order has been applied by a worker. Please click view to checkout the profile."
                 self.viewLabel.attributedText = NSMutableAttributedString(string: "View", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .brandYellow
+                self.viewLabel.backgroundColor = .lightBrandLake
             // user cancelled the order
             case UserOrderType.cancelled.rawValue:
                 message = "You cancelled the order."
@@ -158,9 +163,9 @@ class SCNotificationCell: UITableViewCell {
             // user matched with worker
             case UserOrderType.completed.rawValue:
                 message = "Order completed."
-                self.viewLabel.attributedText = NSMutableAttributedString(string: "Pay", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .lightGray
+                self.viewLabel.backgroundColor = .brandYellow
             default:
                 message = "Unexpected error."
                 self.viewLabel.attributedText = nil
@@ -193,9 +198,9 @@ class SCNotificationCell: UITableViewCell {
             // order completed
             case UserOrderType.completed.rawValue:
                 message = "Order completed. You will receive the fee very soon. Please feel free to leave the comment about this order in review section"
-                self.viewLabel.attributedText = NSMutableAttributedString(string: "Review", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .brandYellow
+                self.viewLabel.backgroundColor = .lightBrandLake
                 self.viewLabel.isUserInteractionEnabled = true
             default:
                 message = "Unexpected error."

@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Review {
+struct Review: Codable {
     var reviewerId: String
     var reviewerImageUrl: String
     var date: String

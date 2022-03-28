@@ -95,25 +95,6 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension NoticeViewController:SCNotificationCellDelgate {
-    
-    func syncUserId(id: String, orderId: String) {
-        FirebaseDBService.service.retrieveUserById(id: id) { [weak self] user in
-            let viewWorkerProfileVc = WorkerProfileViewController()
-            viewWorkerProfileVc.user = user
-            viewWorkerProfileVc.delegate = self
-            viewWorkerProfileVc.orderID = orderId
-            self?.present(viewWorkerProfileVc, animated: true, completion: nil)
-        }
-    }
-    
-    func checkout(totalCost: String) {
-//        let checkoutVC = CheckoutViewController()
-//        checkoutVC.totalCost = totalCost
-//        self.present(checkoutVC, animated: true, completion: nil)
-    }
-}
-
 extension NoticeViewController {
     
     private func configureTableView() {
@@ -131,7 +112,28 @@ extension NoticeViewController {
     
 }
 
-extension NoticeViewController:WorkerProfileViewControllerDelegate {
+extension NoticeViewController:SCNotificationCellDelgate {
+    
+    func syncUserId(id: String, orderId: String) {
+        FirebaseDBService.service.retrieveUserById(id: id) { [weak self] user in
+            let viewWorkerProfileVc = WorkerProfileViewController()
+            viewWorkerProfileVc.user = user
+            viewWorkerProfileVc.delegate = self
+            viewWorkerProfileVc.orderID = orderId
+            self?.present(viewWorkerProfileVc, animated: true, completion: nil)
+        }
+    }
+    
+    func completeOrder(review: Review, revieweeId: String) {
+        FirebaseDBService.service.retrieveUserById(id: revieweeId) { [weak self] user in
+            let ratingVC = SCRatingVC(user: user!, review: review, revieweeId: revieweeId)
+            ratingVC.delegate = self
+            self?.present(ratingVC, animated: true, completion: nil)
+        }
+    }
+}
+
+extension NoticeViewController: WorkerProfileViewControllerDelegate {
     func didTapAcceptButton(_ orderId: String) {
         FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.matched.rawValue])
     }
@@ -139,6 +141,10 @@ extension NoticeViewController:WorkerProfileViewControllerDelegate {
     func didTapRejectedButton(_ orderId: String) {
         FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.cancelled.rawValue], isCancellOrder: true)
     }
-    
-    
+}
+
+extension NoticeViewController: SCRatingVCDelegate {
+    func ratingButtonTapped(review: Review, revieweeId: String) {
+        FirebaseDBService.service.createReview(review: review, revieweeId: revieweeId)
+    }
 }

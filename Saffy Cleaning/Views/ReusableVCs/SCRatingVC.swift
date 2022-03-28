@@ -10,7 +10,7 @@ import SDWebImage
 import Cosmos
 
 protocol SCRatingVCDelegate: AnyObject {
-    func ratingButtonTapped(userRating rating: Double, userMessage message: String)
+    func ratingButtonTapped(review: Review, revieweeId: String)
 }
 
 class SCRatingVC: UIViewController {
@@ -50,9 +50,13 @@ class SCRatingVC: UIViewController {
     }()
     
     public weak var delegate: SCRatingVCDelegate?
+    public var review: Review
+    public var revieweeId: String
     
-    public init(user: User) {
-        self.titleLabel.text = user.userType == UserType.user.rawValue ? "Do you like Sella's service?" : "Do you like working for \(user.fullName)?"
+    public init(user: User, review: Review, revieweeId: String) {
+        self.review = review
+        self.revieweeId = revieweeId
+        self.titleLabel.text = user.userType == UserType.user.rawValue ? "Do you like working for \(user.fullName)?" : "Do you like the \(user.fullName) service?"
         self.imageView.sd_setImage(with: user.profileImageUrl)
         self.nameLabel.text = user.fullName
         self.scoreLabel.text = "Score \(user.fullName) from 1-5 star"
@@ -81,9 +85,14 @@ class SCRatingVC: UIViewController {
     @objc private func confirmationButtonTapped(_ button: UIButton) {
         confirmationButton.animateWithSpring()
         
-        if messageTextField.text != "" {
-            delegate?.ratingButtonTapped(userRating: ratingView.rating, userMessage: messageTextField.text!)
+        if messageTextField.text == "" {
+            self.review.info = "This message is auto generated."
+        }else{
+            self.review.info = messageTextField.text
         }
+        
+        self.review.ratingCount = Int(ratingView.rating)
+        delegate?.ratingButtonTapped(review: self.review, revieweeId: revieweeId)
         
         self.dismiss(animated: true, completion: nil)
     }

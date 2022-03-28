@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
     }
     
     private func renderIcon () {
+
         
         let bView = UIView()
         bView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
@@ -46,6 +47,7 @@ class HomeViewController: UIViewController {
         imageView.tintColor = .brandGem
         
         let barItem = UIBarButtonItem(customView: bView)
+
         navigationItem.leftBarButtonItem = barItem
     }
     
@@ -75,6 +77,7 @@ class HomeViewController: UIViewController {
                 if user.userType == UserType.user.rawValue {
                     DispatchQueue.main.async {
                         self.configureButtons()
+                        self.renderIcon()
                     }
                     
                 }
@@ -84,6 +87,7 @@ class HomeViewController: UIViewController {
                             self?.removeButtons()
                             self?.orders = result
                             self?.addAnnotation(orders: result)
+                            self?.renderIcon()
                         }
                         
                     }
@@ -92,7 +96,7 @@ class HomeViewController: UIViewController {
             }
         }
         self.showCurrentLocation()
-        self.renderIcon()
+        
     }
     private func handleMapZoom(lat: Double, lng: Double, isAddress: Bool) {
         // set coordinates (lat lon)
@@ -120,7 +124,7 @@ class HomeViewController: UIViewController {
         let addressVC = SCAddressVC(height: 380)
         
         if let sheet = addressVC.sheetPresentationController {
-            sheet.detents = [.medium()]
+            sheet.detents = [.large(), .medium()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
             //sheet.delegate = self
