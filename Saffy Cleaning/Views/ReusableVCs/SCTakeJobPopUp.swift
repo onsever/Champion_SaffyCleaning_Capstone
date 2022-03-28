@@ -100,6 +100,9 @@ class SCTakeJobPopUp: UIViewController {
         
         pdfView.document = document
         pdfView.displayMode = .singlePage
+        pdfView.maxScaleFactor = 4.0;
+        pdfView.minScaleFactor = pdfView.scaleFactorForSizeToFit;
+        pdfView.autoScales = true;
         
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
