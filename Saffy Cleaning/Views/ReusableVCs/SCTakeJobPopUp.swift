@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFKit
 
 protocol SCTakeJobPopUpDelegate: AnyObject {
     func didTapConfirmationTakeJob(_ button: UIButton)
@@ -36,6 +37,7 @@ class SCTakeJobPopUp: UIViewController {
     }()
     
     private let policyView = SCPolicyView()
+    private let pdfView = PDFView()
     
     public weak var delegate: SCTakeJobPopUpDelegate?
     private var isPolicySelected: Bool = false
@@ -59,7 +61,7 @@ class SCTakeJobPopUp: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureContainerView()
         configureImageView()
         configureInfoLabel()
@@ -87,6 +89,39 @@ class SCTakeJobPopUp: UIViewController {
         self.dismiss(animated: true)
     }
     
+    private func createPdfView(with document: PDFDocument?) {
+        view.addSubview(pdfView)
+        
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        pdfView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        pdfView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        pdfView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        pdfView.document = document
+        pdfView.displayMode = .singlePage
+        
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .brandGem
+        
+        pdfView.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: pdfView.topAnchor, constant: 15),
+            button.trailingAnchor.constraint(equalTo: pdfView.trailingAnchor, constant: -10),
+            button.heightAnchor.constraint(equalToConstant: 30),
+            button.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        button.addTarget(self, action: #selector(dismissPdfView(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func dismissPdfView(_ button: UIButton) {
+        pdfView.removeFromSuperview()
+    }
+    
 }
 
 extension SCTakeJobPopUp: SCPolicyViewDelegate {
@@ -97,11 +132,20 @@ extension SCTakeJobPopUp: SCPolicyViewDelegate {
     }
     
     func didTapPolicy() {
-        print("Policy tapped!")
+        guard let url = Bundle.main.url(forResource: "Privacy_Policy", withExtension: "pdf") else { return }
+        
+        guard let document = PDFDocument(url: url) else { return }
+        
+        createPdfView(with: document)
+        
     }
     
     func didTapTermsAndConditions() {
-        print("Terms and conditions tapped!")
+        guard let url = Bundle.main.url(forResource: "TermsAndConditions", withExtension: "pdf") else { return }
+        
+        guard let document = PDFDocument(url: url) else { return }
+        
+        createPdfView(with: document)
     }
     
     

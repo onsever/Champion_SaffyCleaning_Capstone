@@ -35,24 +35,19 @@ class HomeViewController: UIViewController {
     }
     
     private func renderIcon () {
-        let bView = UIView()
+
         
+        let bView = UIView()
         bView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         
-        
-        
         let imageView = UIImageView(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket")?.withRenderingMode(.alwaysTemplate))
-        imageView.tintColor = user?.userType == UserType.user.rawValue ? .brandGem : .brandYellow
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        
         bView.addSubview(imageView)
-        
         imageView.contentMode = .scaleAspectFill
-        
-        
+        imageView.tintColor = .brandGem
         
         let barItem = UIBarButtonItem(customView: bView)
-        
+
         navigationItem.leftBarButtonItem = barItem
     }
     

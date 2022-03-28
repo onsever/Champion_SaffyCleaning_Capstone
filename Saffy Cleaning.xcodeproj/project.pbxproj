@@ -87,6 +87,8 @@
 		BAB5F35D27D9AF290018A030 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */; };
 		BAB5F35F27D9AF3F0018A030 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */; };
 		BAB5F36127D9AF4E0018A030 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */; };
+		BAB728E527F20032001DEE44 /* Privacy_Policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */; };
+		BAB728E627F20032001DEE44 /* TermsAndConditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */; };
 		BABBBBF727E98417004B6F76 /* NearbyOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */; };
 		BABE4E4B27DABF3400ECFFE1 /* SCCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */; };
 		BABE4E4F27DAE27500ECFFE1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */; };
@@ -218,6 +220,8 @@
 		BAB5F35C27D9AF290018A030 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
 		BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Privacy_Policy.pdf; path = ../../../../Downloads/Privacy_Policy.pdf; sourceTree = "<group>"; };
+		BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = TermsAndConditions.pdf; path = ../../../../Downloads/TermsAndConditions.pdf; sourceTree = "<group>"; };
 		BABBBBF627E98417004B6F76 /* NearbyOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyOrderViewController.swift; sourceTree = "<group>"; };
 		BABE4E4A27DABF3400ECFFE1 /* SCCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCCircleButton.swift; sourceTree = "<group>"; };
 		BABE4E4E27DAE27500ECFFE1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -532,6 +536,8 @@
 		BA9539D127D991E7005A899A /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				BAB728E327F20032001DEE44 /* Privacy_Policy.pdf */,
+				BAB728E427F20032001DEE44 /* TermsAndConditions.pdf */,
 				BA95397527D99032005A899A /* Assets.xcassets */,
 				BA95396B27D99031005A899A /* SceneDelegate.swift */,
 				BA95396927D99031005A899A /* AppDelegate.swift */,
@@ -719,7 +725,9 @@
 				BA95397927D99032005A899A /* LaunchScreen.storyboard in Resources */,
 				BA95397627D99032005A899A /* Assets.xcassets in Resources */,
 				BA65DB5527DA69A50007A915 /* Urbanist-Regular.ttf in Resources */,
+				BAB728E627F20032001DEE44 /* TermsAndConditions.pdf in Resources */,
 				0B53774F27DB04350085C110 /* GoogleService-Info.plist in Resources */,
+				BAB728E527F20032001DEE44 /* Privacy_Policy.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
