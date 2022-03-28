@@ -56,7 +56,7 @@ class SCRatingVC: UIViewController {
     public init(user: User, review: Review, revieweeId: String) {
         self.review = review
         self.revieweeId = revieweeId
-        self.titleLabel.text = user.userType == UserType.user.rawValue ? "Do you like the \(user.fullName) service?" : "Do you like working for \(user.fullName)?"
+        self.titleLabel.text = user.userType == UserType.user.rawValue ? "Do you like working for \(user.fullName)?" : "Do you like the \(user.fullName) service?"
         self.imageView.sd_setImage(with: user.profileImageUrl)
         self.nameLabel.text = user.fullName
         self.scoreLabel.text = "Score \(user.fullName) from 1-5 star"

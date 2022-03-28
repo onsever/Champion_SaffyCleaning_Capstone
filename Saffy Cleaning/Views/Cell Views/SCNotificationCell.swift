@@ -147,7 +147,7 @@ class SCNotificationCell: UITableViewCell {
                 message = "Your order has been applied by a worker. Please click view to checkout the profile."
                 self.viewLabel.attributedText = NSMutableAttributedString(string: "View", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .brandYellow
+                self.viewLabel.backgroundColor = .lightBrandLake
             // user cancelled the order
             case UserOrderType.cancelled.rawValue:
                 message = "You cancelled the order."
@@ -165,7 +165,7 @@ class SCNotificationCell: UITableViewCell {
                 message = "Order completed."
                 self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .lightGray
+                self.viewLabel.backgroundColor = .brandYellow
             default:
                 message = "Unexpected error."
                 self.viewLabel.attributedText = nil
@@ -200,7 +200,7 @@ class SCNotificationCell: UITableViewCell {
                 message = "Order completed. You will receive the fee very soon. Please feel free to leave the comment about this order in review section"
                 self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
                 self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .brandYellow
+                self.viewLabel.backgroundColor = .lightBrandLake
                 self.viewLabel.isUserInteractionEnabled = true
             default:
                 message = "Unexpected error."
