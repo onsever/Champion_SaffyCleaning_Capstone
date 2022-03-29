@@ -125,9 +125,9 @@ extension NoticeViewController:SCNotificationCellDelgate {
         }
     }
     
-    func completeOrder(review: Review, revieweeId: String) {
+    func completeOrder(review: Review, revieweeId: String, orderId: String) {
         FirebaseDBService.service.retrieveUserById(id: revieweeId) { [weak self] user in
-            let ratingVC = SCRatingVC(user: user!, review: review, revieweeId: revieweeId)
+            let ratingVC = SCRatingVC(user: user!, review: review, revieweeId: revieweeId, orderId: orderId)
             ratingVC.delegate = self
             self?.present(ratingVC, animated: true, completion: nil)
         }
@@ -145,7 +145,8 @@ extension NoticeViewController: WorkerProfileViewControllerDelegate {
 }
 
 extension NoticeViewController: SCRatingVCDelegate {
-    func ratingButtonTapped(review: Review, revieweeId: String) {
-        FirebaseDBService.service.createReview(review: review, revieweeId: revieweeId)
+    
+    func ratingButtonTapped(review: Review, revieweeId: String, orderId: String) {
+        FirebaseDBService.service.createReview(review: review, revieweeId: revieweeId, orderId: orderId)
     }
 }

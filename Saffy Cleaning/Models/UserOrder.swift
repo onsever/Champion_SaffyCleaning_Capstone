@@ -21,6 +21,8 @@ class UserOrder: Codable {
     public var status: String = UserOrderType.pending.rawValue
     public var workerId: String = ""
     public var userId: String
+    public var isUserCommented: Bool = false
+    public var isWorkerCommented: Bool = false
     
     init(date: String,
          time: String,

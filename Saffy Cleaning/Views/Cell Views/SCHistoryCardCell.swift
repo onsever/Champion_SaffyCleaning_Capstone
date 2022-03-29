@@ -122,20 +122,20 @@ class SCHistoryCardCell: UITableViewCell {
         ])
     }
     
-    public func setData(addressTitle: String, date: String, status: Status) {
+    public func setData(addressTitle: String, date: String, status: String) {
         self.addressLabel.text = addressTitle
         self.dateLabel.text = date
         
         switch status {
-        case .completed:
-            self.completionLabel.text = status.rawValue
+        case UserOrderType.completed.rawValue:
+            self.completionLabel.text = UserOrderType.completed.rawValue
             self.completionLabel.textColor = .brandDark
-        case .proceeding:
-            self.completionLabel.text = status.rawValue
-            self.completionLabel.textColor = .brandGem
-        case .cancelled:
-            self.completionLabel.text = status.rawValue
+        case UserOrderType.cancelled.rawValue:
+            self.completionLabel.text = UserOrderType.cancelled.rawValue
             self.completionLabel.textColor = .brandError
+        default:
+            self.completionLabel.text = status
+            self.completionLabel.textColor = .brandGem
         }
 
     }
