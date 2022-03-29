@@ -24,6 +24,10 @@ class WorkerProfileViewController: UIViewController {
     private let averageScoreView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     private let yearView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     
+    private var numbOfHire = 0;
+    private var average = 0;
+    private var yearsOfJoining = 0;
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,16 +76,32 @@ class WorkerProfileViewController: UIViewController {
         self.dismiss(animated: true)
     }
     
+    private func updateContent () {
+        if(!reviewArray.isEmpty) {
+            hiringView.infoLabel.text = String(reviewArray.count)
+            for item in reviewArray {
+                average += item.ratingCount
+            }
+            average = average / reviewArray.count
+        }
+        averageScoreView.infoLabel.text = String(average)
+    }
+    
+    
     private func setData() {
         FirebaseDBService.service.retrieveUser { user in
             guard let user = user else { return }
-            self.profileImageView.sd_setImage(with: user.profileImageUrl)
-            FirebaseDBService.service.retrieveUserReviews(type: user.userType) { [weak self] reviews in
+            FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
                 self?.reviewArray = reviews
+                self?.numbOfHire = reviews.count
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.updateContent()
+                }
             }
         }
     }
-
 }
 
 extension WorkerProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -161,10 +181,10 @@ extension WorkerProfileViewController {
         horizontalStackView.addTopBorder(with: .brandGem, andWidth: 1)
         horizontalStackView.addBottomBorder(with: .brandGem, andWidth: 1)
         
-        hiringView.infoLabel.text = "2"
+        hiringView.infoLabel.text = "0"
         hiringView.infoValue.text = "Services"
         
-        averageScoreView.infoLabel.text = "4"
+        averageScoreView.infoLabel.text = "0"
         averageScoreView.infoValue.text = "Average"
         
         yearView.infoLabel.text = "1"
