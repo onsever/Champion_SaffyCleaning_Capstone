@@ -21,7 +21,7 @@ final class FirebaseDBService {
 
 // MARK: Review Mgmt {
 extension FirebaseDBService {
-    public func retrieveUserReviews(type: String, completion: @escaping([Review]) -> Void) {
+    public func retrieveReviews(type: String, completion: @escaping([Review]) -> Void) {
         let isUser = type == UserType.user.rawValue ? true : false
         let ref = db.child(Constants.reviews).child(user!.uid)
         var reviews = [Review]()

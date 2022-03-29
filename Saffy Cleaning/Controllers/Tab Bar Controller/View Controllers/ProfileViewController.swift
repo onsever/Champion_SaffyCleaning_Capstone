@@ -24,7 +24,9 @@ class ProfileViewController: UIViewController {
     private let yearView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     
     var delegate: ProfileViewProtocol? = nil
-    
+    private var numbOfHire = 0;
+    private var average = 0;
+    private var yearsOfJoining = 0;
 
     private var switchUserVC: SCSwitchUserPopUp? = nil
     
@@ -108,18 +110,32 @@ class ProfileViewController: UIViewController {
         
     }
     
-    private func setData() {
-        FirebaseDBService.service.retrieveUser { user in
-            guard let user = user else { return }
-            FirebaseDBService.service.retrieveUserReviews(type: user.userType) { [weak self] reviews in
-                self?.reviewArray = reviews
+    private func updateContent () {
+        if(!reviewArray.isEmpty) {
+        hiringView.infoLabel.text = String(reviewArray.count)
+            for item in reviewArray {
+                average += item.ratprivate func setData() {
+                    FirebaseDBService.service.retrieveUser { user in
+                        guard let user = user else { return }
+                        FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
+                            self?.reviewArray = reviews
+                            self?.numbOfHire = reviews.count
+                            
+                            DispatchQueue.main.async {
+                                self?.tableView.reloadData()
+                                self?.updateContent()
+                            }
+                        }
+                    }
+                }
+            }ingCount
             }
-            //        reviewArray.append(Review(user: "Mark", userImage: UIImage(named: "carpet")!, date: "17-Nov-2021", info: "Effective and polite", ratingCount: .fiveStar))
-            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "He didn't cleaned home enough!", ratingCount: .oneStar))
-            //        reviewArray.append(Review(user: "Onur", userImage: UIImage(named: "carpet")!, date: "07-Dec-2021", info: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.", ratingCount: .oneStar))
+            average = average / reviewArray.count
         }
+        averageScoreView.infoLabel.text = String(average)
     }
-}
+    
+    
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -225,10 +241,10 @@ extension ProfileViewController {
         horizontalStackView.addTopBorder(with: .brandGem, andWidth: 1)
         horizontalStackView.addBottomBorder(with: .brandGem, andWidth: 1)
         
-        hiringView.infoLabel.text = "2"
+        hiringView.infoLabel.text = "0"
         hiringView.infoValue.text = "Hiring"
         
-        averageScoreView.infoLabel.text = "4"
+        averageScoreView.infoLabel.text = "0"
         averageScoreView.infoValue.text = "Average"
         
         yearView.infoLabel.text = "1"
