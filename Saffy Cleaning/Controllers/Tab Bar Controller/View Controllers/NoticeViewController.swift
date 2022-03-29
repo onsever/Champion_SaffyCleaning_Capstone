@@ -78,6 +78,7 @@ extension NoticeViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.setData(userOrder: notificationArray[indexPath.row], user: user!)
         cell.order = notificationArray[indexPath.row]
+        cell.selectionStyle = .none
         cell.delegate = self
         
         return cell
