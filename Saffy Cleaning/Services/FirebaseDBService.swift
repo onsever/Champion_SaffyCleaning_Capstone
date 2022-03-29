@@ -47,38 +47,20 @@ extension FirebaseDBService {
         completion([])
     }
     
-    public func createReview(review: Review, revieweeId: String) {
+    public func createReview(review: Review, revieweeId: String, orderId: String) {
         let reviewDict = try! DictionaryEncoder.encode(review) as NSDictionary
         db.child(Constants.reviews).child(revieweeId).childByAutoId().setValue(reviewDict)
-    }
-}
-
-// MARK: Notification Mgmt
-extension FirebaseDBService {
-    public func retrieveUserNotification(completion: @escaping ([UserOrder]) -> Void) {
-        let ref = db.child(Constants.userOrders)
-        var orders = [UserOrder]()
-        ref.observeSingleEvent(of: .value, with: { snapshots in
-            for snapshot in snapshots.value as! Dictionary<String, Any>  {
-                let allOrders = snapshot.value as! Dictionary<String, Any>
-                for order in allOrders {
-                    let orderDict = order.value as! Dictionary<String, Any>
-                    if orderDict["status"] as! String == UserOrderType.opening.rawValue
-                        || orderDict["status"] as! String == UserOrderType.applied.rawValue
-                        || orderDict["status"] as! String == UserOrderType.pending.rawValue {
-                        let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
-                        let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
-                        orders.append(orderObj)
-                    }
-                }
-            }
-        })
-        completion(orders)
+        if review.revieweeUserType == UserType.user.rawValue {
+            db.child(Constants.userOrders).child(revieweeId).child(orderId).updateChildValues(["isWorkerCommented": true])
+        }
+        else if review.revieweeUserType == UserType.worker.rawValue {
+            db.child(Constants.userOrders).child(user!.uid).child(orderId).updateChildValues(["isUserCommented": true])
+        }
+        
     }
 }
 
 // MARK: Order Mgmt
-
 extension FirebaseDBService {
     public func createNewOrder(value:NSDictionary, id: String) {
         let ref = db.child(Constants.userOrders)
@@ -176,6 +158,25 @@ extension FirebaseDBService {
         }
     }
     
+    public func retrieveOrderHistory(completion: @escaping ([History]) -> Void) {
+        let ref = db.child(Constants.userOrders).child(user!.uid)
+        var histories = [History]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            guard snapshots.exists() else { return }
+            for snapshot in snapshots.value as! Dictionary<String, Any>  {
+                let order = snapshot.value as! Dictionary<String, Any>
+                if order["status"] as! String == UserOrderType.cancelled.rawValue
+                    || order["status"] as! String == UserOrderType.completed.rawValue {
+                    let address = self.convertDictToAddress(item: order["address"] as! Dictionary<String, Any>)
+                    let orderObj = self.convertDictToOrder(dict: order, address: address)
+                    let history = History(address: address.street, date: orderObj.date, status: orderObj.status)
+                    histories.append(history)
+                }
+            }
+            completion(histories)
+        })
+    }
+    
     
     private func convertDictToOrder(dict: Dictionary<String, Any>, address: Address) -> UserOrder {
         let date = dict["date"] as? String ?? ""
@@ -190,9 +191,13 @@ extension FirebaseDBService {
         let id = dict["id"] as? String ?? ""
         let userId = dict["userId"] as? String ?? ""
         let workerId = dict["workerId"] as? String ?? ""
+        let isUserCommented = dict["isUserCommented"] as? Bool ?? false
+        let isWorkerCommented = dict["isWorkerCommented"] as? Bool ?? false
         let userOrder = UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId, id: id)
         userOrder.status = status
         userOrder.workerId = workerId
+        userOrder.isUserCommented = isUserCommented
+        userOrder.isWorkerCommented = isWorkerCommented
         return userOrder
     }
     
@@ -271,11 +276,10 @@ extension FirebaseDBService {
     }
     public func retrieveUserById(id: String, completion: @escaping(User?) -> Void) {
         db.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
-            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return completion(nil) }
             let user = User(uid: id, dictionary: dictionary)
             completion(user)
         }
-        completion(nil)
     }
 }
 

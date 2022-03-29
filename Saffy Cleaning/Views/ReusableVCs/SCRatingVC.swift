@@ -10,7 +10,7 @@ import SDWebImage
 import Cosmos
 
 protocol SCRatingVCDelegate: AnyObject {
-    func ratingButtonTapped(review: Review, revieweeId: String)
+    func ratingButtonTapped(review: Review, revieweeId: String, orderId: String)
 }
 
 class SCRatingVC: UIViewController {
@@ -52,10 +52,12 @@ class SCRatingVC: UIViewController {
     public weak var delegate: SCRatingVCDelegate?
     public var review: Review
     public var revieweeId: String
+    public var orderId: String
     
-    public init(user: User, review: Review, revieweeId: String) {
+    public init(user: User, review: Review, revieweeId: String, orderId: String) {
         self.review = review
         self.revieweeId = revieweeId
+        self.orderId = orderId
         self.titleLabel.text = user.userType == UserType.user.rawValue ? "Do you like working for \(user.fullName)?" : "Do you like the \(user.fullName) service?"
         self.imageView.sd_setImage(with: user.profileImageUrl)
         self.nameLabel.text = user.fullName
@@ -92,7 +94,7 @@ class SCRatingVC: UIViewController {
         }
         
         self.review.ratingCount = Int(ratingView.rating)
-        delegate?.ratingButtonTapped(review: self.review, revieweeId: revieweeId)
+        delegate?.ratingButtonTapped(review: self.review, revieweeId: revieweeId, orderId: self.orderId)
         
         self.dismiss(animated: true, completion: nil)
     }

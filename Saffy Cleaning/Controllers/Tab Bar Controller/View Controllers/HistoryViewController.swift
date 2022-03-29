@@ -33,8 +33,20 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.backgroundColor = .white
         
         configureTableView()
-        setData()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        FirebaseDBService.service.retrieveOrderHistory() { histories in
+            guard histories.isEmpty == false else { return }
+            DispatchQueue.main.async {
+                self.historyArray = histories
+                self.tableView.reloadData()
+            }
+            
+        }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -63,12 +75,6 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
 }
 
 extension HistoryViewController {
-    
-    private func setData() {
-        historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .proceeding))
-        historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .completed))
-        historyArray.append(History(address: "6th Ave N. Fountain Heights", date: "28-Dec-2021", status: .cancelled))
-    }
     
     private func configureTableView() {
         view.addSubview(tableView)

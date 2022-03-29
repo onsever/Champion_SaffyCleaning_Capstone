@@ -459,8 +459,8 @@ extension OrderViewController {
     }
     
     private func configurePayPalCheckout() {
-        // acc: sb-08udj14512915@personal.example.com
-        // pw: j/d05n=A
+        // acc: sb-f7pwi15477250@personal.example.com
+        // pw: s!L3:4$A
         Checkout.setCreateOrderCallback { [weak self] createOrderAction in
             
             guard let self = self else { return }

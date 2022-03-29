@@ -11,9 +11,9 @@ class History {
     
     var address: String
     var date: String
-    var status: Status
+    var status: String
     
-    init(address: String, date: String, status: Status) {
+    init(address: String, date: String, status: String) {
         self.address = address
         self.date = date
         self.status = status

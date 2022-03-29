@@ -9,7 +9,7 @@ import UIKit
 
 protocol SCNotificationCellDelgate {
     func syncUserId(id:String, orderId: String)
-    func completeOrder(review: Review, revieweeId: String)
+    func completeOrder(review: Review, revieweeId: String, orderId: String)
 }
 
 class SCNotificationCell: UITableViewCell {
@@ -54,14 +54,14 @@ class SCNotificationCell: UITableViewCell {
                 FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
             case UserOrderType.completed.rawValue:
                 let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.worker.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
-                self.delegate?.completeOrder(review: review, revieweeId: order!.workerId)
+                self.delegate?.completeOrder(review: review, revieweeId: order!.workerId, orderId: order!.id)
             default:
                 print("notification label clicked")
             }
         }
         else if user?.userType == UserType.worker.rawValue {
             let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.user.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
-            self.delegate?.completeOrder(review: review, revieweeId: order!.userId)
+            self.delegate?.completeOrder(review: review, revieweeId: order!.userId, orderId: order!.id)
         }
     }
     
@@ -163,9 +163,16 @@ class SCNotificationCell: UITableViewCell {
             // user matched with worker
             case UserOrderType.completed.rawValue:
                 message = "Order completed."
-                self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
-                self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .brandYellow
+                if userOrder.isUserCommented {
+                    self.viewLabel.attributedText = nil
+                    self.viewLabel.textColor = .white
+                    self.viewLabel.backgroundColor = .white
+                }
+                else{
+                    self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                    self.viewLabel.textColor = .black
+                    self.viewLabel.backgroundColor = .brandYellow
+                }
             default:
                 message = "Unexpected error."
                 self.viewLabel.attributedText = nil
@@ -198,10 +205,18 @@ class SCNotificationCell: UITableViewCell {
             // order completed
             case UserOrderType.completed.rawValue:
                 message = "Order completed. You will receive the fee very soon. Please feel free to leave the comment about this order in review section"
-                self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
-                self.viewLabel.textColor = .black
-                self.viewLabel.backgroundColor = .lightBrandLake
-                self.viewLabel.isUserInteractionEnabled = true
+                if userOrder.isWorkerCommented {
+                    self.viewLabel.attributedText = nil
+                    self.viewLabel.textColor = .white
+                    self.viewLabel.backgroundColor = .white
+                }
+                else{
+                    self.viewLabel.attributedText = NSMutableAttributedString(string: "Comment", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                    self.viewLabel.textColor = .black
+                    self.viewLabel.backgroundColor = .brandYellow
+                    self.viewLabel.isUserInteractionEnabled = true
+                }
+                
             default:
                 message = "Unexpected error."
                 self.viewLabel.attributedText = nil
