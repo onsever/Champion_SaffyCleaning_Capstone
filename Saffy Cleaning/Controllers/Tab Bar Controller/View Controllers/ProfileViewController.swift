@@ -114,28 +114,28 @@ class ProfileViewController: UIViewController {
         if(!reviewArray.isEmpty) {
         hiringView.infoLabel.text = String(reviewArray.count)
             for item in reviewArray {
-                average += item.ratprivate func setData() {
-                    FirebaseDBService.service.retrieveUser { user in
-                        guard let user = user else { return }
-                        FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
-                            self?.reviewArray = reviews
-                            self?.numbOfHire = reviews.count
-                            
-                            DispatchQueue.main.async {
-                                self?.tableView.reloadData()
-                                self?.updateContent()
-                            }
-                        }
-                    }
-                }
-            }ingCount
+                average += item.ratingCount
             }
             average = average / reviewArray.count
         }
         averageScoreView.infoLabel.text = String(average)
     }
     
-    
+    private func setData() {
+        FirebaseDBService.service.retrieveUser { user in
+            guard let user = user else { return }
+            FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
+                self?.reviewArray = reviews
+                self?.numbOfHire = reviews.count
+
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.updateContent()
+                }
+            }
+        }
+    }
+}
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
