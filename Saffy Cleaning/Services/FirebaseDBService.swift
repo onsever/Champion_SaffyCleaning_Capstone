@@ -110,12 +110,11 @@ extension FirebaseDBService {
                             let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
                             let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
                             openingOrder.append(orderObj)
-                        } else {
-                            completion([])
                         }
                     }
                 }
-                completion(openingOrder)
+                let sortedOrders = openingOrder.sorted(by: {($0.date, $0.id)>($1.date, $1.id)})
+                completion(sortedOrders)
             }else{
                 completion([])
             }
@@ -134,7 +133,8 @@ extension FirebaseDBService {
                 let order = self.convertDictToOrder(dict: orderDict, address: address)
                 orders.append(order)
             }
-            completion(orders)
+            let sortedOrders = orders.sorted(by: {($0.date, $0.id)>($1.date, $1.id)})
+            completion(sortedOrders)
         })
         completion([])
     }
@@ -173,7 +173,8 @@ extension FirebaseDBService {
                     histories.append(history)
                 }
             }
-            completion(histories)
+            let sortedHistories = histories.sorted(by: {($0.date, $0.address)>($1.date, $1.address)})
+            completion(sortedHistories)
         })
     }
     

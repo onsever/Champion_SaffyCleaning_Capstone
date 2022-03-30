@@ -132,6 +132,10 @@ extension NoticeViewController:SCNotificationCellDelgate {
             self?.present(ratingVC, animated: true, completion: nil)
         }
     }
+    
+    func reloadData () {
+        fetchData()
+    }
 }
 
 extension NoticeViewController: WorkerProfileViewControllerDelegate {
