@@ -88,15 +88,13 @@ class SCRatingVC: UIViewController {
         confirmationButton.animateWithSpring()
         
         if messageTextField.text == "" {
-            self.review.info = "This message is auto generated."
+            self.presentAlert(title: "Warning", message: "Please leave the comment below.", positiveAction: {action in return}, negativeAction: {action in return})
         }else{
             self.review.info = messageTextField.text
+            self.review.ratingCount = Int(ratingView.rating)
+            delegate?.ratingButtonTapped(review: self.review, revieweeId: revieweeId, orderId: self.orderId)
+            self.dismiss(animated: true, completion: nil)
         }
-        
-        self.review.ratingCount = Int(ratingView.rating)
-        delegate?.ratingButtonTapped(review: self.review, revieweeId: revieweeId, orderId: self.orderId)
-        
-        self.dismiss(animated: true, completion: nil)
     }
 
 }

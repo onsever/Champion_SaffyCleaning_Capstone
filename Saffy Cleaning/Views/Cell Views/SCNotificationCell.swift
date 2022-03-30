@@ -10,6 +10,7 @@ import UIKit
 protocol SCNotificationCellDelgate {
     func syncUserId(id:String, orderId: String)
     func completeOrder(review: Review, revieweeId: String, orderId: String)
+    func reloadData()
 }
 
 class SCNotificationCell: UITableViewCell {
@@ -63,6 +64,7 @@ class SCNotificationCell: UITableViewCell {
             let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.user.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
             self.delegate?.completeOrder(review: review, revieweeId: order!.userId, orderId: order!.id)
         }
+        self.delegate?.reloadData()
     }
     
     private func configureImageView() {
