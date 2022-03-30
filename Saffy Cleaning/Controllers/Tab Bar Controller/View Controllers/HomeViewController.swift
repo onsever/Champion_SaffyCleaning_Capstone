@@ -124,7 +124,7 @@ class HomeViewController: UIViewController {
         let addressVC = SCAddressVC(height: 380)
         
         if let sheet = addressVC.sheetPresentationController {
-            sheet.detents = [.large(), .medium()]
+            sheet.detents = [.large()]
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersGrabberVisible = false
             //sheet.delegate = self

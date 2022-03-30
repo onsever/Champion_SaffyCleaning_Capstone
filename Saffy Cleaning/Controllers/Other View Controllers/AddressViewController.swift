@@ -22,6 +22,7 @@ protocol AddressVCDataSource: AnyObject {
 class AddressViewController: UIViewController {
     
     private lazy var ref = Database.database().reference()
+    private var isPostalCodeValid : Bool? = nil
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 300)
         
@@ -127,6 +128,9 @@ class AddressViewController: UIViewController {
         guard let houseSize = houseSizeView.getTextField().validateTextField() else { return }
         guard let contactPerson = contactPersonView.getTextField().validateTextField() else { return }
         guard let contactNumber = contactNumberView.getTextField().validateTextField() else { return }
+       if  isPostalCodeValid == false {
+            return
+        }
 
         LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self] (location) in
             guard let self = self else { return }
@@ -153,6 +157,7 @@ class AddressViewController: UIViewController {
         })
         
         self.dismiss(animated: true, completion: nil)
+        
     }
     
     @objc private func didTapHouseType(_ gesture: UITapGestureRecognizer) {
@@ -163,18 +168,19 @@ class AddressViewController: UIViewController {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        
+        let text = textField.text?.replacingOccurrences(of: " ", with: "")
         let searchRequest = MKLocalSearch.Request()
-        let isPostalCodeValid = validZipCode(postalCode: postalCodeView.getTextField().text ?? "")
+        isPostalCodeValid = validZipCode(postalCode: text ?? "")
         searchRequest.naturalLanguageQuery = postalCodeView.getTextField().text
         let activeSearch = MKLocalSearch(request: searchRequest)
         textField.rightViewMode = .always
-        activeSearch.start { [weak self] response,error in
+        if text!.count == 6 {
+        activeSearch.start { [weak self]response,error in
             guard let response = response else {
                    print(error?.localizedDescription ?? "This should be impossible")
                    return
                }
-            if ((response.mapItems.first?.placemark.postalCode) != nil) == isPostalCodeValid
+            if ((response.mapItems.first?.placemark.postalCode) != nil) == self?.isPostalCodeValid
             {
                 let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
                 let image = UIImage(systemName: "checkmark")
@@ -189,7 +195,7 @@ class AddressViewController: UIViewController {
                 print("VALID POSTALCODE")
             }
             
-            else if ((response.mapItems.first?.placemark.postalCode) != nil) != isPostalCodeValid
+            else if ((response.mapItems.first?.placemark.postalCode) != nil) != self?.isPostalCodeValid
             {
                 let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
                 let image = UIImage(systemName: "xmark")
@@ -204,25 +210,28 @@ class AddressViewController: UIViewController {
                 print("Invalid Postalcode")
                 
             }
-            
-            
+        }
         
-//        let isPostalCodeValid = validZipCode(postalCode: postalCodeView.getTextField().text ?? "")
-//
-//                    if isPostalCodeValid == false {
-//                        print("Invalid postalcode")
-//                       // simpleAlert(title: "Error!", msg: "Please enter a valid CA postal code")
-//
-//                    } else
-//                        if isPostalCodeValid == true {
-//                            print("Valid Postalcode")
-//                       //the postalCaode is correct formatting
-//                    }
     }
+        else if isPostalCodeValid == false{
+            
+            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            let image = UIImage(systemName: "xmark")
+            imageView.image = image
+            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageContainerView.addSubview(imageView)
+            textField.rightView = imageContainerView
+            
+            textField.layer.borderColor = UIColor.brandError.cgColor
+            
+            textField.tintColor = .brandError
+            
+        }
     }
     
     func validZipCode(postalCode:String)->Bool{
-            let postalcodeRegex = "^[a-zA-Z][0-9][a-zA-Z][- ]*[0-9][a-zA-Z][0-9]$"
+        if postalCode.count > 6 { return false}
+            let postalcodeRegex = "^[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]$"
             let pinPredicate = NSPredicate(format: "SELF MATCHES %@", postalcodeRegex)
             let bool = pinPredicate.evaluate(with: postalCode) as Bool
             return bool
