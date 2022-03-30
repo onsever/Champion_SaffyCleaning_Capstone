@@ -175,11 +175,31 @@ class AddressViewController: UIViewController {
                }
             if ((response.mapItems.first?.placemark.postalCode) != nil) == isPostalCodeValid
             {
+                let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+                let image = UIImage(systemName: "checkmark")
+                imageView.image = image
+                let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                imageContainerView.addSubview(imageView)
+                textField.rightView = imageContainerView
+                
+                textField.layer.borderColor = UIColor.brandGem.cgColor
+                
+                textField.tintColor = .brandGem
                 print("VALID POSTALCODE")
             }
             
-            else if ((response.mapItems.first?.placemark.postalCode) != nil) != isPostalCodeValid {
+            else if ((response.mapItems.first?.placemark.postalCode) != nil) != isPostalCodeValid
+            {
+                let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+                let image = UIImage(systemName: "xmark")
+                imageView.image = image
+                let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                imageContainerView.addSubview(imageView)
+                textField.rightView = imageContainerView
                 
+                textField.layer.borderColor = UIColor.brandError.cgColor
+                
+                textField.tintColor = .brandError
                 print("Invalid Postalcode")
                 
             }
