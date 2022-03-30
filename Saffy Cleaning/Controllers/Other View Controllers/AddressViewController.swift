@@ -163,8 +163,49 @@ class AddressViewController: UIViewController {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        textField.layer.borderColor = textField.text?.count != 0 ? UIColor.brandGem.cgColor : UIColor.brandError.cgColor
+        
+        let searchRequest = MKLocalSearch.Request()
+        let isPostalCodeValid = validZipCode(postalCode: postalCodeView.getTextField().text ?? "")
+        searchRequest.naturalLanguageQuery = postalCodeView.getTextField().text
+        let activeSearch = MKLocalSearch(request: searchRequest)
+        activeSearch.start { [weak self] response,error in
+            guard let response = response else {
+                   print(error?.localizedDescription ?? "This should be impossible")
+                   return
+               }
+            if ((response.mapItems.first?.placemark.postalCode) != nil) == isPostalCodeValid
+            {
+                print("VALID POSTALCODE")
+            }
+            
+            else if ((response.mapItems.first?.placemark.postalCode) != nil) != isPostalCodeValid {
+                
+                print("Invalid Postalcode")
+                
+            }
+            
+            
+        
+//        let isPostalCodeValid = validZipCode(postalCode: postalCodeView.getTextField().text ?? "")
+//
+//                    if isPostalCodeValid == false {
+//                        print("Invalid postalcode")
+//                       // simpleAlert(title: "Error!", msg: "Please enter a valid CA postal code")
+//
+//                    } else
+//                        if isPostalCodeValid == true {
+//                            print("Valid Postalcode")
+//                       //the postalCaode is correct formatting
+//                    }
     }
+    }
+    
+    func validZipCode(postalCode:String)->Bool{
+            let postalcodeRegex = "^[a-zA-Z][0-9][a-zA-Z][- ]*[0-9][a-zA-Z][0-9]$"
+            let pinPredicate = NSPredicate(format: "SELF MATCHES %@", postalcodeRegex)
+            let bool = pinPredicate.evaluate(with: postalCode) as Bool
+            return bool
+        }
     
     public func setData(_ address: Address?) {
         
@@ -334,8 +375,9 @@ extension AddressViewController {
         verticalStackView.arrangedSubviews.forEach {
             $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor).isActive = true
             ($0 as! SCInfoView).getTextField().delegate = self
-            ($0 as! SCInfoView).getTextField().addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            
         }
+      postalCodeView.getTextField().addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         contactNumberView.getTextField().keyboardType = .phonePad
         
