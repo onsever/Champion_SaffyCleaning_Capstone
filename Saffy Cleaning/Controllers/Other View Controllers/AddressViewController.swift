@@ -168,6 +168,7 @@ class AddressViewController: UIViewController {
         let isPostalCodeValid = validZipCode(postalCode: postalCodeView.getTextField().text ?? "")
         searchRequest.naturalLanguageQuery = postalCodeView.getTextField().text
         let activeSearch = MKLocalSearch(request: searchRequest)
+        textField.rightViewMode = .always
         activeSearch.start { [weak self] response,error in
             guard let response = response else {
                    print(error?.localizedDescription ?? "This should be impossible")
