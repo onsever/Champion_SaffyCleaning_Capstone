@@ -23,6 +23,7 @@ class Address: Codable {
     var latitude: Double
     var images: [String]
     var createdAt: Date = Date()
+    var id: String = ""
     
     init(name: String, room: String, flat: String, street: String, postalCode: String, building: String, district: String, contactPerson: String, contactNumber: String, type: String, sizes: String, longitude: Double, latitude: Double, images: [String], createdAt: String) {
         self.name = name

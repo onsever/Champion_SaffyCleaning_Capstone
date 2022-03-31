@@ -16,7 +16,7 @@ protocol AddressVCDelegate: AnyObject {
 }
 
 protocol AddressVCDataSource: AnyObject {
-    func didTapSave(_ address: Address)
+    func didTapSave()
 }
 
 class AddressViewController: UIViewController {
@@ -82,6 +82,8 @@ class AddressViewController: UIViewController {
     public weak var dataSource: AddressVCDataSource?
     private var isEditingMode: Bool = false
     private var imageArray = [UIImage]()
+    private var imagesUrl = [String]()
+    private var address: Address?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,25 +137,29 @@ class AddressViewController: UIViewController {
         LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self] (location) in
             guard let self = self else { return }
             if let location = location {
-
-                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: [], createdAt: String(format: "%.6f", Date() as CVarArg))
-
-                let NSDict = try! DictionaryEncoder.encode(newAddress)
-
-                let child = FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
                 
-                FBStorageService.service.saveImages(images: self.imageArray, imageRef: Constants.addressImages) { imgArr in
-                    child.updateChildValues(["images": imgArr])
-                }
+                let newAddress = Address(name: "", room: room, flat: flat, street: street, postalCode: postalCode, building: building, district: district, contactPerson: contactPerson, contactNumber: contactNumber, type: houseType, sizes: String(format: "%d", Int(houseSize)!), longitude: location.longitude, latitude: location.latitude, images: [], createdAt: String(format: "%.6f", Date() as CVarArg))
                 
                 if self.isEditingMode == true {
-                    self.dataSource?.didTapSave(newAddress)
+                    newAddress.id = self.address!.id
+                    newAddress.name = self.address!.name
+                    newAddress.createdAt = self.address!.createdAt
+                    newAddress.images = self.address!.images
+                    let addressDict = try! DictionaryEncoder.encode(newAddress) as NSDictionary
+                    FirebaseDBService.service.updateAddress(addressId: newAddress.id, address: addressDict)
+                    self.dataSource?.didTapSave()
                 }
                 else {
+                    let NSDict = try! DictionaryEncoder.encode(newAddress)
+
+                    let child = FirebaseDBService.service.saveAddress(value: NSDict as NSDictionary)
+                    
+                    FBStorageService.service.saveImages(images: self.imageArray, imageRef: Constants.addressImages) { imgArr in
+                        child.updateChildValues(["images": imgArr])
+                    }
                     self.delegate?.didTapAddButton(newAddress)
                 }
             }
-            
         })
         
         self.dismiss(animated: true, completion: nil)
@@ -250,6 +256,8 @@ class AddressViewController: UIViewController {
             buildingView.getTextField().text = address.building
             districtView.getTextField().text = address.district
             houseSizeView.getTextField().text = address.sizes
+            imagesUrl = address.images
+            self.address = address
         }
         
     }
@@ -275,6 +283,9 @@ extension AddressViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isEditingMode {
+            return imagesUrl.count
+        }
         return imageArray.count + 1
     }
     
@@ -282,11 +293,16 @@ extension AddressViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         let cells: UICollectionViewCell?
         
-        if indexPath.row < imageArray.count {
+        if isEditingMode && indexPath.row < imagesUrl.count {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
+
+            cell.setImageFromUrl(urlString: imagesUrl[indexPath.row])
+            cells = cell
+        }
+        else if indexPath.row < imageArray.count{
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SCHousePhotoCell.identifier, for: indexPath) as? SCHousePhotoCell else { return UICollectionViewCell() }
             
             cell.setData(image: imageArray[indexPath.row])
-            
             cells = cell
         }
         else {

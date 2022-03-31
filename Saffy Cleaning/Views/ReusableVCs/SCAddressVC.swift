@@ -82,7 +82,10 @@ class SCAddressVC: UIViewController {
         super.viewDidLoad()
         
         configureContainerView()
-
+        fetchData()
+    }
+    
+    private func fetchData() {
         // TODO: - update
         FirebaseDBService.service.retrieveAddress() {[weak self](address) in
             if let address = address {
@@ -148,10 +151,8 @@ class SCAddressVC: UIViewController {
 
 extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
     
-    func didTapSave(_ address: Address) {
-        addressArray[SCAddressVC.currentIndex] = address
-        self.addressCollectionView.reloadData()
-        checkArrayCount()
+    func didTapSave() {
+        fetchData()
     }
     
     
@@ -178,17 +179,17 @@ extension SCAddressVC: SCAddressCellDelegate {
             sheet.prefersGrabberVisible = false
         }
         
+        vc.setEditingMode(isEditing: true)
         vc.setData(addressArray[SCAddressVC.currentIndex])
         vc.delegate = self
         vc.dataSource = self
-        vc.setEditingMode(isEditing: true)
+        
         self.present(vc, animated: true, completion: nil)
     }
     
     func didTapDeleteButton(_ button: UIButton) {
-        print("Delete button tapped.")
-        addressArray.remove(at: SCAddressVC.currentIndex)
-        checkArrayCount()
+        FirebaseDBService.service.deleteAddress(addressId: addressArray[SCAddressVC.currentIndex].id)
+        fetchData()
     }
     
     func didTapButton(_ username: String) {
