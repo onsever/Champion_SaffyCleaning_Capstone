@@ -310,6 +310,7 @@ extension FirebaseDBService {
                 for key in dict.keys {
                     if let item = dict[key] as? Dictionary<String, Any> {
                         let newAddress = self.convertDictToAddress(item: item)
+                        newAddress.id = key
                         addresses.append(newAddress)
                     }
                 }
@@ -319,6 +320,16 @@ extension FirebaseDBService {
                 completion([])
             }
         })
+    }
+    
+    public func updateAddress(addressId: String, address: NSDictionary) {
+        let ref = db.child(Constants.userAddress).child(user!.uid)
+        ref.child(addressId).updateChildValues(address as! [AnyHashable : Any])
+    }
+    
+    public func deleteAddress(addressId: String) {
+        let ref = db.child(Constants.userAddress).child(user!.uid)
+        ref.child(addressId).removeValue()
     }
     
     private func convertDictToAddress(item: Dictionary<String, Any>) -> Address {
