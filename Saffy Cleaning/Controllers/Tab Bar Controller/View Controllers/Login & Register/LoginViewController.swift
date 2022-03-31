@@ -18,7 +18,6 @@ class LoginViewController: UIViewController {
     private let spinner = JGProgressHUD(style: .dark)
     private let firstView = UIView()
     private let secondView = UIView()
-    private let thirdView = UIView()
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -39,9 +38,11 @@ class LoginViewController: UIViewController {
     private let loginButton = SCMainButton(title: "Log in", backgroundColor: .brandYellow, titleColor: .brandDark, cornerRadius: 10, fontSize: nil)
     private let signUpButton = SCMainButton(title: "Sign Up", backgroundColor: .white, titleColor: .brandGem, borderColor: .brandGem, cornerRadius: 10, fontSize: nil)
     private var buttonStackView: SCStackView!
-    private let googleSignInView = SCSignInView(image: UIImage(named: "sc_google_logo"), title: "Continue with Google")
-    private let facebookSignInView = SCSignInView(image: UIImage(named: "sc_facebook_logo"), title: "Continue with Facebook")
+    private let googleSignInView = SCSignInView(image: UIImage(named: "sc_google_logo"), title: "Google")
+    private let facebookSignInView = SCSignInView(image: UIImage(named: "sc_facebook_logo"), title: "Facebook")
     private var signInStackView: SCStackView!
+    
+    private var verticalStackView: SCStackView!
 
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -50,13 +51,12 @@ class LoginViewController: UIViewController {
         configureViewController()
         configureFirstView()
         configureSecondView()
-        configureThirdView()
         configureLogoImageView()
         configureLogoTitleLabel()
         configureLogoSubTitleLabel()
         configureTextFieldStackView()
         configureForgetPasswordLabel()
-        configureButtonStackView()
+        configureVerticalStackView()
         configureSignInStackView()
     }
     
@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self?.spinner.dismiss()
-                    self?.presentAlert(title: "Login", message: "Password is not currect", positiveAction: { action in
+                    self?.presentAlert(title: "Login", message: "Password is not correct", positiveAction: { action in
                     }, negativeAction: nil)
                 }
 
@@ -229,19 +229,7 @@ extension LoginViewController {
             secondView.topAnchor.constraint(equalTo: firstView.bottomAnchor, constant: 0),
             secondView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
             secondView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            secondView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
-        ])
-    }
-    
-    private func configureThirdView() {
-        view.addSubview(thirdView)
-        thirdView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            thirdView.topAnchor.constraint(equalTo: secondView.bottomAnchor, constant: 0),
-            thirdView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            thirdView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            thirdView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+            secondView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6)
         ])
     }
     
@@ -284,6 +272,11 @@ extension LoginViewController {
     
     private func configureTextFieldStackView() {
         textFieldStackView = SCStackView(arrangedSubviews: [usernameTextField, passwordTextField])
+        
+        textFieldStackView.axis = .vertical
+        textFieldStackView.alignment = .center
+        textFieldStackView.distribution = .fillEqually
+                
         secondView.addSubview(textFieldStackView)
         
         passwordTextField.isSecureTextEntry = true
@@ -295,14 +288,48 @@ extension LoginViewController {
         
         NSLayoutConstraint.activate([
             usernameTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
-            passwordTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor)
+            passwordTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
         ])
         
         NSLayoutConstraint.activate([
             textFieldStackView.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 20),
             textFieldStackView.leadingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             textFieldStackView.trailingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            textFieldStackView.heightAnchor.constraint(equalToConstant: 100)
         ])
+    }
+    
+    private func configureVerticalStackView() {
+        verticalStackView = SCStackView(arrangedSubviews: [loginButton, signUpButton])
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .center
+        verticalStackView.distribution = .fillEqually
+        verticalStackView.spacing = 10
+        secondView.addSubview(verticalStackView)
+        
+        loginButton.addTarget(self, action: #selector(loginButtonDidTapped(_:)), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonDidTapped(_:)), for: .touchUpInside)
+        
+        verticalStackView.arrangedSubviews.forEach {
+            
+            if let view = $0 as? UIButton {
+                view.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.5).isActive = true
+                view.heightAnchor.constraint(equalTo: verticalStackView.heightAnchor, multiplier: 0.4).isActive = true
+            }
+            else {
+                $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.8).isActive = true
+                $0.heightAnchor.constraint(equalTo: verticalStackView.heightAnchor, multiplier: 0.2).isActive = true
+            }
+                       
+        }
+        
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo: forgetPasswordLabel.bottomAnchor, constant: 20),
+            verticalStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            verticalStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            verticalStackView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
     }
     
     private func configureForgetPasswordLabel() {
@@ -319,32 +346,16 @@ extension LoginViewController {
             forgetPasswordLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
-    
-    private func configureButtonStackView() {
-        buttonStackView = SCStackView(arrangedSubviews: [loginButton, signUpButton])
-        secondView.addSubview(buttonStackView)
-        
-        loginButton.addTarget(self, action: #selector(loginButtonDidTapped(_:)), for: .touchUpInside)
-        signUpButton.addTarget(self, action: #selector(signUpButtonDidTapped(_:)), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            loginButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor),
-            signUpButton.widthAnchor.constraint(equalTo: buttonStackView.widthAnchor),
-            loginButton.heightAnchor.constraint(equalToConstant: 40),
-            signUpButton.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
-        NSLayoutConstraint.activate([
-            buttonStackView.topAnchor.constraint(equalTo: forgetPasswordLabel.bottomAnchor, constant: 25),
-            buttonStackView.centerXAnchor.constraint(equalTo: secondView.centerXAnchor),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 160),
-        ])
-    }
+
     
     private func configureSignInStackView() {
         signInStackView = SCStackView(arrangedSubviews: [googleSignInView, facebookSignInView])
-        thirdView.addSubview(signInStackView)
-        signInStackView.spacing = 20
+        secondView.addSubview(signInStackView)
+        
+        signInStackView.distribution = .fillEqually
+        signInStackView.alignment = .top
+        signInStackView.axis = .horizontal
+        signInStackView.spacing = 10
         
         let googleTap = UITapGestureRecognizer(target: self, action: #selector(continueWithGoogleDidTapped(_:)))
         let facebookTap = UITapGestureRecognizer(target: self, action: #selector(continueWithFacebookDidTapped(_:)))
@@ -353,14 +364,12 @@ extension LoginViewController {
         facebookSignInView.addGestureRecognizer(facebookTap)
                 
         NSLayoutConstraint.activate([
-            facebookSignInView.widthAnchor.constraint(equalTo: signInStackView.widthAnchor),
-            facebookSignInView.heightAnchor.constraint(equalTo: thirdView.heightAnchor, multiplier: 0.25),
-            googleSignInView.widthAnchor.constraint(equalTo: signInStackView.widthAnchor),
-            googleSignInView.heightAnchor.constraint(equalTo: thirdView.heightAnchor, multiplier: 0.25)
+            facebookSignInView.heightAnchor.constraint(equalToConstant: 50),
+            googleSignInView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         NSLayoutConstraint.activate([
-            signInStackView.topAnchor.constraint(equalTo: thirdView.topAnchor, constant: 0),
+            signInStackView.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 25),
             signInStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             signInStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
         ])
@@ -397,3 +406,78 @@ extension LoginViewController: UITextFieldDelegate {
     }
     
 }
+
+/*
+ private func configureUI() {
+     let headingStackView = UIStackView(arrangedSubviews: [logoImageView, logoTitleLabel, logoSubTitleLabel])
+     let inputStackView = UIStackView(arrangedSubviews: [usernameTextField, passwordTextField, forgetPasswordLabel])
+     let buttonStackView = UIStackView(arrangedSubviews: [loginButton, signUpButton])
+     let authStackView = UIStackView(arrangedSubviews: [googleSignInView, facebookSignInView])
+     
+     verticalStackView = UIStackView(arrangedSubviews: [headingStackView, inputStackView, buttonStackView, authStackView])
+     
+     view.addSubview(verticalStackView)
+     
+     // MARK: - VerticalStackView Configurations
+     verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+     verticalStackView.axis = .vertical
+     verticalStackView.distribution = .fillProportionally
+     verticalStackView.alignment = .center
+     verticalStackView.spacing = 10
+     
+     // MARK: - Other Stack Views Configurations
+     verticalStackView.arrangedSubviews.forEach {
+         let view = $0 as! UIStackView
+         view.axis = .vertical
+         view.alignment = .center
+         view.distribution = .fill
+         view.spacing = 10
+     }
+     
+     // MARK: - SubStackViews Configuration
+     verticalStackView.arrangedSubviews.forEach {
+         $0.heightAnchor.constraint(equalTo: verticalStackView.heightAnchor, multiplier: 1/4).isActive = true
+         ($0 as! UIStackView).arrangedSubviews.forEach {
+             $0.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.8).isActive = true
+         }
+     }
+     
+     // MARK: - SubViews Configuration
+     logoTitleLabel.text = "Saffy Cleaning"
+     logoTitleLabel.textAlignment = .center
+     logoSubTitleLabel.textAlignment = .center
+     forgetPasswordLabel.textAlignment = .right
+     logoImageView.contentMode = .scaleAspectFit
+             
+     NSLayoutConstraint.activate([
+         logoImageView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor, multiplier: 0.3),
+         logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
+         logoTitleLabel.heightAnchor.constraint(equalTo: headingStackView.heightAnchor, multiplier: 0.3),
+         logoSubTitleLabel.heightAnchor.constraint(equalTo: headingStackView.heightAnchor, multiplier: 0.3),
+     ])
+     
+     inputStackView.arrangedSubviews.forEach {
+         $0.heightAnchor.constraint(equalTo: inputStackView.heightAnchor, multiplier: 1/3).isActive = true
+     }
+             
+     buttonStackView.arrangedSubviews.forEach {
+         $0.heightAnchor.constraint(equalTo: buttonStackView.heightAnchor, multiplier: 1/4).isActive = true
+     }
+     
+     authStackView.arrangedSubviews.forEach {
+         $0.heightAnchor.constraint(equalTo: authStackView.heightAnchor, multiplier: 1/3).isActive = true
+     }
+     
+     authStackView.alignment = .center
+     authStackView.distribution = .fill
+     
+     // MARK: - VerticalStackView Constraints
+     NSLayoutConstraint.activate([
+         verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+         verticalStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+         verticalStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+         verticalStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+     ])
+     
+ }
+ */
