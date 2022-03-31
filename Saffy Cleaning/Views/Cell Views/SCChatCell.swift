@@ -81,25 +81,25 @@ class SCChatCell: UITableViewCell {
         ])
     }
     
-    public func setData(userImage: UIImage, userName: String, chatMessage: String, completionLabel: Completion, dateLabel: String) {
-        self.userImageView.image = userImage
-        self.userLabel.text = userName
-        self.chatLabel.text = chatMessage
-        self.dateLabel.text = dateLabel
-        
-        switch completionLabel {
-        case .proceeding:
-            
-            let attributedText = NSMutableAttributedString(string: completionLabel.rawValue, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.white, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
-            self.completionLabel.attributedText = attributedText
-            self.completionLabel.backgroundColor = .brandGem
-            
-        case .completed:
-            
-            let attributedText = NSMutableAttributedString(string: completionLabel.rawValue, attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
-            self.completionLabel.attributedText = attributedText
-            self.completionLabel.backgroundColor = .brandLake
-        }
-    }
+//    public func setData(userImage: UIImage, userName: String, chatMessage: String, completionLabel: Completion, dateLabel: String) {
+//        self.userImageView.image = userImage
+//        self.userLabel.text = userName
+//        self.chatLabel.text = chatMessage
+//        self.dateLabel.text = dateLabel
+//
+//        switch completionLabel {
+//        case .proceeding:
+//
+//            let attributedText = NSMutableAttributedString(string: completionLabel.rawValue, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.white, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+//            self.completionLabel.attributedText = attributedText
+//            self.completionLabel.backgroundColor = .brandGem
+//
+//        case .completed:
+//
+//            let attributedText = NSMutableAttributedString(string: completionLabel.rawValue, attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+//            self.completionLabel.attributedText = attributedText
+//            self.completionLabel.backgroundColor = .brandLake
+//        }
+//    }
     
 }

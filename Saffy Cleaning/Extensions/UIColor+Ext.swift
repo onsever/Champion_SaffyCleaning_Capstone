@@ -27,4 +27,14 @@ extension UIColor {
     
     static let brandDarkGray = UIColor(red: 0.47, green: 0.47, blue: 0.47, alpha: 1.00)
     
+    static var primary: UIColor {
+        // swiftlint:disable:next force_unwrapping
+        return UIColor(named: "rw-green")!
+    }
+    
+    static var incomingMessage: UIColor {
+        // swiftlint:disable:next force_unwrapping
+        return UIColor(named: "incoming-message")!
+    }
+    
 }

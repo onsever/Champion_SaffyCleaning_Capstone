@@ -19,6 +19,10 @@ final class FirebaseDBService {
     private let storage = Storage.storage().reference()
 }
 
+// MARK: Chatroom Mgmt
+extension FirebaseDBService {
+}
+
 // MARK: Review Mgmt {
 extension FirebaseDBService {
     public func retrieveReviews(type: String, completion: @escaping([Review]) -> Void) {
