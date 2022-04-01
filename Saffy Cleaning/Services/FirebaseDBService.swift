@@ -19,6 +19,10 @@ final class FirebaseDBService {
     private let storage = Storage.storage().reference()
 }
 
+// MARK: Chatroom Mgmt
+extension FirebaseDBService {
+}
+
 // MARK: Review Mgmt {
 extension FirebaseDBService {
     public func retrieveReviews(type: String, completion: @escaping([Review]) -> Void) {
@@ -62,15 +66,65 @@ extension FirebaseDBService {
 
 // MARK: Order Mgmt
 extension FirebaseDBService {
+
     public func createNewOrder(value:NSDictionary, id: String) {
         let ref = db.child(Constants.userOrders)
         ref.child(user!.uid).child(id).setValue(value)
     }
     
-    public func applyOrder(id: String, userId:String, workerId:String) {
+    public func applyOrder(id: String, userId:String, workerId:String, workerName: String, workerImageURL: String) {
         let ref = db.child(Constants.userOrders)
         ref.child(userId).child(id)
-            .updateChildValues(["workerId": workerId, "status": UserOrderType.applied.rawValue])
+            .updateChildValues(["workerId": workerId,
+                                "workerName": workerName,
+                                "workerImageURL": workerImageURL,
+                                "status": UserOrderType.applied.rawValue])
+    }
+    
+    public func retrieveMatchedOrders(type:String, completion: @escaping ([UserOrder]) -> Void) {
+        
+        let isWorker = type == UserType.worker.rawValue ? true : false
+        var orders = [UserOrder]()
+        if isWorker {
+            // worker applied + matched
+        let workerId = Auth.auth().currentUser!.uid
+        let ref = db.child(Constants.userOrders)
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            if let snapshots = snapshots.value {
+                for snapshot in snapshots as! Dictionary<String, Any>  {
+                    let allOrders = snapshot.value as! Dictionary<String, Any>
+                    for order in allOrders {
+                        let orderDict = order.value as! Dictionary<String, Any>
+                        if orderDict["status"] as! String == UserOrderType.matched.rawValue {
+                            let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                            let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                            if (orderObj.workerId == workerId) {
+                                orders.append(orderObj)
+                            }
+                        }
+                    }
+                }
+                completion(orders)
+            }else{
+                completion([])
+            }
+        })
+        } else {
+            // user id as index + matched
+            let ref = db.child(Constants.userOrders).child(user!.uid)
+            ref.observeSingleEvent(of: .value, with: { snapshot in
+                guard snapshot.exists() else { return }
+                for order in snapshot.value as! Dictionary<String, Any>  {
+                    let orderDict = order.value as! Dictionary<String, Any>
+                    if orderDict["status"] as! String == UserOrderType.matched.rawValue{
+                        let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                        let order = self.convertDictToOrder(dict: orderDict, address: address)
+                        orders.append(order)
+                    }
+                }
+                completion(orders)
+            })
+        }
     }
     
     public func retrievePendingOrders(completion: @escaping ([UserOrder]) -> Void) {
@@ -95,6 +149,8 @@ extension FirebaseDBService {
             }
         })
     }
+    
+
     
     public func retrieveWorkOrders(completion: @escaping ([UserOrder]) -> Void) {
         let ref = db.child(Constants.userOrders)
@@ -201,7 +257,25 @@ extension FirebaseDBService {
         let workerId = dict["workerId"] as? String ?? ""
         let isUserCommented = dict["isUserCommented"] as? Bool ?? false
         let isWorkerCommented = dict["isWorkerCommented"] as? Bool ?? false
-        let userOrder = UserOrder(date: date, time: time, duration: duration, address: address, pet: pet, message: message, selectedItems: selectedItems, tips: tips, totalCost: totalCost, userId: userId, id: id)
+        let workerName = dict["workerName"] as? String ?? ""
+        let userName = dict["userName"] as? String ?? ""
+        let workerImageURL = dict["workerImageURL"] as? String ?? ""
+        let userImageURL = dict["userImageURL"] as? String ?? ""
+        let userOrder = UserOrder(date: date,
+                                  time: time,
+                                  duration: duration,
+                                  address: address,
+                                  pet: pet,
+                                  message: message,
+                                  selectedItems: selectedItems,
+                                  tips: tips,
+                                  totalCost: totalCost,
+                                  userId: userId,
+                                  id: id,
+                                  userName: userName,
+                                  workerName: userImageURL,
+                                  workerImageURL: workerName,
+                                  userImageURL: workerImageURL)
         userOrder.status = status
         userOrder.workerId = workerId
         userOrder.isUserCommented = isUserCommented

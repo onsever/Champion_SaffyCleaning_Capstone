@@ -100,7 +100,7 @@ class LoginViewController: UIViewController {
     @objc private func continueWithGoogleDidTapped(_ gesture: UITapGestureRecognizer) {
         googleSignInView.animateWithSpring()
         spinner.show(in: view)
-        GIDSignIn.sharedInstance.signIn(with: FirebaseAuthService.googleSignConfig, presenting: self) { user, error in
+        GIDSignIn.sharedInstance.signIn(with: FirebaseAuthService.googleSignConfig, presenting: self) { [weak self] user, error in
             guard error == nil else { return }
             guard let authentication = user?.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken ?? "", accessToken: authentication.accessToken)
@@ -142,7 +142,6 @@ class LoginViewController: UIViewController {
           }
             self.spinner.dismiss()
         }
-        
     }
     
     

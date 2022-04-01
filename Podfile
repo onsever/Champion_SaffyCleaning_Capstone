@@ -31,5 +31,6 @@ pod 'SDWebImage'
 pod 'IQKeyboardManagerSwift'
 pod 'Cosmos', '~> 23.0'
 pod 'JGProgressHUD'
+pod 'MessageKit', '~> 3.3.0'
 
 end

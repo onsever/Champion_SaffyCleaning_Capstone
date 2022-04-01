@@ -20,7 +20,11 @@ class UserOrder: Codable {
     public var totalCost: Double
     public var status: String = UserOrderType.pending.rawValue
     public var workerId: String = ""
+    public var workerName: String = ""
+    public var workerImageURL: String
+    public var userName: String
     public var userId: String
+    public var userImageURL: String
     public var isUserCommented: Bool = false
     public var isWorkerCommented: Bool = false
     
@@ -34,7 +38,11 @@ class UserOrder: Codable {
          tips: Double?,
          totalCost: Double,
          userId: String,
-         id: String
+         id: String,
+         userName: String,
+         workerName: String,
+         workerImageURL: String,
+         userImageURL: String
     ) {
         self.date = date
         self.time = time
@@ -47,5 +55,10 @@ class UserOrder: Codable {
         self.totalCost = totalCost
         self.userId = userId
         self.id = id
+        self.userName = userName
+        self.workerName = workerName
+        self.workerImageURL = workerImageURL
+        self.userImageURL = userImageURL
+
     }
 }
