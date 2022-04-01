@@ -36,7 +36,7 @@ extension MainTabBarController {
         UITabBar.appearance().unselectedItemTintColor = .brandLake
         view.backgroundColor = .white
         
-        let homeVC = HomeViewController()
+        let homeVC = HomeViewController(currentUser: user)
         let chatVC = ChatListViewController(currentUser: user)
         let historyVC = HistoryViewController()
         let noticeVC = NoticeViewController()
@@ -61,7 +61,7 @@ extension MainTabBarController {
         let profileNC = UINavigationController(rootViewController: profileVC)
         profileNC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistMedium(size: 16)!]
 
-        viewControllers = [chatNC, noticeNC, historyNC, profileNC, homeNC]
+        viewControllers = [homeNC, chatNC, noticeNC, historyNC, profileNC]
     }
     
 }

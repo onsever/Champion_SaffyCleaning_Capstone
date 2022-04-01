@@ -42,17 +42,18 @@ class SCTakeJobPopUp: UIViewController {
     public weak var delegate: SCTakeJobPopUpDelegate?
     private var isPolicySelected: Bool = false
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
+    private var currentUser: User
     
-    public init() {
-        super.init(nibName: nil, bundle: nil)
-                
+    
+    init(currentUser: User) {
+       
+        self.currentUser = currentUser
+        
         self.imageView.image = UIImage(named: "sc_take_job")!
         self.infoLabel.text = "Take the job?"
         self.descriptionLabel.text = "Make sure you can fulfill the job requirement before you confirm.\nAfter you confirm to take the job, employer would review your profile and you will received further notification to proceed."
         self.confirmationButton.setTitle("CONFIRM", for: .normal)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {

@@ -9,26 +9,49 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-final class ChatListViewController : UITableViewController {
+enum Completion: String {
+    case proceeding = "Proceeding"
+    case completed = "Completed"
+}
+
+class Chat {
+    var userImage: URL
+    var userName: String
+    var message: String
+    var date: String
+    var completion: Completion
+    var id: String
+    
+    init(userImage: URL, userName: String, message: String, date: String, completion: Completion, id: String) {
+        self.userImage = userImage
+        self.userName = userName
+        self.message = message
+        self.date = date
+        self.completion = completion
+        self.id = id
+    }
+}
+class ChatListViewController : UIViewController {
     private let toolbarLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    private var chatArray: [Chat] = []
     
     private let channelCellIdentifier = "channelCell"
     private var currentChannelAlertController: UIAlertController?
     
     private let database = Firestore.firestore()
+    
     private var channelReference: CollectionReference {
         return database.collection("channels")
     }
     
-    private var channels: [Channel] = []
     private var channelListener: ListenerRegistration?
     
-    private let currentUser: User
+    private var currentUser: User
     
     deinit {
         channelListener?.remove()
@@ -36,75 +59,56 @@ final class ChatListViewController : UITableViewController {
     
     init(currentUser: User) {
         self.currentUser = currentUser
-        super.init(style: .grouped)
-        
-//        title = "Channels"
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        clearsSelectionOnViewWillAppear = true
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: channelCellIdentifier)
-        
-        toolbarItems = [
-            UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut)),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(customView: toolbarLabel),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        ]
-//        toolbarLabel.text = AppSettings.displayName
-        
-        channelListener = channelReference.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
+    private func setData() {
+   
+        FirebaseDBService.service.retrieveMatchedOrders(type: currentUser.userType) { [weak self] orders in
+            var _chatArray: [Chat] = []
+            orders.forEach { order in
+                let isWorker = self?.currentUser.userType == UserType.worker.rawValue ? true : false
+                let userName = isWorker ? order.userName : order.workerName
+                let icon = isWorker ? URL(string: order.userImageURL) : URL(string: order.workerImageURL)
+                _chatArray.append(Chat(userImage: icon!,
+                                       userName: userName,
+                                       message: "", date: "",
+                                       completion: order.status == UserOrderType.matched.rawValue ? .proceeding: .completed,
+                                       id: order.id))
             }
-            
-            snapshot.documentChanges.forEach { change in
-                self.handleDocumentChange(change)
+
+            DispatchQueue.main.async {
+                self?.chatArray = _chatArray
+                self?.tableView.reloadData()
             }
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isToolbarHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isToolbarHidden = true
-    }
-    
-    // MARK: - Actions
-    @objc private func signOut() {
-        let alertController = UIAlertController(
-            title: nil,
-            message: "Are you sure you want to sign out?",
-            preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alertController.addAction(cancelAction)
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(SCChatCell.self, forCellReuseIdentifier: SCChatCell.identifier)
+        tableView.separatorStyle = .none
         
-        let signOutAction = UIAlertAction(
-            title: "Sign Out",
-            style: .destructive) { _ in
-                do {
-                    try Auth.auth().signOut()
-                } catch {
-                    print("Error signing out: \(error.localizedDescription)")
-                }
-            }
-        alertController.addAction(signOutAction)
+        return tableView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        present(alertController, animated: true)
+        view.backgroundColor = .white
+        title = "Chat"
+        configureTableView()
+        setData()
     }
     
+
+    
+    // MARK: Add new channel -> after the booking is matched
     @objc private func addButtonPressed() {
         let alertController = UIAlertController(title: "Create a new Channel", message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -157,78 +161,60 @@ final class ChatListViewController : UITableViewController {
         }
     }
     
-    private func addChannelToTable(_ channel: Channel) {
-        if channels.contains(channel) {
-            return
-        }
-        
-        channels.append(channel)
-        channels.sort()
-        
-        guard let index = channels.firstIndex(of: channel) else {
-            return
-        }
-        tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-    }
-    
-    private func updateChannelInTable(_ channel: Channel) {
-        guard let index = channels.firstIndex(of: channel) else {
-            return
-        }
-        
-        channels[index] = channel
-        tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-    }
-    
-    private func removeChannelFromTable(_ channel: Channel) {
-        guard let index = channels.firstIndex(of: channel) else {
-            return
-        }
-        
-        channels.remove(at: index)
-        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-    }
-    
-    private func handleDocumentChange(_ change: DocumentChange) {
-        guard let channel = Channel(document: change.document) else {
-            return
-        }
-        
-        switch change.type {
-        case .added:
-            addChannelToTable(channel)
-        case .modified:
-            updateChannelInTable(channel)
-        case .removed:
-            removeChannelFromTable(channel)
-        }
-    }
 }
 
 // MARK: - TableViewDelegate
-extension ChatListViewController {
-    override func numberOfSections(in tableView: UITableView) -> Int {
+extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chatArray.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
-    }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: channelCellIdentifier, for: indexPath)
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = channels[indexPath.row].name
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SCChatCell.identifier, for: indexPath) as? SCChatCell else { return UITableViewCell() }
+        
+        cell.setData(userImage: chatArray[indexPath.row].userImage, userName: chatArray[indexPath.row].userName, chatMessage: chatArray[indexPath.row].message, completionLabel: chatArray[indexPath.row].completion, dateLabel: chatArray[indexPath.row].date)
+        
+        cell.selectionStyle = .none
+        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channel = channels[indexPath.row]
-        let viewController = ChatViewController(user: currentUser, channel: channel)
-        navigationController?.pushViewController(viewController, animated: true)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.addBottomBorder(with: .brandLake, andWidth: 1)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Index of \(indexPath.row) is selected!")
+        let id = chatArray[indexPath.row].id
+        let isAble = chatArray[indexPath.row].completion == .proceeding
+        let viewController = ChatViewController(user: currentUser, orderId: id, isAble: isAble)
+        navigationController?.pushViewController(viewController, animated: true)
+//        self.present(viewController, animated: true)
+    }
+    
 }

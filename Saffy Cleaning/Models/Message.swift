@@ -31,14 +31,14 @@ struct Message: MessageType {
     var downloadURL: URL?
     
     init(user: User, content: String) {
-        sender = Sender(senderId: user.uid, displayName: AppSettings.displayName)
+        sender = Sender(senderId: user.uid, displayName: "")
         self.content = content
         sentDate = Date()
         id = nil
     }
     
     init(user: User, image: UIImage) {
-        sender = Sender(senderId: user.uid, displayName: AppSettings.displayName)
+        sender = Sender(senderId: user.uid, displayName: "")
         self.image = image
         content = ""
         sentDate = Date()
@@ -49,8 +49,8 @@ struct Message: MessageType {
         let data = document.data()
         guard
             let sentDate = data["created"] as? Timestamp,
-            let senderId = data["senderId"] as? String,
-            let senderName = data["senderName"] as? String
+            let senderId = data["senderId"] as? String
+//            let senderName = data["senderName"] as? String
         else {
             return nil
         }
@@ -58,7 +58,7 @@ struct Message: MessageType {
         id = document.documentID
         
         self.sentDate = sentDate.dateValue()
-        sender = Sender(senderId: senderId, displayName: senderName)
+        sender = Sender(senderId: senderId, displayName: "")
         
         if let content = data["content"] as? String {
             self.content = content

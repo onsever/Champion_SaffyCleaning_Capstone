@@ -28,22 +28,21 @@ final class ChatViewController: MessagesViewController {
     
     private let storage = Storage.storage().reference()
     private let user: User
-    private let channel: Channel
+    private let orderId: String
     private var messages: [Message] = []
     private var messageListener: ListenerRegistration?
     private let database = Firestore.firestore()
     private var reference: CollectionReference?
+    private let isAble: Bool
     
     
     
     
-    
-    init(user: User, channel: Channel) {
+    init(user: User, orderId: String, isAble: Bool) {
         self.user = user
-        self.channel = channel
+        self.orderId = orderId
+        self.isAble = isAble
         super.init(nibName: nil, bundle: nil)
-        
-        title = channel.name
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,12 +63,12 @@ final class ChatViewController: MessagesViewController {
     }
     
     private func listenToMessages() {
-        guard let id = channel.id else {
-            navigationController?.popViewController(animated: true)
-            return
-        }
+//        guard let id = channel.id else {
+//            navigationController?.popViewController(animated: true)
+//            return
+//        }
         
-        reference = database.collection("channels/\(id)/thread")
+        reference = database.collection("channels/\(orderId)/thread")
         messageListener = reference?
             .addSnapshotListener { [weak self] querySnapshot, error in
                 guard let self = self else { return }
@@ -146,11 +145,10 @@ final class ChatViewController: MessagesViewController {
     
     private func uploadImage(
         _ image: UIImage,
-        to channel: Channel,
+        to orderId: String,
         completion: @escaping (URL?) -> Void
     ) {
         guard
-            let channelId = channel.id,
             let scaledImage = image.scaledToSafeUploadSize,
             let data = scaledImage.jpegData(compressionQuality: 0.4)
         else {
@@ -162,7 +160,7 @@ final class ChatViewController: MessagesViewController {
         
         let imageName = [UUID().uuidString, String(Date().timeIntervalSince1970)]
             .joined()
-        let imageReference = storage.child("\(channelId)/\(imageName)")
+        let imageReference = storage.child("\(orderId)/\(imageName)")
         imageReference.putData(data, metadata: metadata) { _, error in
             imageReference.downloadURL { url, _ in
                 completion(url)
@@ -173,7 +171,7 @@ final class ChatViewController: MessagesViewController {
     private func sendPhoto(_ image: UIImage) {
         isSendingPhoto = true
         
-        uploadImage(image, to: channel) { [weak self] url in
+        uploadImage(image, to: orderId) { [weak self] url in
             guard let self = self else { return }
             self.isSendingPhoto = false
             
@@ -240,6 +238,9 @@ final class ChatViewController: MessagesViewController {
         maintainPositionOnKeyboardFrameChanged = true
         messageInputBar.inputTextView.tintColor = .primary
         messageInputBar.sendButton.setTitleColor(.primary, for: .normal)
+        if !self.isAble {
+            messageInputBar.sendButton.isEnabled = false
+        }
         messageInputBar.delegate = self
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -366,7 +367,7 @@ extension ChatViewController: MessagesDataSource {
     
     // 2
     func currentSender() -> SenderType {
-        return Sender(senderId: user.uid, displayName: AppSettings.displayName)
+        return Sender(senderId: user.uid, displayName: user.username)
     }
     
     // 3
