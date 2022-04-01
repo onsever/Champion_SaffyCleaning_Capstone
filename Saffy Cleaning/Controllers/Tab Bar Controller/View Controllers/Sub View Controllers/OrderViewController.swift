@@ -555,7 +555,7 @@ extension OrderViewController {
                                           totalCost: self.resultTotalCost,
                                           userId: self.currentUser.uid,
                                           id: UUID().uuidString,
-                                          userName: self.currentUser.username,
+                                          userName: self.currentUser.fullName,
                                           workerName: "",
                                           workerImageURL: "",
                                           userImageURL: self.currentUser.profileImageUrl?.absoluteString ?? "")

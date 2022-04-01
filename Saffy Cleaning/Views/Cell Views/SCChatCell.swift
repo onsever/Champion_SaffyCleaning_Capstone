@@ -11,7 +11,7 @@ import SDWebImage
 class SCChatCell: UITableViewCell {
     
     public static let identifier = "ChatCell"
-    private let userImageView = UIImageView()
+    private let userImageView = SCProfileImageView(cornerRadius: 75 / 2)
     private let userLabel = SCMainLabel(fontSize: 14, textColor: .brandDark)
     private let dateLabel = SCCompletionLabel(title: "Title", titleColor: .brandDark, fontSize: 12)
     private let chatLabel = SCMainLabel(fontSize: 13, textColor: .brandDark)

@@ -108,34 +108,34 @@ class ChatListViewController : UIViewController {
     
 
     
-    // MARK: Add new channel -> after the booking is matched
-    @objc private func addButtonPressed() {
-        let alertController = UIAlertController(title: "Create a new Channel", message: nil, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alertController.addTextField { field in
-            field.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
-            field.enablesReturnKeyAutomatically = true
-            field.autocapitalizationType = .words
-            field.clearButtonMode = .whileEditing
-            field.placeholder = "Channel name"
-            field.returnKeyType = .done
-            field.tintColor = .primary
-        }
-        
-        let createAction = UIAlertAction(
-            title: "Create",
-            style: .default) { _ in
-                self.createChannel()
-            }
-        createAction.isEnabled = false
-        alertController.addAction(createAction)
-        alertController.preferredAction = createAction
-        
-        present(alertController, animated: true) {
-            alertController.textFields?.first?.becomeFirstResponder()
-        }
-        currentChannelAlertController = alertController
-    }
+//    // MARK: Add new channel -> after the booking is matched
+//    @objc private func addButtonPressed() {
+//        let alertController = UIAlertController(title: "Create a new Channel", message: nil, preferredStyle: .alert)
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        alertController.addTextField { field in
+//            field.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+//            field.enablesReturnKeyAutomatically = true
+//            field.autocapitalizationType = .words
+//            field.clearButtonMode = .whileEditing
+//            field.placeholder = "Channel name"
+//            field.returnKeyType = .done
+//            field.tintColor = .primary
+//        }
+//
+//        let createAction = UIAlertAction(
+//            title: "Create",
+//            style: .default) { _ in
+//                self.createChannel()
+//            }
+//        createAction.isEnabled = false
+//        alertController.addAction(createAction)
+//        alertController.preferredAction = createAction
+//
+//        present(alertController, animated: true) {
+//            alertController.textFields?.first?.becomeFirstResponder()
+//        }
+//        currentChannelAlertController = alertController
+//    }
     
     @objc private func textFieldDidChange(_ field: UITextField) {
         guard let alertController = currentChannelAlertController else {
@@ -191,7 +191,11 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCChatCell.identifier, for: indexPath) as? SCChatCell else { return UITableViewCell() }
         
-        cell.setData(userImage: chatArray[indexPath.row].userImage, userName: chatArray[indexPath.row].userName, chatMessage: chatArray[indexPath.row].message, completionLabel: chatArray[indexPath.row].completion, dateLabel: chatArray[indexPath.row].date)
+        cell.setData(userImage: chatArray[indexPath.row].userImage,
+                     userName: chatArray[indexPath.row].userName,
+                     chatMessage: chatArray[indexPath.row].message,
+                     completionLabel: chatArray[indexPath.row].completion,
+                     dateLabel: chatArray[indexPath.row].date)
         
         cell.selectionStyle = .none
         
@@ -203,18 +207,14 @@ extension ChatListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         cell.addBottomBorder(with: .brandLake, andWidth: 1)
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Index of \(indexPath.row) is selected!")
         let id = chatArray[indexPath.row].id
         let isAble = chatArray[indexPath.row].completion == .proceeding
         let viewController = ChatViewController(user: currentUser, orderId: id, isAble: isAble)
         navigationController?.pushViewController(viewController, animated: true)
-//        self.present(viewController, animated: true)
     }
     
 }

@@ -60,6 +60,7 @@ final class ChatViewController: MessagesViewController {
         setUpMessageView()
         removeMessageAvatars()
         addCameraBarButton()
+        
     }
     
     private func listenToMessages() {
@@ -89,7 +90,6 @@ final class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         //    let testMessage = Message(
         //      user: user,
         //      content: "I love pizza; what is your favorite kind?")
@@ -132,15 +132,15 @@ final class ChatViewController: MessagesViewController {
         messages.append(message)
         messages.sort()
         
-        let isLatestMessage = messages.firstIndex(of: message) == (messages.count - 1)
-        let shouldScrollToBottom =
-        messagesCollectionView.isAtBottom && isLatestMessage
+//        let isLatestMessage = messages.firstIndex(of: message) == (messages.count - 1)
+//        let shouldScrollToBottom =
+//        messagesCollectionView.isAtBottom && isLatestMessage
         
         messagesCollectionView.reloadData()
         
-        if shouldScrollToBottom {
+//        if shouldScrollToBottom {
             messagesCollectionView.scrollToLastItem(animated: true)
-        }
+//        }
     }
     
     private func uploadImage(
@@ -235,12 +235,12 @@ final class ChatViewController: MessagesViewController {
     
     
     private func setUpMessageView() {
+        if !self.isAble {
+            messageInputBar.inputTextView.isUserInteractionEnabled = false
+        }
         maintainPositionOnKeyboardFrameChanged = true
         messageInputBar.inputTextView.tintColor = .primary
         messageInputBar.sendButton.setTitleColor(.primary, for: .normal)
-        if !self.isAble {
-            messageInputBar.sendButton.isEnabled = false
-        }
         messageInputBar.delegate = self
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -273,7 +273,9 @@ final class ChatViewController: MessagesViewController {
         let cameraItem = InputBarButtonItem(type: .system)
         cameraItem.tintColor = .primary
         cameraItem.image = UIImage(named: "camera")
-        
+        if !self.isAble {
+            cameraItem.isEnabled = false
+        }
         // 2
         cameraItem.addTarget(
             self,
@@ -400,6 +402,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         _ inputBar: InputBarAccessoryView,
         didPressSendButtonWith text: String
     ) {
+        if !self.isAble { return }
         // 1
         let message = Message(user: user, content: text)
         

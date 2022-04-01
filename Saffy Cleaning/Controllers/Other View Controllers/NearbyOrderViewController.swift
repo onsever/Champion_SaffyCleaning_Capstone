@@ -193,7 +193,7 @@ extension NearbyOrderViewController: SCTakeJobPopUpDelegate {
         FirebaseDBService.service.applyOrder(id: userOrder.id,
                                              userId: userOrder.userId,
                                              workerId: currentUser.uid,
-                                             workerName: currentUser.username,
+                                             workerName: currentUser.fullName,
                                              workerImageURL: currentUser.profileImageUrl?.absoluteString ?? "")
         print("Confirmation button tapped!")
         delegate?.didDismissNearbyOrder()
