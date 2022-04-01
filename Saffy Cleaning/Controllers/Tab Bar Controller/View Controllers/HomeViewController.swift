@@ -171,7 +171,7 @@ extension HomeViewController: MKMapViewDelegate {
             let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!, currentUser: currentUser)
             nearbyOrderVC.delegate = self
             if let sheet = nearbyOrderVC.sheetPresentationController {
-                sheet.detents = [.medium()]
+                sheet.detents = [.medium(), .large()]
                 sheet.prefersGrabberVisible = true
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             }

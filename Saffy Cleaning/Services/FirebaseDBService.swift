@@ -169,7 +169,7 @@ extension FirebaseDBService {
                         }
                     }
                 }
-                let sortedOrders = openingOrder.sorted(by: {($0.date, $0.id)>($1.date, $1.id)})
+                let sortedOrders = openingOrder.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) })
                 completion(sortedOrders)
             }else{
                 completion([])
@@ -189,10 +189,17 @@ extension FirebaseDBService {
                 let order = self.convertDictToOrder(dict: orderDict, address: address)
                 orders.append(order)
             }
-            let sortedOrders = orders.sorted(by: {($0.date, $0.id)>($1.date, $1.id)})
+            let sortedOrders = orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) })
             completion(sortedOrders)
         })
         completion([])
+    }
+    
+    private func converStrToTimeStamp(_ date: String, _ time: String) -> Date! {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm a"
+        formatter.timeZone = .current
+        return formatter.date(from: "\(date) \(time)")
     }
     
     public func updateOrderStatus(orderId: String, value: [String: Any], isCancellOrder: Bool = false) {
@@ -229,7 +236,7 @@ extension FirebaseDBService {
                     histories.append(history)
                 }
             }
-            let sortedHistories = histories.sorted(by: {($0.date, $0.address)>($1.date, $1.address)})
+            let sortedHistories = histories.sorted(by: {($0.date, $0.address, $0.status)>($1.date, $1.address, $0.status)})
             completion(sortedHistories)
         })
     }

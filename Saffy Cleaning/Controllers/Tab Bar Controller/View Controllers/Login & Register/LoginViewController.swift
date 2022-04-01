@@ -107,16 +107,14 @@ class LoginViewController: UIViewController {
             FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
                 [weak self] (success) in
                 if (success) {
-                    self?.spinner.dismiss()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                     
                 } else {
                     self?.presentAlert(title: "Login with Google", message: "Login Failed", positiveAction: { action in }, negativeAction: nil)
                 }
-                
             })
         }
-        self.spinner.dismiss()
+        spinner.dismiss()
     }
     
     @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
@@ -131,7 +129,6 @@ class LoginViewController: UIViewController {
                   [weak self] (success) in
                   if (success) {
                       DispatchQueue.main.async {
-                          self?.spinner.dismiss()
                           (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                       }
                   } else {
@@ -143,14 +140,15 @@ class LoginViewController: UIViewController {
           case .failed(let error):
             print("Login with error: \(error.localizedDescription)")
           }
+            self.spinner.dismiss()
         }
-        self.spinner.dismiss()
     }
     
     
     
     @objc private func forgetPasswordDidTapped(_ gesture: UITapGestureRecognizer) {
         print("Forget password label tapped on.")
+        self.presentAlert(title: "Reset Password", message: "Please enter the email that used for registration. A reset password email will be sent in few minutes.", positiveAction: {_ in}, negativeAction: nil, isForgetPw: true)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {

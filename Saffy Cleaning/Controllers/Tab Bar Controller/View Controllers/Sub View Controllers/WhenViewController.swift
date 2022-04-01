@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WhenViewDelegate: AnyObject {
-    func addDate(date: String, time: String, duration: Int?)
+    func addDate(date: String, time: String, duration: Int?, selectedDate: Date?)
 }
 
 class WhenViewController: UIViewController {
@@ -29,8 +29,22 @@ class WhenViewController: UIViewController {
     private let durationView = SCInfoView(placeholder: "Choose a duration", text: "Duration")
     private let selectionPopUp = SCSelectionPopUp(isHouseType: false)
     public weak var delegate: WhenViewDelegate?
-    private static var selectedDate: Date? = nil
-    private static var durationText: String? = nil
+    private var selectedDate: Date? {
+        didSet {
+            if let selectedDate = selectedDate {
+                datePicker.setDate(selectedDate, animated: true)
+                datePicker.date = selectedDate
+            }
+            
+        }
+    }
+    private var durationText: String? {
+        didSet {
+            if let durationText = durationText {
+                durationView.getTextField().text = durationText
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,20 +58,11 @@ class WhenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let selectedDate = WhenViewController.selectedDate {
-            datePicker.setDate(selectedDate, animated: true)
-            datePicker.date = selectedDate
-        }
-        
-        durationView.getTextField().text = WhenViewController.durationText
         self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        WhenViewController.selectedDate = datePicker.date
-        WhenViewController.durationText = checkDurationText()
         
         self.tabBarController?.tabBar.isHidden = false
     }
@@ -76,7 +81,7 @@ class WhenViewController: UIViewController {
             let time = formatTime(date: datePicker.date)
             let duration = Int((durationView.getTextField().text!).prefix(1))!
                     
-            delegate?.addDate(date: date, time: time, duration: duration)
+            delegate?.addDate(date: date, time: time, duration: duration, selectedDate: datePicker.date)
         }
 
     }
@@ -114,6 +119,19 @@ class WhenViewController: UIViewController {
         formatter.pmSymbol = "PM"
         
         return formatter.string(from: date)
+    }
+    
+    public func convertStringToDate(date: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-YYYY"
+        return formatter.date(from: date)!
+    }
+    
+    public func setData(date: Date?, duration: String) {
+        if let date = date {
+            self.selectedDate = date
+        }
+        self.durationText = duration
     }
     
     private func checkDurationText() -> String {

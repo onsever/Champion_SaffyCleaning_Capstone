@@ -71,7 +71,7 @@ class SCSelectionPopUp: UIViewController {
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
+            containerView.heightAnchor.constraint(equalToConstant: 330)
         ])
     }
     

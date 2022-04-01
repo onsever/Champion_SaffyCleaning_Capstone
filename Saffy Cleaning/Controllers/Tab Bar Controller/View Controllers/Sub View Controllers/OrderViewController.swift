@@ -59,6 +59,11 @@ class OrderViewController: UIViewController {
     private var selectedItemsArray = [ExtraService]()
     private var selectedTips: Double? = nil
     
+    private var selectedFormattedDate: Date? = nil
+    private var selectedQuantityText: String? = nil
+    private var selectedMessageText: String? = nil
+    private var selectedButtonName: String? = nil
+    
     private var total: CGFloat = 0.0
     
     private lazy var scrollView: UIScrollView = {
@@ -167,6 +172,24 @@ class OrderViewController: UIViewController {
                 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        print("When View Height: \(whenView.frame.size.height)")
+        print("Where View Height: \(whereView.frame.size.height)")
+        print("Other Details Height: \(otherDetailsView.frame.size.height)")
+        
+        let heightTotal: CGFloat = (whereView.frame.size.height) + (whereView.frame.size.height) + (otherDetailsView.frame.size.height) + (tipsView.frame.size.height) + (tableView.frame.size.height) + (paypalButton.frame.size.height) + 110
+        
+        self.contentViewSize = CGSize(width: view.frame.size.width, height: heightTotal)
+        self.scrollView.contentSize = contentViewSize
+        self.contentView.frame.size = contentViewSize
+        
+        print("Table View Height: \(tableView.frame.size.height)")
+        print("Height Total: \(heightTotal)")
+        print("Content View Height: \(contentViewSize.height)")
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         self.tableView.layer.removeAllAnimations()
@@ -175,26 +198,6 @@ class OrderViewController: UIViewController {
             self.updateViewConstraints()
         }
         
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.view.layoutIfNeeded()
-        print("Content size: \(self.scrollView.contentSize) ")
-        print("Container view: \(self.contentView.frame.size.height)")
-        
-        total = 0.0
-        
-        contentView.subviews.forEach {
-            total += $0.frame.size.height
-        }
-        
-        print("Total: \(total)")
-        self.contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + total)
-        print("Content View Height: \(contentViewSize.height)")
-        self.scrollView.contentSize = contentViewSize
-        self.contentView.frame.size = contentViewSize
     }
     
     @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
@@ -212,15 +215,16 @@ class OrderViewController: UIViewController {
 
 extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
     
-    func addDate(date: String, time: String, duration: Int?) {
+    func addDate(date: String, time: String, duration: Int?, selectedDate: Date?) {
         self.navigationController?.popViewController(animated: true)
         
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? 0)
         
         orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? 0) hours)", cost: Double((duration ?? 0) * 30))
-        selectedDate = date
+        self.selectedDate = date
         selectedTime = time
         selectedDuration = duration ?? 0
+        self.selectedFormattedDate = selectedDate
         self.tableView.reloadData()
         
     }
@@ -229,6 +233,11 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         print("Edit button clicked")
         
         let whenVC = WhenViewController()
+        
+        if let date = selectedFormattedDate, let duration = selectedDuration {
+            whenVC.setData(date: date, duration: "\(duration) hours")
+        }
+        
         navigationController?.pushViewController(whenVC, animated: true)
         whenVC.delegate = self
                 
@@ -263,6 +272,13 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
 }
 
 extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
+    
+    func fetchOtherDetailsData(buttonName: String, quantityText: String, messageText: String) {
+        self.selectedButtonName = buttonName
+        self.selectedQuantityText = quantityText
+        self.selectedMessageText = messageText
+    }
+    
     
     func addOtherDetails(pet: String, message: String, selectedItems: [Int : ExtraService]) {
         self.navigationController?.popViewController(animated: true)
@@ -311,6 +327,11 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
     func didTapEditButtonOtherView(_ button: UIButton) {
         
         let otherDetailsVC = OtherDetailsViewController()
+        
+        if let button = self.selectedButtonName, let quantity = selectedQuantityText, let message = selectedMessageText {
+            otherDetailsVC.setOtherDetailsData(buttonName: button, quantityText: quantity, messageText: message)
+        }
+        
         self.navigationController?.pushViewController(otherDetailsVC, animated: true)
         otherDetailsVC.delegate = self
         
