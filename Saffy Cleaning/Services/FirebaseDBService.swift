@@ -104,7 +104,7 @@ extension FirebaseDBService {
                         }
                     }
                 }
-                completion(orders)
+                completion(orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }))
             }else{
                 completion([])
             }
@@ -122,7 +122,7 @@ extension FirebaseDBService {
                         orders.append(order)
                     }
                 }
-                completion(orders)
+                completion(orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }))
             })
         }
     }
