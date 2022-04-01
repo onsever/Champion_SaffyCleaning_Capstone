@@ -25,7 +25,7 @@ class WorkerProfileViewController: UIViewController {
     private let yearView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30, isCentered: true)
     
     private var numbOfHire = 0;
-    private var average = 0;
+    private var average:Double = 0;
     private var yearsOfJoining = 0;
     
     private let tableView: UITableView = {
@@ -80,11 +80,11 @@ class WorkerProfileViewController: UIViewController {
         if(!reviewArray.isEmpty) {
             hiringView.infoLabel.text = String(reviewArray.count)
             for item in reviewArray {
-                average += item.ratingCount
+                average += Double(item.ratingCount)
             }
-            average = average / reviewArray.count
+            average = average / Double(reviewArray.count)
         }
-        averageScoreView.infoLabel.text = String(average)
+        averageScoreView.infoLabel.text = String(format: "%.1f", average)
     }
     
     
