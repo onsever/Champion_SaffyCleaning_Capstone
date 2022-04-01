@@ -19,8 +19,9 @@ class SCRatingVC: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.tintColor = .brandGem
+        imageView.clipsToBounds = true
         
         return imageView
     }()
@@ -135,6 +136,7 @@ extension SCRatingVC {
     
     private func configureImageView() {
         containerView.addSubview(imageView)
+        imageView.layer.cornerRadius = 40
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),

@@ -62,7 +62,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SCHistoryCardCell.identifier, for: indexPath) as? SCHistoryCardCell else { return UITableViewCell() }
         
-        cell.setData(addressTitle: historyArray[indexPath.row].address, date: historyArray[indexPath.row].date, status: historyArray[indexPath.row].status)
+        cell.setData(addressTitle: historyArray[indexPath.row].address, date: historyArray[indexPath.row].date, status: historyArray[indexPath.row].status.capitalized)
         
         return cell
     }
