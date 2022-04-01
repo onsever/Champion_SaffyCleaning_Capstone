@@ -10,11 +10,11 @@ import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
     
-    
     private var user: User?  = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureLayout()
         fetchUserData()
     }
     
@@ -30,12 +30,6 @@ class MainTabBarController: UITabBarController {
 extension MainTabBarController {
     
     private func configure(user: User) {
-        
-        UITabBar.appearance().tintColor = .brandGem
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.urbanistRegular(size: 14)!], for: .normal)
-        UITabBar.appearance().unselectedItemTintColor = .brandLake
-        view.backgroundColor = .white
-        
         let homeVC = HomeViewController(currentUser: user)
         let chatVC = ChatListViewController(currentUser: user)
         let historyVC = HistoryViewController()
@@ -64,4 +58,10 @@ extension MainTabBarController {
         viewControllers = [homeNC, chatNC, noticeNC, historyNC, profileNC]
     }
     
+    private func configureLayout() {
+        UITabBar.appearance().tintColor = .brandGem
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.urbanistRegular(size: 14)!], for: .normal)
+        UITabBar.appearance().unselectedItemTintColor = .brandLake
+        view.backgroundColor = .white
+    }
 }
