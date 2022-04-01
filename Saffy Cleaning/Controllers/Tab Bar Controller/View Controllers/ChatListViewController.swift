@@ -71,6 +71,7 @@ class ChatListViewController : UIViewController {
         FirebaseDBService.service.retrieveMatchedOrders(type: currentUser.userType) { [weak self] orders in
             var _chatArray: [Chat] = []
             orders.forEach { order in
+                
                 let isWorker = self?.currentUser.userType == UserType.worker.rawValue ? true : false
                 let userName = isWorker ? order.userName : order.workerName
                 let icon = isWorker ? URL(string: order.userImageURL) : URL(string: order.workerImageURL)
