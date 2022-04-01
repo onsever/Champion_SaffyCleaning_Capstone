@@ -275,7 +275,7 @@ extension FirebaseDBService {
                                   userName: userName,
                                   workerName: workerName,
                                   workerImageURL: workerImageURL,
-                                  userImageURL: workerImageURL)
+                                  userImageURL: userImageURL)
         userOrder.status = status
         userOrder.workerId = workerId
         userOrder.isUserCommented = isUserCommented
