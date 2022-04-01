@@ -40,7 +40,7 @@ class SCOrderCell: UITableViewCell {
     
     public func setData(title: String, value: Double) {
         self.titleLabel.text = title
-        self.titleValue.text = String(format: "USD %.2f", value)
+        self.titleValue.text = String(format: "CAD %.2f", value)
     }
     
     public func setLabel(title: String) {

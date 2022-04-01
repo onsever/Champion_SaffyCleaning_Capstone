@@ -346,7 +346,7 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if tableView == rewardsTableView {
+        if tableView == rewardsTableView && userOrder.selectedItems.count > 0 {
             return "Extra Service List:"
         }
         
