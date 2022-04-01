@@ -26,8 +26,14 @@ class FirebaseAuthService {
     
     func loginWithThirdParties(credential: AuthCredential, completionBlock: @escaping (_ sucess: Bool) -> Void) {
         Auth.auth().signIn(with: credential) {(result, error) in
+            if error != nil {
+                completionBlock(false)
+                return
+            }
             if let user = result?.user {
+                
                 FirebaseDBService.service.retrieveUserById(id: user.uid, completion: { result in
+                    
                     if (result == nil){
                         let username = user.email ?? ""
                         let email = user.email ?? ""
@@ -59,6 +65,8 @@ class FirebaseAuthService {
                             }
 
                         }
+                    }else {
+                        completionBlock(true)
                     }
                 })
             } else {
