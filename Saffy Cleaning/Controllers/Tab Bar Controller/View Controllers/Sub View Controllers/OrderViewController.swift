@@ -47,6 +47,7 @@ class OrderViewController: UIViewController {
     private var selectedMessage: String? = nil
     private var selectedItemsArray = [ExtraService]()
     private var selectedTips: Double? = nil
+    private var selectedFormattedDate: Date? = nil
     
     private var total: CGFloat = 0.0
     
@@ -199,15 +200,16 @@ class OrderViewController: UIViewController {
 
 extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
     
-    func addDate(date: String, time: String, duration: Int?) {
+    func addDate(date: String, time: String, duration: Int?, selectedDate: Date?) {
         self.navigationController?.popViewController(animated: true)
         
         self.isWhenViewDataSet = self.whenView.setData(date: date, time: time, duration: duration ?? 0)
         
         orderDictionary["basic_cleaning"] = Order(name: "Basic cleaning hours (\(duration ?? 0) hours)", cost: Double((duration ?? 0) * 30))
-        selectedDate = date
+        self.selectedDate = date
         selectedTime = time
         selectedDuration = duration ?? 0
+        self.selectedFormattedDate = selectedDate
         self.tableView.reloadData()
         
     }
@@ -216,6 +218,11 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
         print("Edit button clicked")
         
         let whenVC = WhenViewController()
+        
+        if let date = selectedFormattedDate, let duration = selectedDuration {
+            whenVC.setData(date: date, duration: "\(duration) hours")
+        }
+        
         navigationController?.pushViewController(whenVC, animated: true)
         whenVC.delegate = self
                 
