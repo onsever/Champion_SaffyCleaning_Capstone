@@ -159,7 +159,7 @@ class SCNotificationCell: UITableViewCell {
             // user matched with worker
             case UserOrderType.matched.rawValue:
                 message = "You matched the order with a worker. Please contact the worker through the chatroom for any query."
-                self.viewLabel.attributedText = NSMutableAttributedString(string: "Completed", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 13)!])
+                self.viewLabel.attributedText = NSMutableAttributedString(string: "Completed", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 12)!])
                 self.viewLabel.textColor = .black
                 self.viewLabel.backgroundColor = .green
             // user matched with worker

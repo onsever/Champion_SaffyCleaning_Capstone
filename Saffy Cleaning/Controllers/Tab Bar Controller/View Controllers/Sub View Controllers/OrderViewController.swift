@@ -32,7 +32,7 @@ class OrderViewController: UIViewController {
     
     private var tipsView = SCTipsView(title: "Tips")
     
-    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 600)
+    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height)
     private var tableHeightConstraint: NSLayoutConstraint!
     private var otherDetailsDataSetCollectionViewEmptyConstraint: NSLayoutConstraint!
     private var isArrayEmpty: Bool = false
@@ -47,6 +47,8 @@ class OrderViewController: UIViewController {
     private var selectedMessage: String? = nil
     private var selectedItemsArray = [ExtraService]()
     private var selectedTips: Double? = nil
+    
+    private var total: CGFloat = 0.0
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -72,6 +74,7 @@ class OrderViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.register(SCOrderCell.self, forCellReuseIdentifier: SCOrderCell.identifier)
         tableView.register(SCTotalCostView.self, forHeaderFooterViewReuseIdentifier: SCTotalCostView.identifier)
+        tableView.register(SCHeaderView.self, forHeaderFooterViewReuseIdentifier: SCHeaderView.identifier)
         tableView.allowsSelection = false
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
@@ -161,6 +164,26 @@ class OrderViewController: UIViewController {
             self.updateViewConstraints()
         }
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.view.layoutIfNeeded()
+        print("Content size: \(self.scrollView.contentSize) ")
+        print("Container view: \(self.contentView.frame.size.height)")
+        
+        total = 0.0
+        
+        contentView.subviews.forEach {
+            total += $0.frame.size.height
+        }
+        
+        print("Total: \(total)")
+        self.contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + total)
+        print("Content View Height: \(contentViewSize.height)")
+        self.scrollView.contentSize = contentViewSize
+        self.contentView.frame.size = contentViewSize
     }
     
     @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
@@ -308,18 +331,12 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Service charge"
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SCHeaderView.identifier) as? SCHeaderView else { return UIView() }
         
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.textColor = .brandDark
-        header.textLabel?.font = UIFont.urbanistBold(size: 18)!
-        header.textLabel?.frame = header.bounds
-        header.isUserInteractionEnabled = false
+        view.setData(title: "Service charge")
         
+        return view
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

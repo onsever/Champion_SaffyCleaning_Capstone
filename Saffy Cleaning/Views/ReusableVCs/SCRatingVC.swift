@@ -45,6 +45,7 @@ class SCRatingVC: UIViewController {
     private lazy var ratingView: CosmosView = {
         let view = CosmosView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.rating = 3
         
         return view
     }()
