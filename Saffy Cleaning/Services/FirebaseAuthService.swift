@@ -121,4 +121,14 @@ class FirebaseAuthService {
         
     }
     
+    public func forgetPassword(email: String) {
+        print(email)
+        Auth.auth().sendPasswordReset(withEmail: email) { err in
+            guard err == nil else {
+                print(err?.localizedDescription)
+                return
+            }
+        }
+    }
+    
 }
