@@ -11,6 +11,17 @@ import FirebaseAuth
 
 class OrderViewController: UIViewController {
     
+    private var currentUser: User
+    
+    init(currentUser: User) {
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private lazy var whenView = SCWhenView(title: "When")
     private lazy var whereView = SCWhereView(title: "Where")
     private lazy var otherDetailsView = SCOtherDetailsView(title: "Other details")
@@ -521,8 +532,12 @@ extension OrderViewController {
                                           selectedItems: self.selectedItemsArray.map {$0.name},
                                           tips: 0,
                                           totalCost: self.resultTotalCost,
-                                          userId: Auth.auth().currentUser?.uid ?? "",
-                                          id: UUID().uuidString)
+                                          userId: self.currentUser.uid,
+                                          id: UUID().uuidString,
+                                          userName: self.currentUser.username,
+                                          workerName: "",
+                                          workerImageURL: "",
+                                          userImageURL: self.currentUser.profileImageUrl?.absoluteString ?? "")
                 
                 if let selectedTips = self.selectedTips {
                     userOrder.tips = selectedTips

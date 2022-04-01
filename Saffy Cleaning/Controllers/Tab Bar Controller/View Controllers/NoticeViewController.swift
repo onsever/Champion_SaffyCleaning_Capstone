@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class NoticeViewController: UIViewController {
     
@@ -26,6 +27,20 @@ class NoticeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
+    }
+    
+    private let database = Firestore.firestore()
+    
+    private var channelReference: CollectionReference {
+        return database.collection("channels")
+    }
+    
+    private func createNewChatChannel(orderId: String) {
+        channelReference.addDocument(data: ["id": orderId]) { error in
+            if let error = error {
+                print("Error saving channel: \(error.localizedDescription)")
+            }
+        }
     }
     
     private var notificationArray = [UserOrder]()
@@ -141,6 +156,7 @@ extension NoticeViewController:SCNotificationCellDelgate {
 extension NoticeViewController: WorkerProfileViewControllerDelegate {
     func didTapAcceptButton(_ orderId: String) {
         FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.matched.rawValue])
+        createNewChatChannel(orderId: orderId)
     }
     
     func didTapRejectedButton(_ orderId: String) {

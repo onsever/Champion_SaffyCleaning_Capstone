@@ -27,4 +27,12 @@ extension UIColor {
     
     static let brandDarkGray = UIColor(red: 0.47, green: 0.47, blue: 0.47, alpha: 1.00)
     
+    static var primary: UIColor {
+        return self.brandGem
+    }
+    
+    static var incomingMessage: UIColor {
+        return self.brandLake
+    }
+    
 }

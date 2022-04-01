@@ -10,6 +10,7 @@ import MapKit
 import FirebaseDatabase
 import Photos
 import PhotosUI
+import JGProgressHUD
 
 protocol AddressVCDelegate: AnyObject {
     func didTapAddButton(_ address: Address)
@@ -25,6 +26,9 @@ class AddressViewController: UIViewController {
     private var isPostalCodeValid : Bool? = nil
     
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 300)
+    
+    private let spinner = JGProgressHUD(style: .dark)
+    
         
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -130,10 +134,8 @@ class AddressViewController: UIViewController {
         guard let houseSize = houseSizeView.getTextField().validateTextField() else { return }
         guard let contactPerson = contactPersonView.getTextField().validateTextField() else { return }
         guard let contactNumber = contactNumberView.getTextField().validateTextField() else { return }
-       if  isPostalCodeValid == false {
-            return
-        }
-
+        if isPostalCodeValid == false { return }
+        spinner.show(in: view)
         LocationSearchService.service.searchLocation(text: postalCode, completion: { [weak self] (location) in
             guard let self = self else { return }
             if let location = location {
@@ -148,6 +150,8 @@ class AddressViewController: UIViewController {
                     let addressDict = try! DictionaryEncoder.encode(newAddress) as NSDictionary
                     FirebaseDBService.service.updateAddress(addressId: newAddress.id, address: addressDict)
                     self.dataSource?.didTapSave()
+                    self.spinner.dismiss()
+                    self.dismiss(animated: true, completion: nil)
                 }
                 else {
                     let NSDict = try! DictionaryEncoder.encode(newAddress)
@@ -158,11 +162,13 @@ class AddressViewController: UIViewController {
                         child.updateChildValues(["images": imgArr])
                     }
                     self.delegate?.didTapAddButton(newAddress)
+                    self.spinner.dismiss()
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         })
         
-        self.dismiss(animated: true, completion: nil)
+
         
     }
     

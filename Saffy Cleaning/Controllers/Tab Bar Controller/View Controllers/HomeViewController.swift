@@ -22,10 +22,20 @@ class HomeViewController: UIViewController {
     private let orderButton = SCCircleButton(image: UIImage(systemName: "plus")!, cornerRadius: 20)
     private let addressButton = SCCircleButton(image: UIImage(systemName: "list.dash")!, cornerRadius: 20)
     
-    public var user: User?
+
     private var orders : [UserOrder]?
     private var selectedOrder : UserOrder?
     
+    private var currentUser: User
+    
+    init(currentUser: User) {
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +50,7 @@ class HomeViewController: UIViewController {
         let bView = UIView()
         bView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         
-        let imageView = UIImageView(image: UIImage(named: user?.userType == UserType.user.rawValue ? "owner" : "bucket")?.withRenderingMode(.alwaysTemplate))
+        let imageView = UIImageView(image: UIImage(named: currentUser.userType == UserType.user.rawValue ? "owner" : "bucket")?.withRenderingMode(.alwaysTemplate))
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         bView.addSubview(imageView)
         imageView.contentMode = .scaleAspectFill
@@ -72,9 +82,8 @@ class HomeViewController: UIViewController {
     private func renderView() {
         FirebaseDBService.service.retrieveUser { [weak self] user in
             guard let self = self else { return }
-            if let user = user {
-                self.user = user
-                if user.userType == UserType.user.rawValue {
+            if let currentUser = user {
+                if currentUser.userType == UserType.user.rawValue {
                     DispatchQueue.main.async {
                         self.configureButtons()
                         self.renderIcon()
@@ -113,7 +122,7 @@ class HomeViewController: UIViewController {
     @objc private func orderButtonDidTap(_ button: UIButton) {
         print("Order button tapped.")
         
-        let orderVC = OrderViewController()
+        let orderVC = OrderViewController(currentUser: currentUser)
         
         self.navigationController?.pushViewController(orderVC, animated: true)
     }
@@ -141,9 +150,8 @@ class HomeViewController: UIViewController {
         
         for order in orders {
             let addressLocation = MKPointAnnotation()
-            guard let user = user else { return }
-            if user.userType == UserType.worker.rawValue {
-                addressLocation.title = "Cost: $\(order.totalCost)"
+            if currentUser.userType == UserType.worker.rawValue {
+                addressLocation.title = "Price: $\(order.totalCost)"
             }
 //            addressLocation.title = "Testing"
             addressLocation.coordinate = CLLocationCoordinate2D(latitude: order.address.latitude, longitude: order.address.longitude)
@@ -160,7 +168,7 @@ extension HomeViewController: MKMapViewDelegate {
         let lat = view.annotation?.coordinate.latitude ?? 0
         if orders != nil {
             let userOrder = orders?.first(where: {$0.address.latitude == lat && $0.address.longitude == long})
-            let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!)
+            let nearbyOrderVC = NearbyOrderViewController(userOrder: userOrder!, currentUser: currentUser)
             nearbyOrderVC.delegate = self
             if let sheet = nearbyOrderVC.sheetPresentationController {
                 sheet.detents = [.medium()]

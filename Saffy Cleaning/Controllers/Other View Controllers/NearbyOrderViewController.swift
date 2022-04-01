@@ -14,6 +14,7 @@ protocol NearbyOrderViewControllerDelegate: AnyObject {
 
 class NearbyOrderViewController: UIViewController {
     
+    
     private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 400)
         
     private lazy var scrollView: UIScrollView = {
@@ -94,8 +95,11 @@ class NearbyOrderViewController: UIViewController {
     
     public weak var delegate: NearbyOrderViewControllerDelegate?
     
-    init(userOrder: UserOrder) {
+    private var currentUser: User
+    
+    init(userOrder: UserOrder, currentUser: User) {
         self.userOrder = userOrder
+        self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -132,7 +136,7 @@ class NearbyOrderViewController: UIViewController {
     @objc private func takeJobButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
         
-        let takeJobVC = SCTakeJobPopUp()
+        let takeJobVC = SCTakeJobPopUp(currentUser: currentUser)
         takeJobVC.delegate = self
         self.present(takeJobVC, animated: true, completion: nil)
     }
@@ -176,7 +180,11 @@ class NearbyOrderViewController: UIViewController {
 extension NearbyOrderViewController: SCTakeJobPopUpDelegate {
     
     func didTapConfirmationTakeJob(_ button: UIButton) {
-        FirebaseDBService.service.applyOrder(id: userOrder.id, userId: userOrder.userId, workerId: Auth.auth().currentUser?.uid ?? "")
+        FirebaseDBService.service.applyOrder(id: userOrder.id,
+                                             userId: userOrder.userId,
+                                             workerId: currentUser.uid,
+                                             workerName: currentUser.username,
+                                             workerImageURL: currentUser.profileImageUrl?.absoluteString ?? "")
         print("Confirmation button tapped!")
         delegate?.didDismissNearbyOrder()
     }

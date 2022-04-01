@@ -6,52 +6,38 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainTabBarController: UITabBarController {
     
     
-    private var user: User? {
-        didSet {
-            
-            guard let chatVC = (self.viewControllers?[4] as? UINavigationController)?.viewControllers.first as? ProfileViewController else { return }
-            
-            //chatVC.user = user
-            
-        }
-    }
+    private var user: User?  = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
         fetchUserData()
     }
     
     private func fetchUserData() {
-        
-        FirebaseDBService.service.retrieveUser { user in
-            
+        FirebaseDBService.service.retrieveUser { [weak self] user in
             if let user = user {
-                self.user = user
+                self?.configure(user: user)
             }
-            
         }
-        
     }
-    
 }
 
 extension MainTabBarController {
     
-    private func configure() {
+    private func configure(user: User) {
         
         UITabBar.appearance().tintColor = .brandGem
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.urbanistRegular(size: 14)!], for: .normal)
         UITabBar.appearance().unselectedItemTintColor = .brandLake
         view.backgroundColor = .white
         
-        let homeVC = HomeViewController()
-        let chatVC = ChatViewController()
+        let homeVC = HomeViewController(currentUser: user)
+        let chatVC = ChatListViewController(currentUser: user)
         let historyVC = HistoryViewController()
         let noticeVC = NoticeViewController()
         let profileVC = ProfileViewController()
