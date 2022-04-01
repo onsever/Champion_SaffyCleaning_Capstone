@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-final class ChannelsViewController: UITableViewController {
+final class ChatListViewController : UITableViewController {
     private let toolbarLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -38,7 +38,7 @@ final class ChannelsViewController: UITableViewController {
         self.currentUser = currentUser
         super.init(style: .grouped)
         
-        title = "Channels"
+//        title = "Channels"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,7 +58,7 @@ final class ChannelsViewController: UITableViewController {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
         ]
-        toolbarLabel.text = AppSettings.displayName
+//        toolbarLabel.text = AppSettings.displayName
         
         channelListener = channelReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
@@ -206,7 +206,7 @@ final class ChannelsViewController: UITableViewController {
 }
 
 // MARK: - TableViewDelegate
-extension ChannelsViewController {
+extension ChatListViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

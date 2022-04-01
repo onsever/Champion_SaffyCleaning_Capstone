@@ -19,7 +19,7 @@
 		0BEE575B27F5433800A62983 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE575A27F5433800A62983 /* Sender.swift */; };
 		0BEE575D27F5436A00A62983 /* DatabaseRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE575C27F5436A00A62983 /* DatabaseRepresentation.swift */; };
 		0BEE575F27F5442100A62983 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE575E27F5442100A62983 /* Channel.swift */; };
-		0BEE576127F547C700A62983 /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE576027F547C700A62983 /* ChatListController.swift */; };
+		0BEE576127F547C700A62983 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE576027F547C700A62983 /* ChatListViewController.swift */; };
 		0BEE576327F54B7A00A62983 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE576227F54B7A00A62983 /* UIImage+Ext.swift */; };
 		0BEE576527F54B9E00A62983 /* UICollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEE576427F54B9E00A62983 /* UICollectionView+Ext.swift */; };
 		0F76F659EB22794DED270E8D /* Pods_Saffy_CleaningTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 410EFF279D6AA0052EDB46F6 /* Pods_Saffy_CleaningTests.framework */; };
@@ -153,7 +153,7 @@
 		0BEE575A27F5433800A62983 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		0BEE575C27F5436A00A62983 /* DatabaseRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRepresentation.swift; sourceTree = "<group>"; };
 		0BEE575E27F5442100A62983 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		0BEE576027F547C700A62983 /* ChatListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
+		0BEE576027F547C700A62983 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		0BEE576227F54B7A00A62983 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		0BEE576427F54B9E00A62983 /* UICollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ext.swift"; sourceTree = "<group>"; };
 		2580FDF127E55F65005D6A87 /* LocationSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchService.swift; sourceTree = "<group>"; };
@@ -594,7 +594,7 @@
 				BAB5F35E27D9AF3F0018A030 /* NoticeViewController.swift */,
 				BAB5F36027D9AF4E0018A030 /* ProfileViewController.swift */,
 				BAB5F35127D9AD180018A030 /* Login & Register */,
-				0BEE576027F547C700A62983 /* ChatListController.swift */,
+				0BEE576027F547C700A62983 /* ChatListViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -969,7 +969,7 @@
 				BAFC9B2227DC3BC8000DDBCF /* SCWhenView.swift in Sources */,
 				BAFC9B2A27DC3BE9000DDBCF /* WhereViewController.swift in Sources */,
 				BA0CCA2227DD3AF00030DC0B /* SCOtherDetailsView.swift in Sources */,
-				0BEE576127F547C700A62983 /* ChatListController.swift in Sources */,
+				0BEE576127F547C700A62983 /* ChatListViewController.swift in Sources */,
 				0B53775227DB0D4A0085C110 /* FirebaseAuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
