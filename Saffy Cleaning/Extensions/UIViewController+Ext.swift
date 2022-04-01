@@ -9,7 +9,7 @@ import UIKit
 
 extension UIViewController {
     
-    func presentAlert(title: String, message: String, positiveAction: ((_ action: UIAlertAction) -> Void)?, negativeAction: ((_ action: UIAlertAction) -> Void)?) {
+    func presentAlert(title: String, message: String, positiveAction: ((_ action: UIAlertAction) -> Void)?, negativeAction: ((_ action: UIAlertAction) -> Void)?, isForgetPw: Bool = false) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -21,7 +21,17 @@ extension UIViewController {
         if let positiveAction = positiveAction {
             let positiveAction = UIAlertAction(title: "OK", style: .default) { action in
 
-                positiveAction(action)
+                if isForgetPw{
+                    guard alertController.textFields![0].text != nil else {
+                        print("An email address must be provided.")
+                        return
+                    }
+                    FirebaseAuthService.service.forgetPassword(email: alertController.textFields![0].text!)
+                }
+                else {
+                    positiveAction(action)
+                }
+                
                 alertController.dismiss(animated: true, completion: nil)
             }
             
@@ -38,6 +48,13 @@ extension UIViewController {
             
             negativeAction.setValue(UIColor.systemRed, forKey: "titleTextColor")
             alertController.addAction(negativeAction)
+        }
+        
+        if isForgetPw {
+            alertController.addTextField(configurationHandler: {
+                textfield in
+                textfield.placeholder = "Email"
+            })
         }
         
         self.present(alertController, animated: true, completion: nil)
