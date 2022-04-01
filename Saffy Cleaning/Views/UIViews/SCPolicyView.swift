@@ -15,9 +15,31 @@ protocol SCPolicyViewDelegate: AnyObject {
 
 class SCPolicyView: UIView {
     
+    private let fontSize: CGFloat = 11
+    
     public let checkBox = SCCheckBox(frame: .zero)
     public weak var delegate: SCPolicyViewDelegate?
-    private let infoLabel = SCInfoLabel(alignment: .center, fontSize: 18, text: "Accept the Privacy Policy and Terms & Conditions.")
+    private let infoLabel = SCInfoLabel(frame: .zero)
+    private let andLabel = SCInfoLabel(frame: .zero)
+    private lazy var policyButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.brandDark, for: .normal)
+        button.titleLabel?.font = UIFont.urbanistRegular(size: fontSize)!
+        button.setAttributedTitle(generateAttributedString(with: "Privacy Policy"), for: .normal)
+        
+        return button
+    }()
+    
+    private lazy var termsButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.brandDark, for: .normal)
+        button.titleLabel?.font = UIFont.urbanistRegular(size: fontSize)!
+        button.setAttributedTitle(generateAttributedString(with: "Terms & Conditions."), for: .normal)
+        
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +55,12 @@ class SCPolicyView: UIView {
     private func configure() {
         self.addSubview(checkBox)
         self.addSubview(infoLabel)
+        self.addSubview(policyButton)
+        self.addSubview(andLabel)
+        self.addSubview(termsButton)
+        
+        policyButton.addTarget(self, action: #selector(didTapPolicyText(_:)), for: .touchUpInside)
+        termsButton.addTarget(self, action: #selector(didTapTermsConditionsText(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             checkBox.centerYAnchor.constraint(equalTo: self.centerYAnchor),
@@ -42,34 +70,74 @@ class SCPolicyView: UIView {
             
             infoLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             infoLabel.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 10),
-            infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            infoLabel.heightAnchor.constraint(equalToConstant: 20)
+            infoLabel.heightAnchor.constraint(equalToConstant: 20),
+            
+            policyButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            policyButton.leadingAnchor.constraint(equalTo: infoLabel.trailingAnchor),
+            policyButton.heightAnchor.constraint(equalToConstant: 20),
+            
+            andLabel.leadingAnchor.constraint(equalTo: policyButton.trailingAnchor),
+            andLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            andLabel.heightAnchor.constraint(equalToConstant: 20),
+            
+            termsButton.leadingAnchor.constraint(equalTo: andLabel.trailingAnchor),
+            termsButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            termsButton.heightAnchor.constraint(equalToConstant: 20)
         ])
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(policyAction(_:)))
+        infoLabel.text = "Accept the "
+        infoLabel.font = UIFont.urbanistRegular(size: fontSize)!
+        andLabel.text = " and "
+        andLabel.font = UIFont.urbanistRegular(size: fontSize)!
         
         self.checkBox.addTarget(self, action: #selector(checkBoxTapped(_:)), for: .touchUpInside)
-        self.infoLabel.addGestureRecognizer(tap)
         
+    }
+    
+    private func generateAttributedString(with string: String) -> NSAttributedString {
+        
+        let attributedString = NSAttributedString(string: string, attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistRegular(size: fontSize)!, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.brandGem])
+        
+        return attributedString
     }
     
     @objc private func checkBoxTapped(_ button: UIButton) {
         delegate?.didSelectCheckbox(button)
     }
     
-    @objc private func policyAction(_ gesture: UITapGestureRecognizer) {
-        
-        let policyRange = (infoLabel.text! as NSString).range(of: "Privacy Policy")
-        
-        let termsRange = (infoLabel.text! as NSString).range(of: "Terms & Conditions.")
-        
-        if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: policyRange) {
-            delegate?.didTapPolicy()
-        } else if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: termsRange) {
-            delegate?.didTapTermsAndConditions()
-        } else {
-            print("Tapped none")
-        }
-        
+    
+    @objc private func didTapPolicyText(_ button: UIButton) {
+        delegate?.didTapPolicy()
+    }
+    
+    @objc private func didTapTermsConditionsText(_ button: UIButton) {
+        delegate?.didTapTermsAndConditions()
     }
 }
+
+/*
+ let attributedText = NSMutableAttributedString(string: "Accept the ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
+ let policyText = NSAttributedString(string: "Privacy Policy", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
+ let andText = NSAttributedString(string: " and ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
+ let termsText = NSAttributedString(string: "Terms & Conditions", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
+ 
+ 
+ attributedText.append(policyText)
+ attributedText.append(andText)
+ attributedText.append(termsText)
+ */
+
+
+/*
+ let policyRange = (infoLabel.text! as NSString).range(of: "Privacy Policy")
+ print(policyRange.length)
+ let termsRange = (infoLabel.text! as NSString).range(of: "Terms & Conditions.")
+ 
+ if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: policyRange) {
+     delegate?.didTapPolicy()
+ } else if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: termsRange) {
+     delegate?.didTapTermsAndConditions()
+ } else {
+     print("Tapped none")
+ }
+ */
