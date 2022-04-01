@@ -74,6 +74,7 @@ class OrderViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.register(SCOrderCell.self, forCellReuseIdentifier: SCOrderCell.identifier)
         tableView.register(SCTotalCostView.self, forHeaderFooterViewReuseIdentifier: SCTotalCostView.identifier)
+        tableView.register(SCHeaderView.self, forHeaderFooterViewReuseIdentifier: SCHeaderView.identifier)
         tableView.allowsSelection = false
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
@@ -330,18 +331,12 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Service charge"
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SCHeaderView.identifier) as? SCHeaderView else { return UIView() }
         
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.textColor = .brandDark
-        header.textLabel?.font = UIFont.urbanistBold(size: 18)!
-        header.textLabel?.frame = header.bounds
-        header.isUserInteractionEnabled = false
+        view.setData(title: "Service charge")
         
+        return view
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

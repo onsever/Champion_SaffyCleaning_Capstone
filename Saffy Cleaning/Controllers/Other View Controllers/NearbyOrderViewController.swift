@@ -55,6 +55,7 @@ class NearbyOrderViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.register(SCNearbyOrderCell.self, forCellReuseIdentifier: SCNearbyOrderCell.identifier)
+        tableView.register(SCHeaderView.self, forHeaderFooterViewReuseIdentifier: SCHeaderView.identifier)
         tableView.allowsSelection = false
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
@@ -71,7 +72,7 @@ class NearbyOrderViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.register(SCOrderCell.self, forCellReuseIdentifier: SCOrderCell.identifier)
-        tableView.register(SCTotalCostView.self, forHeaderFooterViewReuseIdentifier: SCTotalCostView.identifier)
+        tableView.register(SCHeaderView.self, forHeaderFooterViewReuseIdentifier: SCHeaderView.identifier)
         tableView.allowsSelection = false
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
@@ -344,25 +345,19 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if tableView == rewardsTableView && userOrder.selectedItems.count > 0 {
-            return "Extra Service List:"
+            guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SCHeaderView.identifier) as? SCHeaderView else { return UIView() }
+            
+            view.setData(title: "Extra Service List:")
+            view.setFontSize(fontSize: 16)
+            
+            return view
         }
-        
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        
-        if tableView == rewardsTableView {
-            guard let header = view as? UITableViewHeaderFooterView else { return }
-            header.textLabel?.textColor = .brandDark
-            header.textLabel?.font = UIFont.urbanistBold(size: 16)!
-            header.textLabel?.frame = header.bounds
-            header.isUserInteractionEnabled = false
+        else {
+            return nil
         }
-        
         
     }
     

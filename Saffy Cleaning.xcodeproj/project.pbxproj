@@ -40,6 +40,7 @@
 		BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */; };
 		BA65DB6427DA6E590007A915 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */; };
 		BA65DB6627DA6E6D0007A915 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA65DB6527DA6E6D0007A915 /* String+Ext.swift */; };
+		BA6C582427F69353000D2491 /* SCHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C582327F69353000D2491 /* SCHeaderView.swift */; };
 		BA78EA6C27EA53A700B45086 /* SCNearbyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */; };
 		BA78EA6E27EA880800B45086 /* SCTakeJobPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */; };
 		BA78EA7027EA8C9400B45086 /* SCSwitchUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */; };
@@ -168,6 +169,7 @@
 		BA65DB6127DA6E400007A915 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6327DA6E590007A915 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		BA65DB6527DA6E6D0007A915 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		BA6C582327F69353000D2491 /* SCHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCHeaderView.swift; sourceTree = "<group>"; };
 		BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNearbyOrderCell.swift; sourceTree = "<group>"; };
 		BA78EA6D27EA880800B45086 /* SCTakeJobPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCTakeJobPopUp.swift; sourceTree = "<group>"; };
 		BA78EA6F27EA8C9400B45086 /* SCSwitchUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCSwitchUserPopUp.swift; sourceTree = "<group>"; };
@@ -526,6 +528,7 @@
 				BA14E4AB27E555370099A801 /* SCEmptyPhotoCell.swift */,
 				BA78EA6B27EA53A700B45086 /* SCNearbyOrderCell.swift */,
 				BA78EA7127EAA02C00B45086 /* SCNotificationCell.swift */,
+				BA6C582327F69353000D2491 /* SCHeaderView.swift */,
 			);
 			path = "Cell Views";
 			sourceTree = "<group>";
@@ -883,6 +886,7 @@
 				BAD694FF27DD7A2A00FF3445 /* SCExtraServiceCell.swift in Sources */,
 				BAEC381727DC762400496D81 /* AddressViewController.swift in Sources */,
 				BAD0D87F27E84F1A004198F8 /* EditProfileViewController.swift in Sources */,
+				BA6C582427F69353000D2491 /* SCHeaderView.swift in Sources */,
 				BA9539C227D99173005A899A /* SCPolicyView.swift in Sources */,
 				BA65DB5A27DA6DED0007A915 /* UITapGestureRecognizer+Ext.swift in Sources */,
 				BA65DB6227DA6E400007A915 /* UILabel+Ext.swift in Sources */,
