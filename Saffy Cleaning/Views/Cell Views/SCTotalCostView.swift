@@ -40,7 +40,7 @@ class SCTotalCostView: UITableViewHeaderFooterView {
     }
     
     public func setData(cost: Double) {
-        self.titleValue.text = String(format: "USD %.2f", cost)
+        self.titleValue.text = String(format: "CAD %.2f", cost)
     }
     
 }
