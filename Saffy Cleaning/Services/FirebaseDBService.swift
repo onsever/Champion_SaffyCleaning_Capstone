@@ -273,8 +273,8 @@ extension FirebaseDBService {
                                   userId: userId,
                                   id: id,
                                   userName: userName,
-                                  workerName: userImageURL,
-                                  workerImageURL: workerName,
+                                  workerName: workerName,
+                                  workerImageURL: workerImageURL,
                                   userImageURL: workerImageURL)
         userOrder.status = status
         userOrder.workerId = workerId
