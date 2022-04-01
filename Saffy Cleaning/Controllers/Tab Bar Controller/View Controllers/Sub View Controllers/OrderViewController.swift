@@ -47,7 +47,11 @@ class OrderViewController: UIViewController {
     private var selectedMessage: String? = nil
     private var selectedItemsArray = [ExtraService]()
     private var selectedTips: Double? = nil
+    
     private var selectedFormattedDate: Date? = nil
+    private var selectedQuantityText: String? = nil
+    private var selectedMessageText: String? = nil
+    private var selectedButtonName: String? = nil
     
     private var total: CGFloat = 0.0
     
@@ -258,6 +262,13 @@ extension OrderViewController: WhereViewDelegate, SCWhereViewDelegate {
 
 extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDelegate {
     
+    func fetchOtherDetailsData(buttonName: String, quantityText: String, messageText: String) {
+        self.selectedButtonName = buttonName
+        self.selectedQuantityText = quantityText
+        self.selectedMessageText = messageText
+    }
+    
+    
     func addOtherDetails(pet: String, message: String, selectedItems: [Int : ExtraService]) {
         self.navigationController?.popViewController(animated: true)
         
@@ -305,6 +316,11 @@ extension OrderViewController: SCOtherDetailsViewDelegate, OtherDetailsViewDeleg
     func didTapEditButtonOtherView(_ button: UIButton) {
         
         let otherDetailsVC = OtherDetailsViewController()
+        
+        if let button = self.selectedButtonName, let quantity = selectedQuantityText, let message = selectedMessageText {
+            otherDetailsVC.setOtherDetailsData(buttonName: button, quantityText: quantity, messageText: message)
+        }
+        
         self.navigationController?.pushViewController(otherDetailsVC, animated: true)
         otherDetailsVC.delegate = self
         

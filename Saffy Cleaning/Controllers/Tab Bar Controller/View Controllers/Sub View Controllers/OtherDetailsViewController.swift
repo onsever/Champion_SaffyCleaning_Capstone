@@ -9,6 +9,7 @@ import UIKit
 
 protocol OtherDetailsViewDelegate: AnyObject {
     func addOtherDetails(pet: String, message: String, selectedItems: [Int : ExtraService])
+    func fetchOtherDetailsData(buttonName: String, quantityText: String, messageText: String)
 }
 
 class OtherDetailsViewController: UIViewController {
@@ -40,9 +41,32 @@ class OtherDetailsViewController: UIViewController {
     private var selectedArray = [ExtraService]()
     private var selectedDictionary = [Int : ExtraService]()
     private static var selectedIndexes = [Int : IndexPath]()
-    private static var buttonName: String? = nil
-    private static var quantityText: String? = nil
-    private static var messageText: String? = nil
+    private var buttonName: String? {
+        didSet {
+            if let buttonName = buttonName {
+                if buttonName == "Yes" {
+                    self.yesButton.radioButton.isSelected = true
+                }
+                else {
+                    self.noButton.radioButton.isSelected = true
+                }
+            }
+        }
+    }
+    private var quantityText: String? {
+        didSet {
+            if let quantityText = quantityText {
+                self.quantityTextField.text = quantityText
+            }
+        }
+    }
+    private var messageText: String? {
+        didSet {
+            if let messageText = messageText {
+                self.messageTextField.text = messageText
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,9 +81,9 @@ class OtherDetailsViewController: UIViewController {
         configureMessageTextField()
         setData()
         
-        if OtherDetailsViewController.buttonName == nil {
+        if self.buttonName == nil {
             noButton.radioButton.isSelected = true
-            OtherDetailsViewController.buttonName = "No"
+            self.buttonName = "No"
             quantityTextField.isUserInteractionEnabled = false
         }
         
@@ -70,31 +94,11 @@ class OtherDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let quantityText = OtherDetailsViewController.quantityText, let messageText = OtherDetailsViewController.messageText {
-            
-            quantityTextField.text = quantityText
-            messageTextField.text = messageText
-            
-        }
-        
-        if let buttonName = OtherDetailsViewController.buttonName {
-            print("Button name: \(buttonName)")
-            if buttonName == "Yes" {
-                yesButton.radioButton.isSelected = true
-            }
-            else if buttonName == "No" {
-                noButton.radioButton.isSelected = true
-            }
-        }
-        
         self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        OtherDetailsViewController.quantityText = quantityTextField.text
-        OtherDetailsViewController.messageText = messageTextField.text
                 
         self.tabBarController?.tabBar.isHidden = false
         
@@ -115,7 +119,7 @@ class OtherDetailsViewController: UIViewController {
     
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
         
-        if (quantityTextField.text == "" && OtherDetailsViewController.buttonName == "Yes") || messageTextField.text == "" {
+        if (quantityTextField.text == "" && self.buttonName == "Yes") || messageTextField.text == "" {
             
             self.presentAlert(title: "Empty Fields", message: "Please fill all the fields.", positiveAction: { action in
                 
@@ -127,12 +131,19 @@ class OtherDetailsViewController: UIViewController {
             let message = messageTextField.text!
             
             delegate?.addOtherDetails(
-                pet: OtherDetailsViewController.buttonName == "Yes" ? "\(OtherDetailsViewController.buttonName!)\n\(pet)" : "\(OtherDetailsViewController.buttonName!)",
+                pet: self.buttonName == "Yes" ? "\(self.buttonName!)\n\(pet)" : "\(self.buttonName!)",
                 message: message,
                 selectedItems: selectedDictionary)
             
+            delegate?.fetchOtherDetailsData(buttonName: self.buttonName ?? "No", quantityText: pet, messageText: message)
         }
         
+    }
+    
+    public func setOtherDetailsData(buttonName: String, quantityText: String, messageText: String) {
+        self.buttonName = buttonName
+        self.quantityText = quantityText
+        self.messageText = messageText
     }
     
     private func setData() {
@@ -163,13 +174,13 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
         
         switch button {
         case yesButton.radioButton:
-            OtherDetailsViewController.buttonName = "Yes"
+            self.buttonName = "Yes"
             print("Yes Button clicked")
             yesButton.radioButton.isSelected = true
             noButton.radioButton.isSelected = false
             quantityTextField.isUserInteractionEnabled = true
         case noButton.radioButton:
-            OtherDetailsViewController.buttonName = "No"
+            self.buttonName = "No"
             print("No button clicked")
             noButton.radioButton.isSelected = true
             yesButton.radioButton.isSelected = false
