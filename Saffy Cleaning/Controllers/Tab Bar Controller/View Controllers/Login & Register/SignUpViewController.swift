@@ -11,6 +11,8 @@ import JGProgressHUD
 class SignUpViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
+    private let firstView = UIView()
+    private let secondView = UIView()
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -50,12 +52,18 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         
         configureViewController()
+        configureFirstView()
+        configureSecondView()
         configureLogoImageView()
         configureLogoTitleLabel()
         configureLogoSubTitleLabel()
         configureTextFieldStackView()
         configureAlreadyUserLabel()
         configureSignUpButton()
+        /*
+        
+        
+         */
         
         navigationController?.isNavigationBarHidden = true
     }
@@ -141,31 +149,55 @@ extension SignUpViewController {
         view.addGestureRecognizer(tap)
     }
     
-    private func configureLogoImageView() {
-        view.addSubview(logoImageView)
+    private func configureFirstView() {
+        view.addSubview(firstView)
+        firstView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 35),
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.heightAnchor.constraint(equalToConstant: 150),
-            logoImageView.widthAnchor.constraint(equalToConstant: 150)
+            firstView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            firstView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            firstView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            firstView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
+        ])
+    }
+    
+    private func configureSecondView() {
+        view.addSubview(secondView)
+        secondView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            secondView.topAnchor.constraint(equalTo: firstView.bottomAnchor, constant: 0),
+            secondView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            secondView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            secondView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6)
+        ])
+    }
+    
+    private func configureLogoImageView() {
+        firstView.addSubview(logoImageView)
+        
+        NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 35),
+            logoImageView.centerXAnchor.constraint(equalTo: firstView.centerXAnchor),
+            logoImageView.heightAnchor.constraint(equalTo: firstView.heightAnchor, multiplier: 0.4),
+            logoImageView.widthAnchor.constraint(equalTo: firstView.widthAnchor, multiplier: 0.4)
         ])
     }
     
     private func configureLogoTitleLabel() {
-        view.addSubview(logoTitleLabel)
+        firstView.addSubview(logoTitleLabel)
         logoTitleLabel.text = "Saffy Cleaning"
         logoTitleLabel.setCharacterSpacing(characterSpacing: 2)
         
         NSLayoutConstraint.activate([
             logoTitleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 5),
             logoTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoTitleLabel.heightAnchor.constraint(equalToConstant: 50)
+            logoTitleLabel.heightAnchor.constraint(equalTo: firstView.heightAnchor, multiplier: 0.2)
         ])
     }
     
     private func configureLogoSubTitleLabel() {
-        view.addSubview(logoSubTitleLabel)
+        firstView.addSubview(logoSubTitleLabel)
         logoSubTitleLabel.numberOfLines = 2
         logoSubTitleLabel.setCharacterSpacing(characterSpacing: 2)
         logoSubTitleLabel.font = .urbanistRegular(size: 25)
@@ -180,7 +212,7 @@ extension SignUpViewController {
     
     private func configureTextFieldStackView() {
         textFieldStackView = SCStackView(arrangedSubviews: [usernameTextField, fullNameTextField, emailTextField, contactNumberTextField, passwordTextField])
-        view.addSubview(textFieldStackView)
+        secondView.addSubview(textFieldStackView)
         
         passwordTextField.isSecureTextEntry = true
         usernameTextField.delegate = self
@@ -201,34 +233,34 @@ extension SignUpViewController {
         ])
         
         NSLayoutConstraint.activate([
-            textFieldStackView.topAnchor.constraint(equalTo: logoSubTitleLabel.bottomAnchor, constant: 60),
-            textFieldStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-            textFieldStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            textFieldStackView.topAnchor.constraint(equalTo: firstView.bottomAnchor, constant: 30),
+            textFieldStackView.leadingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            textFieldStackView.trailingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.trailingAnchor, constant: -15),
         ])
     }
     
     private func configureSignUpButton() {
-        view.addSubview(signUpButton)
+        secondView.addSubview(signUpButton)
         signUpButton.addTarget(self, action: #selector(signUpButtonDidTapped(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            signUpButton.bottomAnchor.constraint(equalTo: alreadyUserLabel.topAnchor, constant: -20),
-            signUpButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            signUpButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            signUpButton.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: 20),
+            signUpButton.leadingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            signUpButton.trailingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             signUpButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     private func configureAlreadyUserLabel() {
-        view.addSubview(alreadyUserLabel)
+        secondView.addSubview(alreadyUserLabel)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(haveAnAccountDidTapped(_:)))
         alreadyUserLabel.addGestureRecognizer(tap)
         
         NSLayoutConstraint.activate([
             alreadyUserLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            alreadyUserLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            alreadyUserLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            alreadyUserLabel.leadingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.leadingAnchor),
+            alreadyUserLabel.trailingAnchor.constraint(equalTo: secondView.safeAreaLayoutGuide.trailingAnchor),
             alreadyUserLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
     }

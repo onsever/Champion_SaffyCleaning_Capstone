@@ -14,7 +14,7 @@ protocol NearbyOrderViewControllerDelegate: AnyObject {
 
 class NearbyOrderViewController: UIViewController {
     
-    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height + 400)
+    private lazy var contentViewSize = CGSize(width: view.frame.width, height: view.frame.height)
         
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -127,6 +127,16 @@ class NearbyOrderViewController: UIViewController {
         
         setUserOrder()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let heightTotal: CGFloat = (nearbyOrderLabel.frame.size.height) + (imageCollectionView.frame.size.height) + (informationTableView.frame.size.height) + (messageToCleanerView.frame.size.height) + (rewardsTableView.frame.size.height) + 200
+                
+        self.contentViewSize = CGSize(width: view.frame.size.width, height: heightTotal)
+        self.scrollView.contentSize = contentViewSize
+        self.contentView.frame.size = contentViewSize
     }
     
     @objc private func takeJobButtonTapped(_ button: UIButton) {
