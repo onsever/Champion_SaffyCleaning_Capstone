@@ -156,6 +156,24 @@ class OrderViewController: UIViewController {
                 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        print("When View Height: \(whenView.frame.size.height)")
+        print("Where View Height: \(whereView.frame.size.height)")
+        print("Other Details Height: \(otherDetailsView.frame.size.height)")
+        
+        let heightTotal: CGFloat = (whereView.frame.size.height) + (whereView.frame.size.height) + (otherDetailsView.frame.size.height) + (tipsView.frame.size.height) + (tableView.frame.size.height) + (paypalButton.frame.size.height) + 110
+        
+        self.contentViewSize = CGSize(width: view.frame.size.width, height: heightTotal)
+        self.scrollView.contentSize = contentViewSize
+        self.contentView.frame.size = contentViewSize
+        
+        print("Table View Height: \(tableView.frame.size.height)")
+        print("Height Total: \(heightTotal)")
+        print("Content View Height: \(contentViewSize.height)")
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         self.tableView.layer.removeAllAnimations()
@@ -164,26 +182,6 @@ class OrderViewController: UIViewController {
             self.updateViewConstraints()
         }
         
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.view.layoutIfNeeded()
-        print("Content size: \(self.scrollView.contentSize) ")
-        print("Container view: \(self.contentView.frame.size.height)")
-        
-        total = 0.0
-        
-        contentView.subviews.forEach {
-            total += $0.frame.size.height
-        }
-        
-        print("Total: \(total)")
-        self.contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + total)
-        print("Content View Height: \(contentViewSize.height)")
-        self.scrollView.contentSize = contentViewSize
-        self.contentView.frame.size = contentViewSize
     }
     
     @objc private func doneButtonTapped(_ button: UIBarButtonItem) {
