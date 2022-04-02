@@ -111,17 +111,23 @@ class LoginViewController: UIViewController {
             guard error == nil else { return }
             guard let authentication = user?.authentication else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken ?? "", accessToken: authentication.accessToken)
+            
             FirebaseAuthService.service.loginWithThirdParties(credential: credential, completionBlock: {
                 [weak self] (success) in
                 if (success) {
+                    
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(MainTabBarController())
                     
                 } else {
                     self?.presentAlert(title: "Login with Google", message: "Login Failed", positiveAction: { action in }, negativeAction: nil)
                 }
+
+
             })
         }
-        spinner.dismiss()
+        DispatchQueue.main.async {
+            self.spinner.dismiss()
+        }
     }
     
     @objc private func continueWithFacebookDidTapped(_ gesture: UITapGestureRecognizer) {
