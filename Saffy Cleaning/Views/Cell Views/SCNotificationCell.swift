@@ -10,7 +10,7 @@ import UIKit
 protocol SCNotificationCellDelgate {
     func syncUserId(id:String, orderId: String)
     func completeOrder(review: Review, revieweeId: String, orderId: String)
-    func reloadData()
+    func updateOrderToComplete(orderId: String)
 }
 
 class SCNotificationCell: UITableViewCell {
@@ -52,7 +52,7 @@ class SCNotificationCell: UITableViewCell {
             case UserOrderType.applied.rawValue:
                 self.delegate?.syncUserId(id: order!.workerId, orderId: order!.id)
             case UserOrderType.matched.rawValue:
-                FirebaseDBService.service.updateOrderStatus(orderId: order!.id, value: ["status": UserOrderType.completed.rawValue])
+                self.delegate?.updateOrderToComplete(orderId: order!.id)
             case UserOrderType.completed.rawValue:
                 let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.worker.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
                 self.delegate?.completeOrder(review: review, revieweeId: order!.workerId, orderId: order!.id)
@@ -64,7 +64,6 @@ class SCNotificationCell: UITableViewCell {
             let review = Review(reviewerId: user!.uid, date: timestamp, info: "", ratingCount: 0, revieweeUserType: UserType.user.rawValue, reviewerImageUrl: user!.profileImageUrl!.absoluteString)
             self.delegate?.completeOrder(review: review, revieweeId: order!.userId, orderId: order!.id)
         }
-        self.delegate?.reloadData()
     }
     
     private func configureImageView() {

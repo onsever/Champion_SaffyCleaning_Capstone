@@ -224,6 +224,7 @@ extension FirebaseDBService {
     public func retrieveOrderHistory(completion: @escaping ([History]) -> Void) {
         let ref = db.child(Constants.userOrders).child(user!.uid)
         var histories = [History]()
+        var tmpOrders = [UserOrder]()
         ref.observeSingleEvent(of: .value, with: { snapshots in
             guard snapshots.exists() else { return }
             for snapshot in snapshots.value as! Dictionary<String, Any>  {
@@ -232,12 +233,14 @@ extension FirebaseDBService {
                     || order["status"] as! String == UserOrderType.completed.rawValue {
                     let address = self.convertDictToAddress(item: order["address"] as! Dictionary<String, Any>)
                     let orderObj = self.convertDictToOrder(dict: order, address: address)
-                    let history = History(address: address.street, date: orderObj.date, status: orderObj.status)
-                    histories.append(history)
+                    tmpOrders.append(orderObj)
                 }
             }
-            let sortedHistories = histories.sorted(by: {($0.date, $0.address, $0.status)>($1.date, $1.address, $0.status)})
-            completion(sortedHistories)
+            for order in tmpOrders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }) {
+                let history = History(address: order.address.street, date: "\(order.date) \(order.time)", status: order.status)
+                histories.append(history)
+            }
+            completion(histories)
         })
     }
     

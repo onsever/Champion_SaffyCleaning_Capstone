@@ -148,7 +148,8 @@ extension NoticeViewController:SCNotificationCellDelgate {
         }
     }
     
-    func reloadData () {
+    func updateOrderToComplete(orderId: String) {
+        FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.completed.rawValue])
         fetchData()
     }
 }
@@ -157,10 +158,12 @@ extension NoticeViewController: WorkerProfileViewControllerDelegate {
     func didTapAcceptButton(_ orderId: String) {
         FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.matched.rawValue])
         createNewChatChannel(orderId: orderId)
+        fetchData()
     }
     
     func didTapRejectedButton(_ orderId: String) {
         FirebaseDBService.service.updateOrderStatus(orderId: orderId, value: ["status": UserOrderType.cancelled.rawValue], isCancellOrder: true)
+        fetchData()
     }
 }
 
@@ -168,5 +171,6 @@ extension NoticeViewController: SCRatingVCDelegate {
     
     func ratingButtonTapped(review: Review, revieweeId: String, orderId: String) {
         FirebaseDBService.service.createReview(review: review, revieweeId: revieweeId, orderId: orderId)
+        fetchData()
     }
 }

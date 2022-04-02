@@ -70,8 +70,15 @@ class LoginViewController: UIViewController {
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
         spinner.show(in: view)
-        guard let username = usernameTextField.text, let password = passwordTextField.text else {return }
-        FirebaseAuthService.service.signIn(email: username, pass: password) {[weak self] (success) in
+        guard usernameTextField.text != "" else {
+            self.spinner.dismiss()
+            return
+        }
+        guard passwordTextField.text != "" else {
+            self.spinner.dismiss()
+            return
+        }
+        FirebaseAuthService.service.signIn(email: usernameTextField.text!, pass: passwordTextField.text!) {[weak self] (success) in
             if (success) {
                 DispatchQueue.main.async {
                     self?.spinner.dismiss()

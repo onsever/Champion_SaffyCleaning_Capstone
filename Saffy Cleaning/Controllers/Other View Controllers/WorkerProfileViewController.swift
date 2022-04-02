@@ -159,6 +159,7 @@ extension WorkerProfileViewController {
         view.addSubview(profileImageView)
         usernameLabel.text = user?.fullName
         view.addSubview(usernameLabel)
+        profileImageView.sd_setImage(with: user?.profileImageUrl)
         
         NSLayoutConstraint.activate([
             profileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),

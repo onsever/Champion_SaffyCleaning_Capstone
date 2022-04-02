@@ -70,7 +70,7 @@ class FirebaseAuthService {
 
     
     
-    public func registerUser(with user: Credentials, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    public func registerUser(with user: Credentials, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         
         let username = user.username
         let fullName = user.fullName
@@ -79,7 +79,7 @@ class FirebaseAuthService {
         let contactNumber = user.contactNumber
         let userType = user.userType
         
-        guard let imageData = user.profileImageUrl.jpegData(compressionQuality: 0.8) else { return }
+        guard let imageData = user.profileImageUrl.jpegData(compressionQuality: 1) else { return }
         
         let fileName = NSUUID().uuidString
         let storageRef = Storage.storage().reference().child("profileImages").child(fileName)
@@ -93,8 +93,7 @@ class FirebaseAuthService {
             
             storageRef.downloadURL { url, error in
                 
-                if let error = error {
-                    print(error.localizedDescription)
+                if let _ = error {
                     return
                 }
                 
@@ -103,6 +102,7 @@ class FirebaseAuthService {
                 Auth.auth().createUser(withEmail: email, password: password) { result, error in
                     
                     if let error = error {
+                        completion(error, nil)
                         print(error.localizedDescription)
                         return
                     }

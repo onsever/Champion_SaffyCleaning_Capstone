@@ -13,6 +13,7 @@ class SignUpViewController: UIViewController {
     private let spinner = JGProgressHUD(style: .dark)
     private let firstView = UIView()
     private let secondView = UIView()
+    private var inputValidation: Bool = false
     
     // MARK: - Properties
     private let logoImageView: UIImageView = {
@@ -72,6 +73,10 @@ class SignUpViewController: UIViewController {
         spinner.show(in: view)
         let user = Credentials(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password, profileImageUrl: UIImage(systemName: "person.circle")!, userType: UserType.user.rawValue)
         FirebaseAuthService.service.registerUser(with: user) { [weak self] error, reference in
+            guard error == nil else {
+                self?.presentAlert(title: "Error", message: error!.localizedDescription, positiveAction: {_ in}, negativeAction: nil)
+                return
+            }
             print("Registeration is successfull!")
             DispatchQueue.main.async {
                 self?.spinner.dismiss()
@@ -83,14 +88,21 @@ class SignUpViewController: UIViewController {
     // MARK: - Selectors
     @objc private func signUpButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
-        guard let username = usernameTextField.text else { return }
-        guard let fullName = fullNameTextField.text else { return }
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        guard let contactNumber = contactNumberTextField.text else { return }
-        sendUserToFirebase(username: username, fullName: fullName, email: email, contactNumber: contactNumber, password: password)
-        
-        
+        guard inputValidation == true else { self.spinner.dismiss(); return }
+        guard usernameTextField.text != "", fullNameTextField.text != "",
+        emailTextField.text != "", passwordTextField.text != "", passwordTextField.text != "",
+        contactNumberTextField.text != ""
+        else {
+            self.spinner.dismiss()
+            return
+        }
+        sendUserToFirebase(
+            username: usernameTextField.text!,
+            fullName: fullNameTextField.text!,
+            email: emailTextField.text!,
+            contactNumber: contactNumberTextField.text!,
+            password: passwordTextField.text!)
+        self.spinner.dismiss()
     }
     
     @objc private func haveAnAccountDidTapped(_ gesture: UITapGestureRecognizer) {
@@ -120,6 +132,7 @@ class SignUpViewController: UIViewController {
             textField.layer.borderColor = UIColor.brandGem.cgColor
             
             textField.tintColor = .brandGem
+            inputValidation = true
         }
         else {
             let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
@@ -132,6 +145,7 @@ class SignUpViewController: UIViewController {
             textField.layer.borderColor = UIColor.brandError.cgColor
             
             textField.tintColor = .brandError
+            inputValidation = false
         }
     }
 
@@ -221,7 +235,7 @@ extension SignUpViewController {
         emailTextField.delegate = self
         contactNumberTextField.delegate = self
         
-        usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         NSLayoutConstraint.activate([
