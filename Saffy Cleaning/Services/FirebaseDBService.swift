@@ -225,7 +225,7 @@ extension FirebaseDBService {
         }
     }
     
-    public func retrieveOrderHistory(completion: @escaping ([History]) -> Void) {
+    public func retrieveUserHistory(completion: @escaping ([History]) -> Void) {
         let ref = db.child(Constants.userOrders).child(user!.uid)
         var histories = [History]()
         var tmpOrders = [UserOrder]()
@@ -241,6 +241,37 @@ extension FirebaseDBService {
                 }
             }
             tmpOrders = SortUserOrder.sort(array: tmpOrders)
+            for order in tmpOrders {
+                let history = History(address: order.address.street, date: "\(order.date) \(order.time)", status: order.status)
+                histories.append(history)
+            }
+            completion(histories)
+        })
+    }
+    
+    public func retrieveWorkerHistory(completion: @escaping ([History]) -> Void) {
+        let ref = db.child(Constants.userOrders)
+        let workerId = Auth.auth().currentUser!.uid
+        var orders = [UserOrder]()
+        var histories = [History]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            guard snapshots.exists() else { return }
+            for snapshot in snapshots.value as! Dictionary<String, Any>  {
+                let allOrders = snapshot.value as! Dictionary<String, Any>
+                for order in allOrders {
+                    let orderDict = order.value as! Dictionary<String, Any>
+                    if orderDict["workerId"] as! String == workerId {
+                        if orderDict["status"] as! String == UserOrderType.cancelled.rawValue
+                            || orderDict["status"] as! String == UserOrderType.completed.rawValue {
+                            let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                            let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                            orders.append(orderObj)
+                        }
+                        
+                    }
+                }
+            }
+            let tmpOrders = SortUserOrder.sort(array: orders)
             for order in tmpOrders {
                 let history = History(address: order.address.street, date: "\(order.date) \(order.time)", status: order.status)
                 histories.append(history)
