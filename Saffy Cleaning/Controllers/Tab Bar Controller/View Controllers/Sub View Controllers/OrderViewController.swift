@@ -558,7 +558,10 @@ extension OrderViewController {
                                           userName: self.currentUser.fullName,
                                           workerName: "",
                                           workerImageURL: "",
-                                          userImageURL: self.currentUser.profileImageUrl?.absoluteString ?? "")
+                                          userImageURL: self.currentUser.profileImageUrl?.absoluteString ?? "",
+                                          createdAt: Date().toString(),
+                                          updatedAt: Date().toString()
+                                        )
                 
                 if let selectedTips = self.selectedTips {
                     userOrder.tips = selectedTips

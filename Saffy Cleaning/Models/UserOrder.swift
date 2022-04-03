@@ -27,6 +27,8 @@ class UserOrder: Codable {
     public var userImageURL: String
     public var isUserCommented: Bool = false
     public var isWorkerCommented: Bool = false
+    public var createdAt: String
+    public var updatedAt: String
     
     init(date: String,
          time: String,
@@ -42,7 +44,9 @@ class UserOrder: Codable {
          userName: String,
          workerName: String,
          workerImageURL: String,
-         userImageURL: String
+         userImageURL: String,
+         createdAt: String,
+         updatedAt: String
     ) {
         self.date = date
         self.time = time
@@ -59,6 +63,7 @@ class UserOrder: Codable {
         self.workerName = workerName
         self.workerImageURL = workerImageURL
         self.userImageURL = userImageURL
-
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 }
