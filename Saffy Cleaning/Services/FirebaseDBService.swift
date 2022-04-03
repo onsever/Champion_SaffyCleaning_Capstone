@@ -78,7 +78,8 @@ extension FirebaseDBService {
             .updateChildValues(["workerId": workerId,
                                 "workerName": workerName,
                                 "workerImageURL": workerImageURL,
-                                "status": UserOrderType.applied.rawValue])
+                                "status": UserOrderType.applied.rawValue,
+                                "updatedAt": Date().toString()])
     }
     
     public func retrieveMatchedOrders(type:String, completion: @escaping ([UserOrder]) -> Void) {
@@ -104,7 +105,7 @@ extension FirebaseDBService {
                         }
                     }
                 }
-                completion(orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }))
+                completion(SortUserOrder.sort(array: orders))
             }else{
                 completion([])
             }
@@ -122,7 +123,7 @@ extension FirebaseDBService {
                         orders.append(order)
                     }
                 }
-                completion(orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }))
+                completion(SortUserOrder.sort(array: orders))
             })
         }
     }
@@ -169,7 +170,7 @@ extension FirebaseDBService {
                         }
                     }
                 }
-                let sortedOrders = openingOrder.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) })
+                let sortedOrders = SortUserOrder.sort(array: openingOrder)
                 completion(sortedOrders)
             }else{
                 completion([])
@@ -189,7 +190,7 @@ extension FirebaseDBService {
                 let order = self.convertDictToOrder(dict: orderDict, address: address)
                 orders.append(order)
             }
-            let sortedOrders = orders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) })
+            let sortedOrders = SortUserOrder.sort(array: orders)
             completion(sortedOrders)
         })
         completion([])
@@ -213,6 +214,9 @@ extension FirebaseDBService {
                 let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
                 let order = self.convertDictToOrder(dict: orderDict, address: address)
                 order.id = UUID().uuidString
+                let date = Date().toString()
+                order.updatedAt = date
+                order.createdAt = date
                 order.status = UserOrderType.pending.rawValue
                 order.workerId = ""
                 let newOrderDict = try! DictionaryEncoder.encode(order)
@@ -221,7 +225,7 @@ extension FirebaseDBService {
         }
     }
     
-    public func retrieveOrderHistory(completion: @escaping ([History]) -> Void) {
+    public func retrieveUserHistory(completion: @escaping ([History]) -> Void) {
         let ref = db.child(Constants.userOrders).child(user!.uid)
         var histories = [History]()
         var tmpOrders = [UserOrder]()
@@ -236,7 +240,39 @@ extension FirebaseDBService {
                     tmpOrders.append(orderObj)
                 }
             }
-            for order in tmpOrders.sorted(by: { (self.converStrToTimeStamp($0.date, $0.time), $0.id) > (self.converStrToTimeStamp($1.date, $1.time), $1.id) }) {
+            tmpOrders = SortUserOrder.sort(array: tmpOrders)
+            for order in tmpOrders {
+                let history = History(address: order.address.street, date: "\(order.date) \(order.time)", status: order.status)
+                histories.append(history)
+            }
+            completion(histories)
+        })
+    }
+    
+    public func retrieveWorkerHistory(completion: @escaping ([History]) -> Void) {
+        let ref = db.child(Constants.userOrders)
+        let workerId = Auth.auth().currentUser!.uid
+        var orders = [UserOrder]()
+        var histories = [History]()
+        ref.observeSingleEvent(of: .value, with: { snapshots in
+            guard snapshots.exists() else { return }
+            for snapshot in snapshots.value as! Dictionary<String, Any>  {
+                let allOrders = snapshot.value as! Dictionary<String, Any>
+                for order in allOrders {
+                    let orderDict = order.value as! Dictionary<String, Any>
+                    if orderDict["workerId"] as! String == workerId {
+                        if orderDict["status"] as! String == UserOrderType.cancelled.rawValue
+                            || orderDict["status"] as! String == UserOrderType.completed.rawValue {
+                            let address = self.convertDictToAddress(item: orderDict["address"] as! Dictionary<String, Any>)
+                            let orderObj = self.convertDictToOrder(dict: orderDict, address: address)
+                            orders.append(orderObj)
+                        }
+                        
+                    }
+                }
+            }
+            let tmpOrders = SortUserOrder.sort(array: orders)
+            for order in tmpOrders {
                 let history = History(address: order.address.street, date: "\(order.date) \(order.time)", status: order.status)
                 histories.append(history)
             }
@@ -264,6 +300,8 @@ extension FirebaseDBService {
         let userName = dict["userName"] as? String ?? ""
         let workerImageURL = dict["workerImageURL"] as? String ?? ""
         let userImageURL = dict["userImageURL"] as? String ?? ""
+        let createdAt = dict["createdAt"] as? String ?? ""
+        let updatedAt = dict["updatedAt"] as? String ?? ""
         let userOrder = UserOrder(date: date,
                                   time: time,
                                   duration: duration,
@@ -278,7 +316,10 @@ extension FirebaseDBService {
                                   userName: userName,
                                   workerName: workerName,
                                   workerImageURL: workerImageURL,
-                                  userImageURL: userImageURL)
+                                  userImageURL: userImageURL,
+                                  createdAt: createdAt,
+                                  updatedAt: updatedAt)
+        
         userOrder.status = status
         userOrder.workerId = workerId
         userOrder.isUserCommented = isUserCommented

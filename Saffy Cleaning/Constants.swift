@@ -16,6 +16,7 @@ struct Constants {
     static let users = "users"
     static let addressImages = "addressImages"
     static let reviews = "reviews"
+    static let dateFormatStyle = "yyyy-MM-dd HH:mm:ss"
 }
 
 

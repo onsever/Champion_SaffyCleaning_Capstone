@@ -186,6 +186,7 @@ extension HomeViewController: MKMapViewDelegate {
 extension HomeViewController: NearbyOrderViewControllerDelegate {
     
     func didDismissNearbyOrder() {
+        self.showCurrentLocation()
         self.dismiss(animated: true, completion: nil)
     }
     

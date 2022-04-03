@@ -39,13 +39,27 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        FirebaseDBService.service.retrieveOrderHistory() { histories in
-            guard histories.isEmpty == false else { return }
-            DispatchQueue.main.async {
-                self.historyArray = histories
-                self.tableView.reloadData()
+        FirebaseDBService.service.retrieveUser { [weak self] user in
+            if let user = user {
+                if user.userType == UserType.user.rawValue {
+                    FirebaseDBService.service.retrieveUserHistory() { [weak self] histories in
+                        guard histories.isEmpty == false else { return }
+                        DispatchQueue.main.async {
+                            self?.historyArray = histories
+                            self?.tableView.reloadData()
+                        }
+                    }
+                }
+                else {
+                    FirebaseDBService.service.retrieveWorkerHistory() { [weak self] histories in
+                        guard histories.isEmpty == false else { return }
+                        DispatchQueue.main.async {
+                            self?.historyArray = histories
+                            self?.tableView.reloadData()
+                        }
+                    }
+                }
             }
-            
         }
     }
 
