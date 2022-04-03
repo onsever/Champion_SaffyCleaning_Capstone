@@ -110,7 +110,7 @@ class SignUpViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
+    @objc private func emailFieldDidChange(_ textField : UITextField) {
         
         if textField.text!.count == 0 {
             textField.rightView = nil
@@ -120,8 +120,9 @@ class SignUpViewController: UIViewController {
         }
         
         textField.rightViewMode = .always
-        
-        if textField.text!.count > 5 {
+        let condition  = ValidateHelper.isValidEmail(textField.text!)
+        inputValidation = condition
+        if condition {
             let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
             let image = UIImage(systemName: "checkmark")
             imageView.image = image
@@ -132,7 +133,6 @@ class SignUpViewController: UIViewController {
             textField.layer.borderColor = UIColor.brandGem.cgColor
             
             textField.tintColor = .brandGem
-            inputValidation = true
         }
         else {
             let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
@@ -145,9 +145,85 @@ class SignUpViewController: UIViewController {
             textField.layer.borderColor = UIColor.brandError.cgColor
             
             textField.tintColor = .brandError
-            inputValidation = false
         }
     }
+    
+    @objc private func passwordFieldDidChange(_ textField: UITextField) {
+        
+        if textField.text!.count == 0 {
+            textField.rightView = nil
+            textField.layer.borderColor = UIColor.brandGem.cgColor
+            textField.tintColor = .brandGem
+            return
+        }
+        
+        textField.rightViewMode = .always
+        let condition =  textField.text!.count > 5
+        inputValidation = condition
+        if condition {
+            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            let image = UIImage(systemName: "checkmark")
+            imageView.image = image
+            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageContainerView.addSubview(imageView)
+            textField.rightView = imageContainerView
+            
+            textField.layer.borderColor = UIColor.brandGem.cgColor
+            
+            textField.tintColor = .brandGem
+        }
+        else {
+            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            let image = UIImage(systemName: "xmark")
+            imageView.image = image
+            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageContainerView.addSubview(imageView)
+            textField.rightView = imageContainerView
+            
+            textField.layer.borderColor = UIColor.brandError.cgColor
+            
+            textField.tintColor = .brandError
+        }
+    }
+    
+//    @objc private func textFieldDidChange(_ textField: UITextField) {
+//
+//        if textField.text!.count == 0 {
+//            textField.rightView = nil
+//            textField.layer.borderColor = UIColor.brandGem.cgColor
+//            textField.tintColor = .brandGem
+//            return
+//        }
+//
+//        textField.rightViewMode = .always
+//
+//        if textField.text!.count > 5 {
+//            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+//            let image = UIImage(systemName: "checkmark")
+//            imageView.image = image
+//            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//            imageContainerView.addSubview(imageView)
+//            textField.rightView = imageContainerView
+//
+//            textField.layer.borderColor = UIColor.brandGem.cgColor
+//
+//            textField.tintColor = .brandGem
+//            inputValidation = true
+//        }
+//        else {
+//            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+//            let image = UIImage(systemName: "xmark")
+//            imageView.image = image
+//            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//            imageContainerView.addSubview(imageView)
+//            textField.rightView = imageContainerView
+//
+//            textField.layer.borderColor = UIColor.brandError.cgColor
+//
+//            textField.tintColor = .brandError
+//            inputValidation = false
+//        }
+//    }
 
 
 }
@@ -235,8 +311,8 @@ extension SignUpViewController {
         emailTextField.delegate = self
         contactNumberTextField.delegate = self
         
-        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(emailFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(passwordFieldDidChange(_:)), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             usernameTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),

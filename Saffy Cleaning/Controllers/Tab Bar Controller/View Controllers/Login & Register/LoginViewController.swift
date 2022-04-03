@@ -43,6 +43,8 @@ class LoginViewController: UIViewController {
     private var signInStackView: SCStackView!
     
     private var verticalStackView: SCStackView!
+    
+    private var isValidate = false
 
     // MARK: - View LifeCycle
     override func viewDidLoad() {
@@ -70,6 +72,10 @@ class LoginViewController: UIViewController {
     @objc private func loginButtonDidTapped(_ button: UIButton) {
         button.animateWithSpring()
         spinner.show(in: view)
+        if (!isValidate) {
+            self.spinner.dismiss()
+            return
+        }
         guard usernameTextField.text != "" else {
             self.spinner.dismiss()
             return
@@ -164,7 +170,9 @@ class LoginViewController: UIViewController {
         self.presentAlert(title: "Reset Password", message: "Please enter the email that used for registration. A reset password email will be sent in few minutes.", positiveAction: {_ in}, negativeAction: nil, isForgetPw: true)
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
+
+    
+    @objc private func emailFieldDidChange(_ textField : UITextField) {
         
         if textField.text!.count == 0 {
             textField.rightView = nil
@@ -174,8 +182,47 @@ class LoginViewController: UIViewController {
         }
         
         textField.rightViewMode = .always
+        let condition  = ValidateHelper.isValidEmail(textField.text!)
+        isValidate = condition
+        if condition {
+            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            let image = UIImage(systemName: "checkmark")
+            imageView.image = image
+            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageContainerView.addSubview(imageView)
+            textField.rightView = imageContainerView
+            
+            textField.layer.borderColor = UIColor.brandGem.cgColor
+            
+            textField.tintColor = .brandGem
+        }
+        else {
+            let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
+            let image = UIImage(systemName: "xmark")
+            imageView.image = image
+            let imageContainerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageContainerView.addSubview(imageView)
+            textField.rightView = imageContainerView
+            
+            textField.layer.borderColor = UIColor.brandError.cgColor
+            
+            textField.tintColor = .brandError
+        }
+    }
+    
+    @objc private func passwordFieldDidChange(_ textField: UITextField) {
         
-        if textField.text!.count > 5 {
+        if textField.text!.count == 0 {
+            textField.rightView = nil
+            textField.layer.borderColor = UIColor.brandGem.cgColor
+            textField.tintColor = .brandGem
+            return
+        }
+        
+        textField.rightViewMode = .always
+        let condition =  textField.text!.count > 5
+        isValidate = condition
+        if condition {
             let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
             let image = UIImage(systemName: "checkmark")
             imageView.image = image
@@ -294,8 +341,8 @@ extension LoginViewController {
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         
-        usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(emailFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(passwordFieldDidChange(_:)), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             usernameTextField.widthAnchor.constraint(equalTo: textFieldStackView.widthAnchor),
