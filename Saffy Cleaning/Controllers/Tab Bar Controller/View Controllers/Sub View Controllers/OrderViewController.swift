@@ -63,9 +63,7 @@ class OrderViewController: UIViewController {
     private var selectedQuantityText: String? = nil
     private var selectedMessageText: String? = nil
     private var selectedButtonName: String? = nil
-    
-    private var total: CGFloat = 0.0
-    
+        
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.backgroundColor = .white
@@ -100,6 +98,7 @@ class OrderViewController: UIViewController {
     
     private let paypalButton = PayPalButton(label: .checkout)
     private let confirmationPopUp = SCConfirmationPopUp()
+    private let paymentInformationLabel = SCSubTitleLabel(text: "", isRequired: false, textColor: .brandDark)
     
     private var orderDictionary = [String: Order]()
 
@@ -117,6 +116,7 @@ class OrderViewController: UIViewController {
         configureOtherDetailsView()
         configureTipsView()
         configureTableView()
+        configurePaymentLabel()
         configurePayPalButton()
         configurePayPalCheckout()
         
@@ -175,19 +175,12 @@ class OrderViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        print("When View Height: \(whenView.frame.size.height)")
-        print("Where View Height: \(whereView.frame.size.height)")
-        print("Other Details Height: \(otherDetailsView.frame.size.height)")
-        
-        let heightTotal: CGFloat = (whereView.frame.size.height) + (whereView.frame.size.height) + (otherDetailsView.frame.size.height) + (tipsView.frame.size.height) + (tableView.frame.size.height) + (paypalButton.frame.size.height) + 110
+        let heightTotal: CGFloat = (whenView.frame.size.height) + (whereView.frame.size.height) + (otherDetailsView.frame.size.height) + (tipsView.frame.size.height) + (tableView.frame.size.height) + (paypalButton.frame.size.height) + (paymentInformationLabel.frame.size.height) + 200
         
         self.contentViewSize = CGSize(width: view.frame.size.width, height: heightTotal)
         self.scrollView.contentSize = contentViewSize
         self.contentView.frame.size = contentViewSize
         
-        print("Table View Height: \(tableView.frame.size.height)")
-        print("Height Total: \(heightTotal)")
-        print("Content View Height: \(contentViewSize.height)")
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -230,7 +223,6 @@ extension OrderViewController: WhenViewDelegate, SCWhenViewDelegate {
     }
     
     func didTapEditButtonWhenView(_ button: UIButton) {
-        print("Edit button clicked")
         
         let whenVC = WhenViewController()
         
@@ -385,6 +377,8 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
         
         view.setData(cost: totalCost)
         
+        configurePaymentLabel()
+        
         return view
         
     }
@@ -398,7 +392,6 @@ extension OrderViewController: UITableViewDelegate, UITableViewDataSource {
 extension OrderViewController: SCConfirmationPopUpDelegate {
     
     func didTapConfirmationButton(_ button: UIButton) {
-        print("Order confirmation button pressed.")
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -490,11 +483,31 @@ extension OrderViewController {
         tableHeightConstraint.isActive = true
     }
     
+    private func configurePaymentLabel() {
+        contentView.addSubview(paymentInformationLabel)
+        paymentInformationLabel.font = UIFont.urbanistRegular(size: 16)!
+        let attributedText = NSMutableAttributedString(string: "Your PayPal account will be temporarily authorized for ")
+        attributedText.append(NSAttributedString(string: "$\(String(format: "%.2f", resultTotalCost))", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistBold(size: 16)!]))
+        attributedText.append(NSAttributedString(string: ". Once the order is "))
+        attributedText.append(NSAttributedString(string: "completed", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGreen, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.systemGreen]))
+        attributedText.append(NSAttributedString(string: ", it will automatically transfer the fund to the worker, and if order is "))
+        attributedText.append(NSAttributedString(string: "cancelled", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandError, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue, NSAttributedString.Key.underlineColor: UIColor.brandError]))
+        attributedText.append(NSAttributedString(string: ", the fund will send to your PayPal account."))
+        paymentInformationLabel.attributedText = attributedText
+        
+        NSLayoutConstraint.activate([
+            paymentInformationLabel.topAnchor.constraint(equalTo: self.tableView.bottomAnchor, constant: 10),
+            paymentInformationLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            paymentInformationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+        ])
+        
+    }
+    
     private func configurePayPalButton() {
         contentView.addSubview(paypalButton)
         paypalButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            paypalButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 10),
+            paypalButton.topAnchor.constraint(equalTo: paymentInformationLabel.bottomAnchor, constant: 10),
             paypalButton.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             paypalButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             paypalButton.heightAnchor.constraint(equalToConstant: 50)
@@ -528,7 +541,7 @@ extension OrderViewController {
                 
                 if error != nil {
                     self.presentAlert(title: "Error!", message: "There is an error with the payment. Please try again!", positiveAction: { action in
-                        print("Positive button tapped.")
+                        
                     }, negativeAction: nil)
                     
                     return

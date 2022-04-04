@@ -114,30 +114,3 @@ class SCPolicyView: UIView {
         delegate?.didTapTermsAndConditions()
     }
 }
-
-/*
- let attributedText = NSMutableAttributedString(string: "Accept the ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
- let policyText = NSAttributedString(string: "Privacy Policy", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
- let andText = NSAttributedString(string: " and ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandDark, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
- let termsText = NSAttributedString(string: "Terms & Conditions", attributes: [NSAttributedString.Key.foregroundColor: UIColor.brandGem, NSAttributedString.Key.font: UIFont.urbanistRegular(size: 18)!])
- 
- 
- attributedText.append(policyText)
- attributedText.append(andText)
- attributedText.append(termsText)
- */
-
-
-/*
- let policyRange = (infoLabel.text! as NSString).range(of: "Privacy Policy")
- print(policyRange.length)
- let termsRange = (infoLabel.text! as NSString).range(of: "Terms & Conditions.")
- 
- if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: policyRange) {
-     delegate?.didTapPolicy()
- } else if gesture.didTapAttributedTextInLabel(label: infoLabel, inRange: termsRange) {
-     delegate?.didTapTermsAndConditions()
- } else {
-     print("Tapped none")
- }
- */

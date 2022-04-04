@@ -195,7 +195,6 @@ extension NearbyOrderViewController: SCTakeJobPopUpDelegate {
                                              workerId: currentUser.uid,
                                              workerName: currentUser.fullName,
                                              workerImageURL: currentUser.profileImageUrl?.absoluteString ?? "")
-        print("Confirmation button tapped!")
         delegate?.didDismissNearbyOrder()
     }
     

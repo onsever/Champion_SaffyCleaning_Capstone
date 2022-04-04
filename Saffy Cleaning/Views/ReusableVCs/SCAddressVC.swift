@@ -108,7 +108,6 @@ class SCAddressVC: UIViewController {
     }
     
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
-        print("Add a new address tapped.")
         
         let vc = AddressViewController()
         
@@ -161,7 +160,6 @@ extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
         self.addressCollectionView.reloadData()
         checkArrayCount()
         self.pageControl.numberOfPages = addressArray.count + 1
-        print(address.street)
     }
     
     
@@ -170,7 +168,6 @@ extension SCAddressVC: AddressVCDelegate, AddressVCDataSource {
 extension SCAddressVC: SCAddressCellDelegate {
     
     func didTapEditButton(_ button: UIButton) {
-        print("Edit button tapped.")
         
         let vc = AddressViewController()
         
@@ -241,7 +238,6 @@ extension SCAddressVC {
     private func checkArrayCount() {
         
         if addressArray.count == 0 || addressArray.isEmpty {
-            print(addressArray.count)
             configureEmptyView()
         }
         else {

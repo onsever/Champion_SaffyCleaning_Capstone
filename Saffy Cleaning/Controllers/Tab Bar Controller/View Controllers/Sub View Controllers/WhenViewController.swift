@@ -68,8 +68,6 @@ class WhenViewController: UIViewController {
     }
     
     @objc private func okButtonTapped(_ button: UIBarButtonItem) {
-        print(formatDate(date: datePicker.date))
-        print(formatTime(date: datePicker.date))
         
         if durationView.getTextField().text == "" {
             self.presentAlert(title: "Empty Field", message: "Please choose a duration.", positiveAction: { action in

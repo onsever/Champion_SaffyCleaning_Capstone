@@ -44,7 +44,6 @@ class ProfileViewController: UIViewController {
     
     public var user: User? {
         didSet {
-            print("User data is set.")
             switchUserVC = SCSwitchUserPopUp(user: user!)
             switchUserVC?.delegate = self
         }

@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func leftBar () {
-        print("pressing")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +120,6 @@ class HomeViewController: UIViewController {
     
     
     @objc private func orderButtonDidTap(_ button: UIButton) {
-        print("Order button tapped.")
         
         let orderVC = OrderViewController(currentUser: currentUser)
         
@@ -128,7 +127,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func addressButtonDidTap(_ button: UIButton) {
-        print("Address button tapped.")
         
         let addressVC = SCAddressVC(height: 380)
         

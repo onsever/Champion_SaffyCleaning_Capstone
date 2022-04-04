@@ -175,13 +175,11 @@ extension OtherDetailsViewController: SCRadioButtonViewDelegate {
         switch button {
         case yesButton.radioButton:
             self.buttonName = "Yes"
-            print("Yes Button clicked")
             yesButton.radioButton.isSelected = true
             noButton.radioButton.isSelected = false
             quantityTextField.isUserInteractionEnabled = true
         case noButton.radioButton:
             self.buttonName = "No"
-            print("No button clicked")
             noButton.radioButton.isSelected = true
             yesButton.radioButton.isSelected = false
             quantityTextField.isUserInteractionEnabled = false
