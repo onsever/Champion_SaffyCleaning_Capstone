@@ -62,6 +62,11 @@ class WorkerProfileViewController: UIViewController {
         setData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setData()
+    }
+    
     @objc private func acceptButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
         delegate?.didTapAcceptButton(orderID!)
