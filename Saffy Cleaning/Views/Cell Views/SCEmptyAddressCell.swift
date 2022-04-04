@@ -39,7 +39,6 @@ class SCEmptyAddressCell: UICollectionViewCell {
     }
     
     @objc private func addNewAddress(_ gesture: UITapGestureRecognizer) {
-        print("Add new address empty view tapped.")
         delegate?.addNewAddressTapped(gesture)
     }
     

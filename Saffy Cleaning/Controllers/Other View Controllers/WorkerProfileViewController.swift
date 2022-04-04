@@ -47,7 +47,7 @@ class WorkerProfileViewController: UIViewController {
     private var reviewArray = [Review]()
     public var user: User? {
         didSet {
-            print("User data is set.")
+            
         }
     }
 
@@ -65,14 +65,12 @@ class WorkerProfileViewController: UIViewController {
     @objc private func acceptButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
         delegate?.didTapAcceptButton(orderID!)
-        print("Accepted")
         self.dismiss(animated: true)
     }
     
     @objc private func rejectedButtonTapped(_ button: UIButton) {
         button.animateWithSpring()
         delegate?.didTapRejectedButton(orderID!)
-        print("Rejected")
         self.dismiss(animated: true)
     }
     

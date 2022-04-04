@@ -204,7 +204,6 @@ class AddressViewController: UIViewController {
                 textField.layer.borderColor = UIColor.brandGem.cgColor
                 
                 textField.tintColor = .brandGem
-                print("VALID POSTALCODE")
             }
             
             else if ((response.mapItems.first?.placemark.postalCode) != nil) != self?.isPostalCodeValid
@@ -219,8 +218,6 @@ class AddressViewController: UIViewController {
                 textField.layer.borderColor = UIColor.brandError.cgColor
                 
                 textField.tintColor = .brandError
-                print("Invalid Postalcode")
-                
             }
         }
         
@@ -368,7 +365,6 @@ extension AddressViewController: PHPickerViewControllerDelegate {
         }
         
         group.notify(queue: .main) {
-            print(self.imageArray.count)
             self.imageCollectionView.reloadData()
         }
         

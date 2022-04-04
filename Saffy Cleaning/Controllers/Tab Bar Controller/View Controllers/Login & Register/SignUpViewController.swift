@@ -106,7 +106,6 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func haveAnAccountDidTapped(_ gesture: UITapGestureRecognizer) {
-        print("Have an account label tapped on.")
         navigationController?.popViewController(animated: true)
     }
     
