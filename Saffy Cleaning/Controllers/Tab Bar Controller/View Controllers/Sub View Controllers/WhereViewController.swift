@@ -73,7 +73,7 @@ extension WhereViewController: SCAddressVCDelegate {
         self.mapView.removeAnnotations(allAnnotations)
         
         let addressLocation = MKPointAnnotation()
-        addressLocation.title = "Testing"
+//        addressLocation.title = "Testing"
         addressLocation.coordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         mapView.addAnnotation(addressLocation)
         mapView.layoutMargins = UIEdgeInsets(top: 25, left: 25, bottom: 25, right: 25)
