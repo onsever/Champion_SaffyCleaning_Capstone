@@ -70,8 +70,8 @@ class ChatListViewController : UIViewController {
    
         FirebaseDBService.service.retrieveMatchedOrders(type: currentUser.userType) { [weak self] orders in
             var _chatArray: [Chat] = []
+            dump(orders)
             orders.forEach { order in
-                
                 let isWorker = self?.currentUser.userType == UserType.worker.rawValue ? true : false
                 let userName = isWorker ? order.userName : order.workerName
                 let icon = isWorker ? URL(string: order.userImageURL) : URL(string: order.workerImageURL)
@@ -107,6 +107,10 @@ class ChatListViewController : UIViewController {
         setData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setData()
+    }
 
     
 //    // MARK: Add new channel -> after the booking is matched
