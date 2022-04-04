@@ -183,6 +183,7 @@ extension FirebaseDBService {
         var orders = [UserOrder]()
         
         ref.observeSingleEvent(of: .value, with: { snapshot in
+            print(snapshot)
             guard snapshot.exists() else { return }
             for order in snapshot.value as! Dictionary<String, Any>  {
                 let orderDict = order.value as! Dictionary<String, Any>
