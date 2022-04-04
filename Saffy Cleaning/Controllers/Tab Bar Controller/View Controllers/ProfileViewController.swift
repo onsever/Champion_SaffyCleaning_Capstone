@@ -241,7 +241,7 @@ extension ProfileViewController {
         horizontalStackView.addBottomBorder(with: .brandGem, andWidth: 1)
         
         hiringView.infoLabel.text = "0"
-        hiringView.infoValue.text = "Hiring"
+        hiringView.infoValue.text = user?.userType == "user" ? "Hiring": "Services"
         
         averageScoreView.infoLabel.text = "0"
         averageScoreView.infoValue.text = "Average"
