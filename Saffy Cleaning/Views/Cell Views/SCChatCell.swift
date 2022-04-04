@@ -11,10 +11,9 @@ import SDWebImage
 class SCChatCell: UITableViewCell {
     
     public static let identifier = "ChatCell"
-    private let userImageView = SCProfileImageView(cornerRadius: 75 / 2)
+    private let userImageView = SCProfileImageView(cornerRadius: 60 / 2)
     private let userLabel = SCMainLabel(fontSize: 14, textColor: .brandDark)
     private let dateLabel = SCCompletionLabel(title: "Title", titleColor: .brandDark, fontSize: 12)
-    private let chatLabel = SCMainLabel(fontSize: 13, textColor: .brandDark)
     private let completionLabel = SCCorneredCompletionLabel(cornerRadius: 8)
     private var horizontalStackView: SCStackView!
     
@@ -23,7 +22,6 @@ class SCChatCell: UITableViewCell {
         
         configureImageView()
         configureUserLabel()
-        configureChatLabel()
         configureHorizontalStackView()
     }
     
@@ -32,41 +30,30 @@ class SCChatCell: UITableViewCell {
     }
     
     private func configureImageView() {
-        self.addSubview(userImageView)
+        contentView.addSubview(userImageView)
         
         NSLayoutConstraint.activate([
-            userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
-            userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            userImageView.widthAnchor.constraint(equalToConstant: 75),
-            userImageView.heightAnchor.constraint(equalToConstant: 75)
+            userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            userImageView.widthAnchor.constraint(equalToConstant: 60),
+            userImageView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
     private func configureUserLabel() {
-        self.addSubview(userLabel)
+        contentView.addSubview(userLabel)
         userLabel.font = .urbanistBold(size: 16)
         
         NSLayoutConstraint.activate([
-            userLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
+            userLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             userLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
-            userLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
-        ])
-    }
-    
-    private func configureChatLabel() {
-        self.addSubview(chatLabel)
-        
-        NSLayoutConstraint.activate([
-            chatLabel.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 10),
-            chatLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
-            chatLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            chatLabel.heightAnchor.constraint(equalToConstant: 25)
+            userLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
     }
     
     private func configureHorizontalStackView() {
         horizontalStackView = SCStackView(arrangedSubviews: [completionLabel, dateLabel])
-        self.addSubview(horizontalStackView)
+        contentView.addSubview(horizontalStackView)
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = 10
         horizontalStackView.distribution = .equalSpacing
@@ -76,16 +63,16 @@ class SCChatCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            horizontalStackView.topAnchor.constraint(equalTo: chatLabel.bottomAnchor, constant: 15),
+            horizontalStackView.topAnchor.constraint(equalTo: userLabel.bottomAnchor, constant: 15),
             horizontalStackView.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15),
-            horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            horizontalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            horizontalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
     
     public func setData(userImage: URL, userName: String, chatMessage: String, completionLabel: Completion, dateLabel: String) {
         self.userImageView.sd_setImage(with: userImage)
         self.userLabel.text = userName
-        self.chatLabel.text = chatMessage
         self.dateLabel.text = dateLabel
 
         switch completionLabel {
