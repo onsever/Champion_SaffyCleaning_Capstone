@@ -66,7 +66,7 @@ class NearbyOrderViewController: UIViewController {
         return tableView
     }()
     
-    private let messageToCleanerView = SCVerticalOrderInfoView(backgroundColor: .white, height: 40)
+    private let messageToCleanerView = SCVerticalOrderInfoView(backgroundColor: .white, height: 30)
     
     private lazy var rewardsTableView: UITableView = {
         let tableView = UITableView()
@@ -231,7 +231,7 @@ extension NearbyOrderViewController {
         contentView.addSubview(informationTableView)
         
         NSLayoutConstraint.activate([
-            informationTableView.topAnchor.constraint(equalTo: imageCollectionView.bottomAnchor, constant: 10),
+            informationTableView.topAnchor.constraint(equalTo: imageCollectionView.bottomAnchor, constant: 0),
             informationTableView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             informationTableView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
@@ -246,7 +246,7 @@ extension NearbyOrderViewController {
         messageToCleanerView.infoLabel.text = "Message to cleaner"
         
         NSLayoutConstraint.activate([
-            messageToCleanerView.topAnchor.constraint(equalTo: informationTableView.bottomAnchor, constant: 10),
+            messageToCleanerView.topAnchor.constraint(equalTo: informationTableView.bottomAnchor, constant: 0),
             messageToCleanerView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             messageToCleanerView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             messageToCleanerView.heightAnchor.constraint(equalToConstant: 80)
@@ -257,7 +257,7 @@ extension NearbyOrderViewController {
         contentView.addSubview(rewardsTableView)
         
         NSLayoutConstraint.activate([
-            rewardsTableView.topAnchor.constraint(equalTo: messageToCleanerView.bottomAnchor, constant: 10),
+            rewardsTableView.topAnchor.constraint(equalTo: messageToCleanerView.bottomAnchor, constant: 0),
             rewardsTableView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             rewardsTableView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
@@ -376,6 +376,14 @@ extension NearbyOrderViewController: UITableViewDelegate, UITableViewDataSource 
             return nil
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if tableView == informationTableView {
+            return 0
+        }
+        
+        return 20
     }
     
 }
