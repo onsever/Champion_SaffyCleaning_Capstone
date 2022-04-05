@@ -7,7 +7,7 @@ Onurcan Sever -> Front-end & Architecture<br>
 Rohankumar Pankajbhai -> Map & Testing<br>
 Ravi Radadiya -> Presentation<br>
 
-Figma Layout Link: https://www.figma.com/file/if9OOk8aU5lq7jWY154P5d/Cleaner-wireframe-(Share)?node-id=9%3A666
+Figma Layout Link: https://www.figma.com/file/if9OOk8aU5lq7jWY154P5d/Cleaner-wireframe-(Share)?node-id=9%3A666<br>
 Application Demo Link: https://www.youtube.com/watch?v=Sd-HP0TPzEc
 
 **Future Scope Bug Fixes**
