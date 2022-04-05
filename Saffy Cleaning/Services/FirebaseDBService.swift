@@ -220,6 +220,8 @@ extension FirebaseDBService {
                 order.createdAt = date
                 order.status = UserOrderType.pending.rawValue
                 order.workerId = ""
+                order.workerImageURL = ""
+                order.workerName = ""
                 let newOrderDict = try! DictionaryEncoder.encode(order)
                 ref.child(order.id).setValue(newOrderDict)
             })
