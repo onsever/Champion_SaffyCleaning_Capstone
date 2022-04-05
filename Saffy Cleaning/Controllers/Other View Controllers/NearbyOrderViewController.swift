@@ -177,7 +177,7 @@ class NearbyOrderViewController: UIViewController {
         self.informationTableView.layer.removeAllAnimations()
         infoTableHeightConstraint.constant = self.informationTableView.contentSize.height
         self.rewardsTableView.layer.removeAllAnimations()
-        rewardsTableHeightConstraint.constant = self.rewardsTableView.contentSize.height
+        rewardsTableHeightConstraint.constant = userOrder.selectedItems.count == 0 ? 0: self.rewardsTableView.contentSize.height
         UIView.animate(withDuration: 0.5) {
             self.updateViewConstraints()
         }
