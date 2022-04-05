@@ -15,3 +15,5 @@ Application Demo Link: https://www.youtube.com/watch?v=Sd-HP0TPzEc
 * Sometimes clicking on the adding photo icon in the ChatViewController crashes the application.
 * Reviews are not loading real-time. (Rebuilding the application fixes but needs to be solved)
 * Fetching address photos from Firebase is working slowly, needs to be optimized.
+
+<a href="https://ibb.co/s9x8ZNF"><img src="https://i.ibb.co/b5wckCr/Jira.png" alt="Jira" border="0" /></a>
