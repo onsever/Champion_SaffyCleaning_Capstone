@@ -171,6 +171,7 @@ extension HomeViewController: MKMapViewDelegate {
             if let sheet = nearbyOrderVC.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.prefersGrabberVisible = true
+                sheet.delegate = self
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = true
             }
             guard let userOrder = userOrder else { return }
@@ -216,6 +217,11 @@ extension HomeViewController: SCAddressVCDelegate {
     
 }
 
+extension HomeViewController: UISheetPresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.showCurrentLocation()
+    }
+}
 
 extension HomeViewController {
     
