@@ -45,7 +45,6 @@ class HomeViewController: UIViewController {
     }
     
     private func renderIcon () {
-
         
         let bView = UIView()
         bView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
@@ -82,6 +81,11 @@ class HomeViewController: UIViewController {
     private func renderView() {
         FirebaseDBService.service.retrieveUser { [weak self] user in
             guard let self = self else { return }
+            
+            if user != nil {
+                self.currentUser = user!
+            }
+                
             if let currentUser = user {
                 if currentUser.userType == UserType.user.rawValue {
                     DispatchQueue.main.async {

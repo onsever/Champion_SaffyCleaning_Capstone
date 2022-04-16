@@ -123,7 +123,6 @@ class ProfileViewController: UIViewController {
         FirebaseDBService.service.retrieveUser { user in
             guard let user = user else { return }
             FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
-                dump(reviews)
                 self?.reviewArray = reviews
                 self?.numbOfHire = reviews.count
 
