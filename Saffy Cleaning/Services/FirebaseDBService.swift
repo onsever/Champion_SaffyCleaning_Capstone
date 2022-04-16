@@ -25,6 +25,31 @@ extension FirebaseDBService {
 
 // MARK: Review Mgmt {
 extension FirebaseDBService {
+    public func retrieveWorkerReviews(user: User, completion: @escaping([Review]) -> Void) {
+        let isUser = false
+        let ref = db.child(Constants.reviews).child(user.uid)
+        var reviews = [Review]()
+        ref.observeSingleEvent(of: .value) { snapshot in
+            guard snapshot.exists() else { return }
+            for item in snapshot.value as! Dictionary<String, Any> {
+                let itemDict = item.value as! Dictionary<String, Any>
+                let date = itemDict["date"] ?? ""
+                let reviewerId = itemDict["reviewerId"] ?? ""
+                let reviewerImageUrl = itemDict["reviewerImageUrl"] ?? ""
+                let info = itemDict["info"] ?? ""
+                let ratingCount = itemDict["ratingCount"] ?? 0
+                let revieweeUserType = itemDict["revieweeUserType"] ?? UserType.user.rawValue
+                let newReview = Review(reviewerId: reviewerId as! String, date: date as! String, info: info as! String, ratingCount: ratingCount as! Int, revieweeUserType: revieweeUserType as! String, reviewerImageUrl: reviewerImageUrl as! String)
+                if(isUser && revieweeUserType as! String == UserType.worker.rawValue) {
+                    reviews.append(newReview)
+                } else if (!isUser && revieweeUserType as! String == UserType.user.rawValue) {
+                    reviews.append(newReview)
+                }
+            }
+            completion(reviews)
+        }
+        completion([])
+    }
     public func retrieveReviews(type: String, completion: @escaping([Review]) -> Void) {
         let isUser = type == UserType.user.rawValue ? true : false
         let ref = db.child(Constants.reviews).child(user!.uid)
@@ -183,7 +208,6 @@ extension FirebaseDBService {
         var orders = [UserOrder]()
         
         ref.observeSingleEvent(of: .value, with: { snapshot in
-            print(snapshot)
             guard snapshot.exists() else { return }
             for order in snapshot.value as! Dictionary<String, Any>  {
                 let orderDict = order.value as! Dictionary<String, Any>

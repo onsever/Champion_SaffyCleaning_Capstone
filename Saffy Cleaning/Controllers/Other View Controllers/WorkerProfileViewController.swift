@@ -92,9 +92,8 @@ class WorkerProfileViewController: UIViewController {
     
     
     private func setData() {
-        FirebaseDBService.service.retrieveUser { user in
             guard let user = user else { return }
-            FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
+            FirebaseDBService.service.retrieveWorkerReviews(user: user) { [weak self] reviews in
                 self?.reviewArray = reviews
                 self?.numbOfHire = reviews.count
                 
@@ -104,7 +103,6 @@ class WorkerProfileViewController: UIViewController {
                 }
             }
         }
-    }
 }
 
 extension WorkerProfileViewController: UITableViewDelegate, UITableViewDataSource {
