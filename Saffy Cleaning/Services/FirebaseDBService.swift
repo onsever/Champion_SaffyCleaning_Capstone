@@ -40,9 +40,9 @@ extension FirebaseDBService {
                 let ratingCount = itemDict["ratingCount"] ?? 0
                 let revieweeUserType = itemDict["revieweeUserType"] ?? UserType.user.rawValue
                 let newReview = Review(reviewerId: reviewerId as! String, date: date as! String, info: info as! String, ratingCount: ratingCount as! Int, revieweeUserType: revieweeUserType as! String, reviewerImageUrl: reviewerImageUrl as! String)
-                if(isUser && revieweeUserType as! String == UserType.user.rawValue) {
+                if(isUser && revieweeUserType as! String == UserType.worker.rawValue) {
                     reviews.append(newReview)
-                } else if (!isUser && revieweeUserType as! String == UserType.worker.rawValue) {
+                } else if (!isUser && revieweeUserType as! String == UserType.user.rawValue) {
                     reviews.append(newReview)
                 }
             }

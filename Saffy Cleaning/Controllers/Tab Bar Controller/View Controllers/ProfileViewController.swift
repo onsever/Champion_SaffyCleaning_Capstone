@@ -57,12 +57,11 @@ class ProfileViewController: UIViewController {
         configureImageViewAndLabel()
         configureHorizontalStackView()
         configureTableView()
-        setData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setData()
         FirebaseDBService.service.retrieveUser { [weak self] user in
             
             guard let self = self else { return }
@@ -124,6 +123,7 @@ class ProfileViewController: UIViewController {
         FirebaseDBService.service.retrieveUser { user in
             guard let user = user else { return }
             FirebaseDBService.service.retrieveReviews(type: user.userType) { [weak self] reviews in
+                dump(reviews)
                 self?.reviewArray = reviews
                 self?.numbOfHire = reviews.count
 
